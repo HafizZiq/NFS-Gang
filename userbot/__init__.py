@@ -135,6 +135,9 @@ TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 # User Terminal alias
 USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS", "root@NFS-Gang")
 
+# Zipfile module
+ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
+
 # Clean Welcome
 CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
 
