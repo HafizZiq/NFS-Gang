@@ -590,7 +590,7 @@ async def download_song(song):
     subprocess.check_output("rm -rf *.mp3",shell=True)
 
 
-@register(outgoing=True, pattern=r".yt(a|v) (.*)")
+@register(outgoing=True, pattern=r".ytd(a|v) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -777,6 +777,6 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'rip':
-    '.yta <url> or ytv <url>\
+    '.ytda <url> or ytdv <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
