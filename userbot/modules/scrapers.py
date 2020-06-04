@@ -616,8 +616,6 @@ async def download_video(v_url):
             True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
-                'preferredrate': '44100',
-                'preferredchannels': '2',
             }],
             'outtmpl':
             '%(id)s.flac',
