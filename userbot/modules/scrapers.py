@@ -590,7 +590,7 @@ async def download_song(song):
     subprocess.check_output("rm -rf *.mp3",shell=True)
 
 
-@register(outgoing=True, pattern=r".rip(audio|video) (.*)")
+@register(outgoing=True, pattern=r".rip(a|v) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -598,7 +598,7 @@ async def download_video(v_url):
 
     await v_url.edit("`Preparing to download...`")
 
-    if type == "audio":
+    if type == "a":
         opts = {
             'format':
             'bestaudio',
@@ -616,11 +616,10 @@ async def download_video(v_url):
             True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '320',
+                'preferredcodec': 'flac',
             }],
             'outtmpl':
-            '%(id)s.mp3',
+            '%(id)s.flac',
             'quiet':
             True,
             'logtostderr':
@@ -629,7 +628,7 @@ async def download_video(v_url):
         video = False
         song = True
 
-    elif type == "video":
+    elif type == "v":
         opts = {
             'format':
             'best',
@@ -697,7 +696,7 @@ async def download_video(v_url):
         \nby *{rip_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
-            f"{rip_data['id']}.mp3",
+            f"{rip_data['id']}.flac",
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(duration=int(rip_data['duration']),
@@ -707,8 +706,8 @@ async def download_video(v_url):
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
-                         f"{rip_data['title']}.mp3")))
-        os.remove(f"{rip_data['id']}.mp3")
+                         f"{rip_data['title']}.flac")))
+        os.remove(f"{rip_data['id']}.flac")
         await v_url.delete()
     elif video:
         await v_url.edit(f"`Preparing to upload video:`\
