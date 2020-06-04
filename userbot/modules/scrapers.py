@@ -776,6 +776,6 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'rip':
-    '.ripaudio <url> or ripvideo <url>\
+    '.ripa <url> (for audio) or ripv <url> (for video)\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
