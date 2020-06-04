@@ -590,7 +590,7 @@ async def download_song(song):
     subprocess.check_output("rm -rf *.mp3",shell=True)
 
 
-@register(outgoing=True, pattern=r".rip(a|v) (.*)")
+@register(outgoing=True, pattern=r".yt(a|v) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -616,9 +616,11 @@ async def download_video(v_url):
             True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '320',
             }],
             'outtmpl':
-            '%(id)s.flac',
+            '%(id)s.mp3',
             'quiet':
             True,
             'logtostderr':
@@ -695,7 +697,7 @@ async def download_video(v_url):
         \nby *{rip_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
-            f"{rip_data['id']}.flac",
+            f"{rip_data['id']}.mp3",
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(duration=int(rip_data['duration']),
@@ -705,8 +707,8 @@ async def download_video(v_url):
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
-                         f"{rip_data['title']}.flac")))
-        os.remove(f"{rip_data['id']}.flac")
+                         f"{rip_data['title']}.mp3")))
+        os.remove(f"{rip_data['id']}.mp3")
         await v_url.delete()
     elif video:
         await v_url.edit(f"`Preparing to upload video:`\
@@ -775,6 +777,6 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'rip':
-    '.ripa <url> (for audio) or ripv <url> (for video)\
+    '.yta <url> or ytv <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
