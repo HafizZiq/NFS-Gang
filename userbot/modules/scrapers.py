@@ -776,7 +776,7 @@ CMD_HELP.update({
         \nUsage: Instantly download any songs from YouTube and many other sites.'
 })
 CMD_HELP.update({
-    'rip':
+    'ytdl':
     '.ytda <url> or ytdv <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
