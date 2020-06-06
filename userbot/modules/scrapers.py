@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module containing various scrapers. """
 
 import os
@@ -60,7 +60,6 @@ async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
-
 
 @register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
@@ -127,7 +126,6 @@ async def carbon_api(e):
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
 
-
 @register(outgoing=True, pattern="^.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
@@ -158,7 +156,6 @@ async def img_sampler(event):
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
     await event.delete()
 
-
 @register(outgoing=True, pattern="^.currency (.*)")
 async def moni(event):
     input_str = event.pattern_match.group(1)
@@ -185,7 +182,6 @@ async def moni(event):
     else:
         await event.edit("`Invalid syntax.`")
         return
-
 
 @register(outgoing=True, pattern=r"^.google (.*)")
 async def gsearch(q_event):
@@ -220,7 +216,6 @@ async def gsearch(q_event):
             "Google Search query `" + match + "` was executed successfully",
         )
 
-
 @register(outgoing=True, pattern=r"^.wiki (.*)")
 async def wiki(wiki_q):
     """ For .wiki command, fetch content from Wikipedia. """
@@ -251,7 +246,6 @@ async def wiki(wiki_q):
     if BOTLOG:
         await wiki_q.client.send_message(
             BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully")
-
 
 @register(outgoing=True, pattern="^.ud (.*)")
 async def urban_dict(ud_e):
@@ -291,7 +285,6 @@ async def urban_dict(ud_e):
                 "ud query `" + query + "` executed successfully.")
     else:
         await ud_e.edit("No result found for **" + query + "**")
-
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
@@ -336,7 +329,6 @@ async def text_to_speech(query):
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
         await query.delete()
-
 
 # kanged from Blank-x ;---;
 @register(outgoing=True, pattern="^.imdb (.*)")
@@ -421,7 +413,6 @@ async def imdb(e):
     except IndexError:
         await e.edit("Plox enter **Valid movie name** kthx")
 
-
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
 async def translateme(trans):
     """ For .trt command, translate the given text using Google Translate. """
@@ -452,7 +443,6 @@ async def translateme(trans):
             BOTLOG_CHATID,
             f"Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.",
         )
-
 
 @register(pattern=".lang (trt|tts) (.*)", outgoing=True)
 async def lang(value):
@@ -488,7 +478,6 @@ async def lang(value):
             BOTLOG_CHATID,
             f"`Language for {scraper} changed to {LANG.title()}.`")
 
-
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
@@ -514,7 +503,6 @@ async def yt_search(video_q):
     reply_text = f"**Search Query:**\n`{query}`\n\n**Results:**\n\n{result}"
 
     await video_q.edit(reply_text)
-
 
 async def youtube_search(query,
                          order="relevance",
@@ -551,10 +539,7 @@ async def youtube_search(query,
         nexttok = "KeyError, try again."
         return (nexttok, videos)
 
-
-
 os.system("rm -rf *.mp3")
-
 
 def bruh(name):
     os.system("instantmusic -q -s "+name)
@@ -588,7 +573,6 @@ async def download_song(song):
             )
     os.system("rm -rf *.mp3")
     subprocess.check_output("rm -rf *.mp3",shell=True)
-
 
 @register(outgoing=True, pattern=r".ytd(a|v) (.*)")
 async def download_video(v_url):
@@ -726,11 +710,9 @@ async def download_video(v_url):
         os.remove(f"{rip_data['id']}.mp4")
         await v_url.delete()
 
-
 def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
     return get_emoji_regexp().sub(u'', inputString)
-
 
 CMD_HELP.update({
     'img':

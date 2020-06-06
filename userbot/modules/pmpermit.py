@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module for keeping control who PM you. """
 
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
@@ -20,7 +20,6 @@ UNAPPROVED_MSG = (
     "`Alexa : Hey , there You don't have permission to talk to my Master?`\n"
     "`Wait for him to look up on you. He usually don't approve retards though`")
 # =================================================================
-
 
 @register(incoming=True, disable_edited=True, disable_errors=True)
 async def permitpm(event):
@@ -96,7 +95,6 @@ async def permitpm(event):
                             " was just another retarded nibba",
                         )
 
-
 @register(disable_edited=True, outgoing=True, disable_errors=True)
 async def auto_accept(event):
     """ Will approve automatically if you texted them first. """
@@ -131,7 +129,6 @@ async def auto_accept(event):
                         f"[{chat.first_name}](tg://user?id={chat.id})",
                     )
 
-
 @register(outgoing=True, pattern="^.notifoff$")
 async def notifoff(noff_event):
     """ For .notifoff command, stop getting notifications from unapproved PMs. """
@@ -143,7 +140,6 @@ async def notifoff(noff_event):
     addgvar("NOTIF_OFF", True)
     await noff_event.edit("`Notifications from unapproved PM's are silenced!`")
 
-
 @register(outgoing=True, pattern="^.notifon$")
 async def notifon(non_event):
     """ For .notifoff command, get notifications from unapproved PMs. """
@@ -154,7 +150,6 @@ async def notifon(non_event):
         return
     delgvar("NOTIF_OFF")
     await non_event.edit("`Notifications from unapproved PM's unmuted!`")
-
 
 @register(outgoing=True, pattern="^.approve$")
 async def approvepm(apprvpm):
@@ -196,7 +191,6 @@ async def approvepm(apprvpm):
             "#APPROVED\n" + "User: " + f"[{name0}](tg://user?id={uid})",
         )
 
-
 @register(outgoing=True, pattern="^.disapprove$")
 async def disapprovepm(disapprvpm):
     try:
@@ -225,7 +219,6 @@ async def disapprovepm(disapprvpm):
             f"[{name0}](tg://user?id={disapprvpm.chat_id})"
             " was disapproved to PM you.",
         )
-
 
 @register(outgoing=True, pattern="^.block$")
 async def blockpm(block):
@@ -257,7 +250,6 @@ async def blockpm(block):
             "#BLOCKED\n" + "User: " + f"[{name0}](tg://user?id={uid})",
         )
 
-
 @register(outgoing=True, pattern="^.unblock$")
 async def unblockpm(unblock):
     """ For .unblock command, let people PMing you again! """
@@ -274,7 +266,6 @@ async def unblockpm(unblock):
             f"[{name0}](tg://user?id={replied_user.id})"
             " was unblocc'd!.",
         )
-
 
 CMD_HELP.update({
     "pmpermit":

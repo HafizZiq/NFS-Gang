@@ -4,7 +4,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module for reverse searching stickers and images on Google """
 
 import io
@@ -23,7 +23,6 @@ from userbot.events import register
 opener = urllib.request.build_opener()
 useragent = 'Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.70 Mobile Safari/537.36'
 opener.addheaders = [('User-agent', useragent)]
-
 
 @register(outgoing=True, pattern=r"^.reverse(?: |$)(\d*)")
 async def okgoogle(img):
@@ -99,7 +98,6 @@ async def okgoogle(img):
         await img.edit(
             f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
 
-
 async def ParseSauce(googleurl):
     """Parse/Scrape the HTML code for the info we want."""
 
@@ -121,7 +119,6 @@ async def ParseSauce(googleurl):
 
     return results
 
-
 async def scam(results, lim):
 
     single = opener.open(results['similar_images']).read()
@@ -141,7 +138,6 @@ async def scam(results, lim):
             break
 
     return imglinks
-
 
 CMD_HELP.update({
     'reverse':

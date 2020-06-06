@@ -2,8 +2,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
-# Port From UniBorg to UserBot by keselekpermen69
 
 import asyncio
 import io
@@ -31,7 +29,6 @@ async def on_new_message(event):
             break
         pass
 
-
 @register(outgoing=True, pattern="^.addbl(?: |$)(.*)")
 async def on_add_black_list(addbl):
     text = addbl.pattern_match.group(1)
@@ -39,7 +36,6 @@ async def on_add_black_list(addbl):
     for trigger in to_blacklist:
         sql.add_to_blacklist(addbl.chat_id, trigger.lower())
     await addbl.edit("Added {} triggers to the blacklist in the current chat".format(len(to_blacklist)))
-
 
 @register(outgoing=True, pattern="^.listbl(?: |$)(.*)")
 async def on_view_blacklist(listbl):
@@ -64,7 +60,6 @@ async def on_view_blacklist(listbl):
             await listbl.delete()
     else:
         await listbl.edit(OUT_STR)
-
 
 @register(outgoing=True, pattern="^.rmbl(?: |$)(.*)")
 async def on_delete_blacklist(rmbl):

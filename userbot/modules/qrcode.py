@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 # The entire source code is OSSRPL except 'makeqr and getqr' which is MPL
 # License: MPL and OSSRPL
 """ Userbot module containing commands related to QR Codes. """
@@ -18,7 +18,6 @@ from bs4 import BeautifulSoup
 
 from userbot import CMD_HELP, LOGS
 from userbot.events import register
-
 
 @register(pattern=r"^.decode$", outgoing=True)
 async def parseqr(qr_e):
@@ -48,7 +47,6 @@ async def parseqr(qr_e):
     soup = BeautifulSoup(t_response, "html.parser")
     qr_contents = soup.find_all("pre")[0].text
     await qr_e.edit(qr_contents)
-
 
 @register(pattern=r".barcode(?: |$)([\s\S]*)", outgoing=True)
 async def bq(event):
@@ -91,7 +89,6 @@ async def bq(event):
         return await event.edit(str(e))
     await event.delete()
 
-
 @register(pattern=r".makeqr(?: |$)([\s\S]*)", outgoing=True)
 async def make_qr(makeqr):
     """ For .makeqr command, make a QR Code containing the given content. """
@@ -131,7 +128,6 @@ async def make_qr(makeqr):
                                   reply_to=reply_msg_id)
     os.remove("img_file.webp")
     await makeqr.delete()
-
 
 CMD_HELP.update({
     'qr':

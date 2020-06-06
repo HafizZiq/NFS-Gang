@@ -2,10 +2,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
-
-# (c) Shrimadhav U K - UniBorg
-# Thanks to Prakasaka for porting.
 
 import io
 import os
@@ -13,7 +9,6 @@ import requests
 from userbot.events import register
 from telethon.tl.types import MessageMediaPhoto
 from userbot import CMD_HELP, REM_BG_API_KEY, TEMP_DOWNLOAD_DIRECTORY
-
 
 @register(outgoing=True, pattern="^.rbg(?: |$)(.*)")
 async def kbg(remob):
@@ -66,7 +61,6 @@ async def kbg(remob):
         await remob.edit("**Error (Invalid API key, I guess ?)**\n`{}`".format(
             output_file_name.content.decode("UTF-8")))
 
-
 # this method will call the API, and return in the appropriate format
 # with the name provided.
 async def ReTrieveFile(input_file_name):
@@ -83,7 +77,6 @@ async def ReTrieveFile(input_file_name):
                       stream=True)
     return r
 
-
 async def ReTrieveURL(input_url):
     headers = {
         "X-API-Key": REM_BG_API_KEY,
@@ -95,7 +88,6 @@ async def ReTrieveURL(input_url):
                       allow_redirects=True,
                       stream=True)
     return r
-
 
 CMD_HELP.update({
     "rbg":

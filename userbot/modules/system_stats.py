@@ -19,7 +19,6 @@ from userbot.events import register
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
-
 @register(outgoing=True, pattern="^.sysd$")
 async def sysdetails(sysd):
     """ For .sysd command, get system info using neofetch. """
@@ -39,7 +38,6 @@ async def sysdetails(sysd):
             await sysd.edit("`" + result + "`")
         except FileNotFoundError:
             await sysd.edit("`Install neofetch first !!`")
-
 
 @register(outgoing=True, pattern="^.botver$")
 async def bot_ver(event):
@@ -81,7 +79,6 @@ async def bot_ver(event):
             await event.edit(
                 "Shame that you don't have git, you're running - 'v2.5' anyway!"
             )
-
 
 @register(outgoing=True, pattern="^.pip(?: |$)(.*)")
 async def pipcheck(pip):
@@ -127,18 +124,17 @@ async def pipcheck(pip):
         else:
             await pip.edit("`Use .help pip to see an example`")
 
-
 @register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     await alive.edit("`Heya I'm Alive `\n"
                      f"> `Telethon : v{version.__version__} `\n"
                      f"> `Python : v{python_version()} `\n"
-	                 "===================== \n"
+                     f"===================== \n"
                      f"`User : `{DEFAULTUSER} \n"
-		             "===================== \n"
+                     f"===================== \n"
                      f"#NFSGang @nfsinjector \n"
-		     "===================== \n")
+                     f"===================== \n")
 
 @register(outgoing=True, pattern="^.aliveu")
 async def amireallyaliveuser(username):
@@ -152,14 +148,12 @@ async def amireallyaliveuser(username):
         output = 'Successfully changed user to ' + newuser + '!'
     await username.edit("`" f"{output}" "`")
 
-
 @register(outgoing=True, pattern="^.resetalive$")
 async def amireallyalivereset(ureset):
     """ For .resetalive command, reset the username in the .alive command. """
     global DEFAULTUSER
     DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
     await ureset.edit("`" "Successfully reset user for alive!" "`")
-
 
 CMD_HELP.update(
     {"sysd": ".sysd\

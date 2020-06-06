@@ -5,7 +5,6 @@ except ImportError:
 
 from sqlalchemy import Column, String
 
-
 class Mute(BASE):
     __tablename__ = "muted"
     chat_id = Column(String(14), primary_key=True)
@@ -15,9 +14,7 @@ class Mute(BASE):
         self.chat_id = str(chat_id)  # ensure string
         self.sender = str(sender)
 
-
 Mute.__table__.create(checkfirst=True)
-
 
 def is_muted(chat_id):
     try:
@@ -27,12 +24,10 @@ def is_muted(chat_id):
     finally:
         SESSION.close()
 
-
 def mute(chat_id, sender):
     adder = Mute(str(chat_id), str(sender))
     SESSION.add(adder)
     SESSION.commit()
-
 
 def unmute(chat_id, sender):
     rem = SESSION.query(Mute).get(((str(chat_id)), (str(sender))))

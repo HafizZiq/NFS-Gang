@@ -10,7 +10,6 @@ from re import search, IGNORECASE, escape
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
-
 @register(incoming=True, disable_edited=True, disable_errors=True)
 async def filter_incoming_handler(handler):
     """ Checks if the incoming message contains handler of a filter """
@@ -37,7 +36,6 @@ async def filter_incoming_handler(handler):
                     await handler.reply(trigger.reply)
     except AttributeError:
         pass
-
 
 @register(outgoing=True, pattern=r"^.filter (.*)")
 async def add_new_filter(new_handler):
@@ -81,7 +79,6 @@ async def add_new_filter(new_handler):
     else:
         await new_handler.edit(success.format(keyword, 'updated'))
 
-
 @register(outgoing=True, pattern=r"^.stop (.*)")
 async def remove_a_filter(r_handler):
     """ For .stop command, allows you to remove a filter from a chat. """
@@ -95,7 +92,6 @@ async def remove_a_filter(r_handler):
     else:
         await r_handler.edit(
             "`Filter`  **{}**  `was deleted successfully`.".format(filt))
-
 
 @register(outgoing=True, pattern="^.rmbotfilters (.*)")
 async def kick_marie_filter(event):
@@ -122,7 +118,6 @@ async def kick_marie_filter(event):
         await event.client.send_message(
             BOTLOG_CHATID, "I cleaned all filters at " + str(event.chat_id))
 
-
 @register(outgoing=True, pattern="^.filters$")
 async def filters_active(event):
     """ For .filters command, lists all of the active filters in a chat. """
@@ -140,7 +135,6 @@ async def filters_active(event):
             transact += "`{}`\n".format(filt.keyword)
 
     await event.edit(transact)
-
 
 CMD_HELP.update({
     "filter":

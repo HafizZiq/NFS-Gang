@@ -10,7 +10,6 @@ from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, bot
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
 
-
 @register(outgoing=True, pattern="^.userid$")
 async def useridgetter(target):
     """ For .userid command, returns the ID of the target user. """
@@ -31,7 +30,6 @@ async def useridgetter(target):
         await target.edit("**Name:** {} \n**User ID:** `{}`".format(
             name, user_id))
 
-
 @register(outgoing=True, pattern="^.link(?: |$)(.*)")
 async def permalink(mention):
     """ For .link command, generates a link to the user's PM with a custom text. """
@@ -45,12 +43,10 @@ async def permalink(mention):
                                       "") if user.first_name else user.username
         await mention.edit(f"[{tag}](tg://user?id={user.id})")
 
-
 @register(outgoing=True, pattern="^.chatid$")
 async def chatidgetter(chat):
     """ For .chatid, returns the ID of the chat you are in at that moment. """
     await chat.edit("Chat ID: `" + str(chat.chat_id) + "`")
-
 
 @register(outgoing=True, pattern=r"^.log(?: |$)([\s\S]*)")
 async def log(log_text):
@@ -79,7 +75,6 @@ async def kickme(leave):
     await leave.edit("Nope, no, no, I go away")
     await leave.client.kick_participant(leave.chat_id, 'me')
 
-
 @register(outgoing=True, pattern="^.unmutechat$")
 async def unmute_chat(unm_e):
     """ For .unmutechat command, unmute a muted chat. """
@@ -96,7 +91,6 @@ async def unmute_chat(unm_e):
         await unm_e.client.send_message(
             BOTLOG_CHATID,
             str(unm_e.chat_id) + " was unsilenced.")
-
 
 @register(outgoing=True, pattern="^.mutechat$")
 async def mute_chat(mute_e):
@@ -115,7 +109,6 @@ async def mute_chat(mute_e):
             BOTLOG_CHATID,
             str(mute_e.chat_id) + " was silenced.")
 
-
 @register(incoming=True, disable_errors=True)
 async def keep_read(message):
     """ The mute logic. """
@@ -129,10 +122,8 @@ async def keep_read(message):
             if i.groupid == str(message.chat_id):
                 await message.client.send_read_acknowledge(message.chat_id)
 
-
 # Regex-Ninja module by @Kandnub
 regexNinja = False
-
 
 @register(outgoing=True, pattern="^s/")
 async def sedNinja(event):
@@ -140,7 +131,6 @@ async def sedNinja(event):
     if regexNinja:
         await sleep(.5)
         await event.delete()
-
 
 @register(outgoing=True, pattern="^.regexninja (on|off)$")
 async def sedNinjaToggle(event):
@@ -156,7 +146,6 @@ async def sedNinjaToggle(event):
         await event.edit("`Successfully disabled ninja mode for Regexbot.`")
         await sleep(1)
         await event.delete()
-
 
 CMD_HELP.update({
     "chat":

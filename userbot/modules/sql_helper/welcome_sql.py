@@ -5,7 +5,6 @@ except ImportError:
 
 from sqlalchemy import BigInteger, Column, Numeric, String, UnicodeText
 
-
 class Welcome(BASE):
     __tablename__ = "welcome"
     chat_id = Column(String(14), primary_key=True)
@@ -19,16 +18,13 @@ class Welcome(BASE):
         self.reply = reply
         self.f_mesg_id = f_mesg_id
 
-
 Welcome.__table__.create(checkfirst=True)
-
 
 def get_welcome(chat_id):
     try:
         return SESSION.query(Welcome).get(str(chat_id))
     finally:
         SESSION.close()
-
 
 def get_current_welcome_settings(chat_id):
     try:
@@ -38,7 +34,6 @@ def get_current_welcome_settings(chat_id):
         return None
     finally:
         SESSION.close()
-
 
 def add_welcome_setting(chat_id, previous_welcome, reply, f_mesg_id):
     to_check = get_welcome(chat_id)
@@ -55,7 +50,6 @@ def add_welcome_setting(chat_id, previous_welcome, reply, f_mesg_id):
         SESSION.commit()
         return False
 
-
 def rm_welcome_setting(chat_id):
     try:
         rem = SESSION.query(Welcome).get(str(chat_id))
@@ -65,7 +59,6 @@ def rm_welcome_setting(chat_id):
             return True
     except BaseException:
         return False
-
 
 def update_previous_welcome(chat_id, previous_welcome):
     row = SESSION.query(Welcome).get(str(chat_id))

@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module for changing your Telegram profile details. """
 
 import os
@@ -39,7 +39,6 @@ USERNAME_SUCCESS = "```Your username was succesfully changed.```"
 USERNAME_TAKEN = "```This username is already taken.```"
 # ===============================================================
 
-
 @register(outgoing=True, pattern="^.reserved$")
 async def mine(event):
     """ For .reserved command, get a list of your reserved usernames. """
@@ -48,7 +47,6 @@ async def mine(event):
     for channel_obj in result.chats:
         output_str += f"{channel_obj.title}\n@{channel_obj.username}\n\n"
     await event.edit(output_str)
-
 
 @register(outgoing=True, pattern="^.name")
 async def update_name(name):
@@ -65,7 +63,6 @@ async def update_name(name):
     await name.client(
         UpdateProfileRequest(first_name=firstname, last_name=lastname))
     await name.edit(NAME_OK)
-
 
 @register(outgoing=True, pattern="^.setpfp$")
 async def set_profilepic(propic):
@@ -95,7 +92,6 @@ async def set_profilepic(propic):
         except PhotoExtInvalidError:
             await propic.edit(INVALID_MEDIA)
 
-
 @register(outgoing=True, pattern="^.setbio (.*)")
 async def set_biograph(setbio):
     """ For .setbio command, set a new bio for your profile in Telegram. """
@@ -103,7 +99,6 @@ async def set_biograph(setbio):
     newbio = setbio.pattern_match.group(1)
     await setbio.client(UpdateProfileRequest(about=newbio))
     await setbio.edit(BIO_SUCCESS)
-
 
 @register(outgoing=True, pattern="^.username (.*)")
 async def update_username(username):
@@ -115,7 +110,6 @@ async def update_username(username):
         await username.edit(USERNAME_SUCCESS)
     except UsernameOccupiedError:
         await username.edit(USERNAME_TAKEN)
-
 
 @register(outgoing=True, pattern="^.count$")
 async def count(event):
@@ -153,7 +147,6 @@ async def count(event):
 
     await event.edit(result)
 
-
 @register(outgoing=True, pattern=r"^.delpfp")
 async def remove_profilepic(delpfp):
     """ For .delpfp command, delete your current profile picture in Telegram. """
@@ -180,7 +173,6 @@ async def remove_profilepic(delpfp):
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await delpfp.edit(
         f"`Successfully deleted {len(input_photos)} profile picture(s).`")
-
 
 CMD_HELP.update({
     "profile":

@@ -3,6 +3,7 @@ import asyncio
 from collections import deque
 from userbot.events import register
 from userbot import CMD_HELP
+
 @register(outgoing=True,pattern="^.earth(?: |$)(.*)")
 async def _(event):
 	if event.fwd_from:

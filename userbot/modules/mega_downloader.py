@@ -2,7 +2,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
 
 from asyncio import create_subprocess_shell as asyncSubprocess
 from asyncio.subprocess import PIPE as asyncPIPE
@@ -21,7 +20,6 @@ from userbot import CMD_HELP, LOGS
 from userbot.events import register
 from userbot.modules.upload_download import humanbytes
 
-
 async def subprocess_run(megadl, cmd):
     subproc = await asyncSubprocess(cmd, stdout=asyncPIPE, stderr=asyncPIPE)
     stdout, stderr = await subproc.communicate()
@@ -34,7 +32,6 @@ async def subprocess_run(megadl, cmd):
             f'stderr: {stderr.decode().strip()}```')
         return exitCode
     return stdout.decode().strip(), stderr.decode().strip(), exitCode
-
 
 @register(outgoing=True, pattern=r"^.mega(?: |$)(.*)")
 async def mega_downloader(megadl):
@@ -127,7 +124,6 @@ async def mega_downloader(megadl):
             LOGS.info(str(e))
     return
 
-
 async def decrypt_file(megadl, file_name, temp_file_name,
                        hex_key, hex_raw_key):
     cmd = ("cat '{}' | openssl enc -d -aes-128-ctr -K {} -iv {} > '{}'"
@@ -138,7 +134,6 @@ async def decrypt_file(megadl, file_name, temp_file_name,
         raise FileNotFoundError(
             errno.ENOENT, os.strerror(errno.ENOENT), file_name)
     return
-
 
 CMD_HELP.update({
     "mega":

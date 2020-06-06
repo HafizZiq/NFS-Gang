@@ -5,7 +5,6 @@ except ImportError:
 
 from sqlalchemy import Column, String, UnicodeText
 
-
 class Globals(BASE):
     __tablename__ = "globals"
     variable = Column(String, primary_key=True, nullable=False)
@@ -15,9 +14,7 @@ class Globals(BASE):
         self.variable = str(variable)
         self.value = value
 
-
 Globals.__table__.create(checkfirst=True)
-
 
 def gvarstatus(variable):
     try:
@@ -28,7 +25,6 @@ def gvarstatus(variable):
     finally:
         SESSION.close()
 
-
 def addgvar(variable, value):
     if SESSION.query(Globals).filter(
             Globals.variable == str(variable)).one_or_none():
@@ -36,7 +32,6 @@ def addgvar(variable, value):
     adder = Globals(str(variable), value)
     SESSION.add(adder)
     SESSION.commit()
-
 
 def delgvar(variable):
     rem = SESSION.query(Globals).filter(Globals.variable == str(variable))\

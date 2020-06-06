@@ -2,10 +2,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
-# Random RGB Sticklet by @PhycoNinja13b
-# modified by @UniBorg
-# Port From UniBorg to UserBot by @ElytrA8
 
 import io
 import os
@@ -16,7 +12,6 @@ from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 from userbot import CMD_HELP
 from userbot.events import register
-
 
 @register(outgoing=True, pattern=r"^.srgb(.*)")
 async def sticklet(event):
@@ -65,7 +60,6 @@ async def sticklet(event):
         os.remove(FONT_FILE)
     except:
         pass
-
 
 async def get_font_file(client, channel_id):
     # first get the font messages
