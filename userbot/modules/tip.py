@@ -3,24 +3,16 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
+
 from telethon import events
-
 import asyncio
-
 import os
-
 import sys
-
 import random
-
 from userbot import CMD_HELP
-
 from userbot.events import register
 
-
-
 @register(pattern="^.tip(?: |$)(.*)")
-
 async def _(event):
 
     if event.fwd_from:
@@ -28,13 +20,9 @@ async def _(event):
         return
 
     await event.edit("Well, let me give you a life-pro tip... 😉")
-
     await asyncio.sleep(2)
-
     x=(random.randrange(1,87))
-
     if x==1:
-
         await event.edit("`\"Before telling your landlord you're moving, ask them to fix anything broken that you're worried you might get charged for. They often will, and then when you move out they won't be able to take it out of your security deposit.\"`")
 
     if x==2:

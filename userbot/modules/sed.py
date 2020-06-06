@@ -15,7 +15,6 @@ from userbot.events import register
 
 DELIMITERS = ("/", ":", "|", "_")
 
-
 async def separate_sed(sed_string):
     """ Separate sed arguments. """
 
@@ -61,7 +60,6 @@ async def separate_sed(sed_string):
         return replace, replace_with, flags.lower()
     return None
 
-
 @register(outgoing=True, pattern="^.s")
 async def sed(command):
     """ For sed command, use sed on Telegram. """
@@ -102,7 +100,6 @@ async def sed(command):
             return
         if text:
             await command.edit(f"Did you mean? \n\n{text}")
-
 
 CMD_HELP.update({
     "sed":

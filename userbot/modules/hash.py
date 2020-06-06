@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module containing hash and encode/decode commands. """
 
 from subprocess import PIPE
@@ -10,7 +10,6 @@ from subprocess import run as runapp
 import pybase64
 from userbot import CMD_HELP
 from userbot.events import register
-
 
 @register(outgoing=True, pattern="^.hash (.*)")
 async def gethash(hash_q):
@@ -43,7 +42,6 @@ async def gethash(hash_q):
     else:
         await hash_q.reply(ans)
 
-
 @register(outgoing=True, pattern="^.base64 (en|de) (.*)")
 async def endecrypt(query):
     """ For .base64 command, find the base64 encoding of the given string. """
@@ -57,7 +55,6 @@ async def endecrypt(query):
             pybase64.b64decode(bytes(query.pattern_match.group(2), "utf-8"),
                                validate=True))[2:]
         await query.reply("Decoded: `" + lething[:-1] + "`")
-
 
 CMD_HELP.update({"base64": "Find the base64 encoding of the given string"})
 

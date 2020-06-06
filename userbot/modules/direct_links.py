@@ -32,7 +32,6 @@ def subprocess_run(cmd):
         return reply
     return talk
 
-
 @register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """ direct links generator """
@@ -77,7 +76,6 @@ async def direct_link_generator(request):
                                 link)[0] + ' is not supported'
     await request.edit(reply)
 
-
 def gdrive(url: str) -> str:
     """ GDrive direct links generator """
     drive = 'https://drive.google.com'
@@ -120,7 +118,6 @@ def gdrive(url: str) -> str:
     reply += f'[{name}]({dl_url})\n'
     return reply
 
-
 def zippy_share(url: str) -> str:
     """ ZippyShare direct links generator
     Based on https://github.com/LameLemon/ziggy"""
@@ -149,7 +146,6 @@ def zippy_share(url: str) -> str:
     reply += f'[{name}]({dl_url})\n'
     return reply
 
-
 def yandex_disk(url: str) -> str:
     """ Yandex.Disk direct links generator
     Based on https://github.com/wldhx/yadisk-direct"""
@@ -168,7 +164,6 @@ def yandex_disk(url: str) -> str:
         reply += '`Error: File not found / Download limit reached`\n'
         return reply
     return reply
-
 
 def mega_dl(url: str) -> str:
     """ MEGA.nz direct links generator
@@ -193,7 +188,6 @@ def mega_dl(url: str) -> str:
     size = naturalsize(int(data['file_size']))
     reply += f'[{name} ({size})]({dl_url})\n'
     return reply
-
 
 def cm_ru(url: str) -> str:
     """ cloud.mail.ru direct links generator
@@ -220,7 +214,6 @@ def cm_ru(url: str) -> str:
     reply += f'[{name} ({size})]({dl_url})\n'
     return reply
 
-
 def mediafire(url: str) -> str:
     """ MediaFire direct links generator """
     try:
@@ -236,7 +229,6 @@ def mediafire(url: str) -> str:
     name = page.find('div', {'class': 'filename'}).text
     reply += f'[{name} {size}]({dl_url})\n'
     return reply
-
 
 def sourceforge(url: str) -> str:
     """ SourceForge direct links generator """
@@ -257,7 +249,6 @@ def sourceforge(url: str) -> str:
         dl_url = f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}'
         reply += f'[{name}]({dl_url}) '
     return reply
-
 
 def osdn(url: str) -> str:
     """ OSDN direct links generator """
@@ -280,7 +271,6 @@ def osdn(url: str) -> str:
         reply += f'[{name}]({dl_url}) '
     return reply
 
-
 def github(url: str) -> str:
     """ GitHub direct links generator """
     try:
@@ -298,7 +288,6 @@ def github(url: str) -> str:
     name = link.split('/')[-1]
     reply += f'[{name}]({dl_url}) '
     return reply
-
 
 def androidfilehost(url: str) -> str:
     """ AFH direct links generator """
@@ -350,7 +339,6 @@ def androidfilehost(url: str) -> str:
         reply += f'[{name}]({dl_url}) '
     return reply
 
-
 def useragent():
     """
     useragent random setter
@@ -362,7 +350,6 @@ def useragent():
         'lxml').findAll('td', {'class': 'useragent'})
     user_agent = choice(useragents)
     return user_agent.text
-
 
 CMD_HELP.update({
     "direct":

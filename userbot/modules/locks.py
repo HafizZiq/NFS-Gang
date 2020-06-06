@@ -2,14 +2,12 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from userbot import CMD_HELP
 from userbot.events import register
-
 
 @register(outgoing=True, pattern=r"^.lock ?(.*)")
 async def locks(event):
@@ -98,7 +96,6 @@ async def locks(event):
             f"`Do I have proper rights for that ??`\n**Error:** {str(e)}")
         return
 
-
 @register(outgoing=True, pattern=r"^.unlock ?(.*)")
 async def rem_locks(event):
     input_str = event.pattern_match.group(1).lower()
@@ -185,7 +182,6 @@ async def rem_locks(event):
         await event.edit(
             f"`Do I have proper rights for that ??`\n**Error:** {str(e)}")
         return
-
 
 CMD_HELP.update({
     "locks":

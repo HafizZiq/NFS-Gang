@@ -13,7 +13,6 @@ from telethon.tl.types import ChannelParticipantsAdmins, Message
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, ANTI_SPAMBOT, ANTI_SPAMBOT_SHOUT, bot
 
-
 @bot.on(ChatAction)
 async def ANTI_SPAMBOTS(welcm):
     try:
@@ -176,7 +175,6 @@ async def ANTI_SPAMBOTS(welcm):
                             f"MESSAGE:\n\n{message.text}")
     except ValueError:
         pass
-
 
 CMD_HELP.update({
     'anti_spambot':

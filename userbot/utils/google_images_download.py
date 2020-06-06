@@ -43,7 +43,6 @@ args_list = ["keywords", "keywords_from_file", "prefix_keywords", "suffix_keywor
              "thumbnail", "thumbnail_only", "language", "prefix", "chromedriver", "related_images", "safe_search", "no_numbering",
              "offset", "no_download","save_source","silent_mode","ignore_urls"]
 
-
 def user_input():
     config = argparse.ArgumentParser()
     config.add_argument('-cf', '--config_file', help='config file name', default='', type=str, required=False)
@@ -123,7 +122,6 @@ def user_input():
         records.append(arguments)
     return records
 
-
 class googleimagesdownload:
     def __init__(self):
         pass
@@ -161,7 +159,6 @@ class googleimagesdownload:
                       "If you are using proxy, make sure your proxy settings is configured correctly")
                 sys.exit()
                 return "Page Not found"
-
 
     # Download Page for more than 100 images
     def download_extended_page(self,url,chromedriver):
@@ -213,7 +210,6 @@ class googleimagesdownload:
 
         return source
 
-
     #Correcting the escape characters for python2
     def replace_with_byte(self,match):
         return chr(int(match.group(0)[1:], 8))
@@ -221,7 +217,6 @@ class googleimagesdownload:
     def repair(self,brokenjson):
         invalid_escape = re.compile(r'\\[0-7]{1,3}')  # up to 3 digits for byte values up to FF
         return invalid_escape.sub(self.replace_with_byte, brokenjson)
-
 
     # Finding 'Next Image' from the given raw page
     def get_next_tab(self,s):
@@ -252,7 +247,6 @@ class googleimagesdownload:
 
             return url_item, updated_item_name, end_content
 
-
     # Getting all links with the help of '_images_get_next_image'
     def get_all_tabs(self,page):
         tabs = {}
@@ -269,7 +263,6 @@ class googleimagesdownload:
                     page = page[end_content:]
         return tabs
 
-
     #Format the object in readable format
     def format_object(self,object):
         data = object[1]
@@ -285,7 +278,6 @@ class googleimagesdownload:
         formatted_object['image_source'] = info['2003'][2]
         formatted_object['image_thumbnail_url'] = data[2][0]
         return formatted_object
-
 
     #function to download single image
     def single_image(self,image_url):
@@ -420,7 +412,6 @@ class googleimagesdownload:
         built_url = lang_url+built_url+exact_size+time_range
         return built_url
 
-
     #building main search URL
     def build_search_url(self,search_term,params,url,similar_images,specific_site,safe_search):
         #check safe_search
@@ -444,7 +435,6 @@ class googleimagesdownload:
             url = url + safe_search_string
 
         return url
-
 
     #measures the file size
     def file_size(self,file_path):
@@ -509,7 +499,6 @@ class googleimagesdownload:
                 raise
             pass
         return
-
 
     # Download Image thumbnails
     def download_image_thumbnail(self,image_url,main_directory,dir_name,return_image_name,print_urls,socket_timeout,print_size,no_download,save_source,img_src,ignore_urls):
@@ -576,7 +565,6 @@ class googleimagesdownload:
             download_status = 'fail'
             download_message = "IOError on an image...trying next one..." + " Error: " + str(e)
         return download_status, download_message
-
 
     # Download Images
     def download_image(self,image_url,image_format,main_directory,dir_name,count,print_urls,socket_timeout,prefix,print_size,no_numbering,no_download,save_source,img_src,silent_mode,thumbnail_only,format,ignore_urls):
@@ -713,7 +701,6 @@ class googleimagesdownload:
 
         return download_status,download_message,return_image_name,absolute_path
 
-
     # Finding 'Next Image' from the given raw page
     def _get_next_item(self,s):
         start_line = s.find('rg_meta notranslate')
@@ -741,7 +728,6 @@ class googleimagesdownload:
                 except:
                     final_object = ""
             return final_object, end_object
-
 
     # Getting all links with the help of '_images_get_next_image'
     def _get_image_objects(self,s):
@@ -799,7 +785,6 @@ class googleimagesdownload:
                 limit) + " could not be downloaded because some images were not downloadable. " + str(
                 count-1) + " is all we got for this search filter!")
         return items,errorCount,abs_path
-
 
     # Bulk Download
     def download(self,arguments):
@@ -945,7 +930,6 @@ class googleimagesdownload:
                     params = self.build_url_parameters(arguments)     #building URL with params
 
                     url = self.build_search_url(search_term,params,arguments['url'],arguments['similar_images'],arguments['specific_site'],arguments['safe_search'])      #building main search url
-
                     if limit < 101:
                         raw_html = self.download_page(url)  # download page
                     else:

@@ -5,7 +5,6 @@ except ImportError:
 
 from sqlalchemy import Column, String
 
-
 class KRead(BASE):
     __tablename__ = "kread"
     groupid = Column(String(14), primary_key=True)
@@ -13,9 +12,7 @@ class KRead(BASE):
     def __init__(self, sender):
         self.groupid = str(sender)
 
-
 KRead.__table__.create(checkfirst=True)
-
 
 def is_kread():
     try:
@@ -25,12 +22,10 @@ def is_kread():
     finally:
         SESSION.close()
 
-
 def kread(chat):
     adder = KRead(str(chat))
     SESSION.add(adder)
     SESSION.commit()
-
 
 def unkread(chat):
     rem = SESSION.query(KRead).get((str(chat)))

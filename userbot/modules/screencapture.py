@@ -15,7 +15,6 @@ from selenium.webdriver.chrome.options import Options
 from userbot.events import register
 from userbot import GOOGLE_CHROME_BIN, CHROME_DRIVER, CMD_HELP
 
-
 @register(pattern=r".ss (.*)", outgoing=True)
 async def capture(url):
     """ For .ss command, capture a website's screenshot and send the photo. """

@@ -2,12 +2,11 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 """ Userbot module containing commands for keeping global notes. """
 
 from userbot.events import register
 from userbot import CMD_HELP, BOTLOG_CHATID
-
 
 @register(outgoing=True,
           pattern=r"\$\w*",
@@ -35,7 +34,6 @@ async def on_snip(event):
         await event.client.send_message(event.chat_id,
                                         snip.reply,
                                         reply_to=message_id_to_reply)
-
 
 @register(outgoing=True, pattern="^.snip (\w*)")
 async def on_snip_save(event):
@@ -76,7 +74,6 @@ async def on_snip_save(event):
     else:
         await event.edit(success.format('saved', keyword))
 
-
 @register(outgoing=True, pattern="^.snips$")
 async def on_snip_list(event):
     """ For .snips command, lists snips saved by you. """
@@ -97,7 +94,6 @@ async def on_snip_list(event):
 
     await event.edit(message)
 
-
 @register(outgoing=True, pattern="^.remsnip (\w*)")
 async def on_snip_delete(event):
     """ For .remsnip command, deletes a snip. """
@@ -111,7 +107,6 @@ async def on_snip_delete(event):
         await event.edit(f"`Successfully deleted snip:` **{name}**")
     else:
         await event.edit(f"`Couldn't find snip:` **{name}**")
-
 
 CMD_HELP.update({
     "snips":

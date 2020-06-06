@@ -23,7 +23,6 @@ else:
     DEFCITY = None
 # ====================
 
-
 async def get_tz(con):
     """ Get time zone of the given country. """
     """ Credits: @aragon12 and @zakaryan2004. """
@@ -35,7 +34,6 @@ async def get_tz(con):
             return tz(c_tz[con][0])
     except KeyError:
         return
-
 
 @register(outgoing=True, pattern="^.weather(?: |$)(.*)")
 async def get_weather(weather):
@@ -132,7 +130,6 @@ async def get_weather(weather):
         f"**Sunrise:** `{sun(sunrise)}`\n" +
         f"**Sunset:** `{sun(sunset)}`\n\n" + f"**{desc}**\n" +
         f"`{cityname}, {fullc_n}`\n" + f"`{time}`")
-
 
 CMD_HELP.update({
     "weather":

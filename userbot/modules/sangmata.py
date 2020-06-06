@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 # Port to userbot by @MoveAngel
 
 import datetime
@@ -41,9 +41,6 @@ async def lastname(steal):
              await steal.edit("```can you kindly disable your forward privacy settings for good?```")
           else: 
              await steal.edit(f"{response.message.message}")
-
-
-
 
 @register(outgoing=True, pattern="^.fakemail(?: |$)(.*)")
 async def pembohong(fake):

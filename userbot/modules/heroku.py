@@ -3,7 +3,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
 
 """
    Heroku manager for your userbot
@@ -20,7 +19,6 @@ heroku_api = "https://api.heroku.com"
 if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
     Heroku = heroku3.from_key(HEROKU_API_KEY)
     app = Heroku.app(HEROKU_APP_NAME)
-
 
 @register(outgoing=True,
           pattern=r"^.(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)")
@@ -125,7 +123,6 @@ async def variable(var):
         else:
             return await var.edit("`Information don't exists...`")
 
-
 @register(outgoing=True, pattern=r"^.usage(?: |$)")
 async def dyno_usage(dyno):
     """
@@ -191,7 +188,6 @@ async def dyno_usage(dyno):
                  f"**|**  [`{percentage}`**%**]"
             )
             return True
-
 
 CMD_HELP.update({
     "heroku":

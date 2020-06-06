@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-#
+
 # You can find misc modules, which dont fit in anything xD
 """ Userbot module for other small commands. """
 
@@ -17,7 +17,6 @@ import json
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
 from userbot.events import register
 
-
 @register(outgoing=True, pattern="^.random")
 async def randomise(items):
     """ For .random command, get a random item from the list of items. """
@@ -30,7 +29,6 @@ async def randomise(items):
     index = randint(1, len(itemo) - 1)
     await items.edit("**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" +
                      itemo[index] + "`")
-
 
 @register(outgoing=True, pattern="^.sleep( [0-9]+)?$")
 async def sleepybot(time):
@@ -50,7 +48,6 @@ async def sleepybot(time):
         await sleep(counter)
         await time.edit("`OK, I'm awake now.`")
 
-
 @register(outgoing=True, pattern="^.shutdown$")
 async def killdabot(event):
     """ For .shutdown command, shut the bot down."""
@@ -59,7 +56,6 @@ async def killdabot(event):
         await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n"
                                         "Bot shut down")
     await bot.disconnect()
-
 
 @register(outgoing=True, pattern="^.restart$")
 async def killdabot(event):
@@ -87,14 +83,12 @@ async def repeat(rep):
 
     await rep.edit(replyText)
 
-
 @register(outgoing=True, pattern="^.repo$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
     await wannasee.edit(
         "[Click here](https://github.com/HafizZiq/Dirty-meh) to open uBot's GitHub page."
     )
-
 
 @register(outgoing=True, pattern="^.raw$")
 async def raw(event):
@@ -118,7 +112,6 @@ async def raw(event):
             allow_cache=False,
             reply_to=reply_to_id,
             caption="`Here's the decoded message data !!`")
-
 
 CMD_HELP.update({
     'random':

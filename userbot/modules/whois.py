@@ -16,7 +16,6 @@ from telethon.utils import get_input_location
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
-
 @register(pattern=".whois(?: |$)(.*)", outgoing=True)
 async def who(event):
 
@@ -55,7 +54,6 @@ async def who(event):
     except TypeError:
         await event.edit(caption, parse_mode="html")
 
-
 async def get_user(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id and not event.pattern_match.group(1):
@@ -89,7 +87,6 @@ async def get_user(event):
             return None
 
     return replied_user
-
 
 async def fetch_info(replied_user, event):
     """ Get details from the User object. """
@@ -145,7 +142,6 @@ async def fetch_info(replied_user, event):
     caption += f"<a href=\"tg://user?id={user_id}\">{first_name}</a>"
 
     return photo, caption
-
 
 CMD_HELP.update({
     "whois":

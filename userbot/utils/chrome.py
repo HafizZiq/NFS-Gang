@@ -11,7 +11,6 @@ from selenium.webdriver.chrome.options import Options
 
 from userbot import TEMP_DOWNLOAD_DIRECTORY, GOOGLE_CHROME_BIN, CHROME_DRIVER
 
-
 async def chrome(chrome_options=None):
     if chrome_options is None:
         chrome_options = await options()
@@ -22,7 +21,6 @@ async def chrome(chrome_options=None):
     driver = webdriver.Chrome(executable_path=CHROME_DRIVER,
                               options=chrome_options)
     return driver
-
 
 async def options():
     chrome_options = Options()

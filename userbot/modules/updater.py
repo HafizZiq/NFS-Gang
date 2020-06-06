@@ -19,14 +19,12 @@ from userbot.events import register
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), 'requirements.txt')
 
-
 async def gen_chlog(repo, diff):
     ch_log = ''
     d_form = "%d/%m/%y"
     for c in repo.iter_commits(diff):
         ch_log += f'•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n'
     return ch_log
-
 
 async def update_requirements():
     reqs = str(requirements_path)
@@ -39,7 +37,6 @@ async def update_requirements():
         return process.returncode
     except Exception as e:
         return repr(e)
-
 
 async def deploy(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is not None:
@@ -94,7 +91,6 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                          )
     return
 
-
 async def update(event, repo, ups_rem, ac_br):
     try:
         ups_rem.pull(ac_br)
@@ -113,7 +109,6 @@ async def update(event, repo, ups_rem, ac_br):
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
     return
-
 
 @register(outgoing=True, pattern=r"^.update(?: |$)(now|deploy)?")
 async def upstream(event):
@@ -197,7 +192,6 @@ async def upstream(event):
     elif conf == "deploy":
         await deploy(event, repo, ups_rem, ac_br, txt)
     return
-
 
 CMD_HELP.update({
     'update':

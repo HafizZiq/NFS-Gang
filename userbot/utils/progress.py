@@ -10,7 +10,6 @@ import math
 from .tools import humanbytes, time_formatter
 from .exceptions import CancelProcess
 
-
 async def progress(
     current, total, gdrive, start, prog_type,
     file_name=None, is_cancelled=False
