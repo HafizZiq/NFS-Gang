@@ -2,6 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+# Ported to UserBot by @Mayur_Karaniya
 
 from github import Github
 import aiohttp
@@ -16,6 +17,7 @@ from telethon.tl.types import DocumentAttributeVideo
 from userbot.events import register
 # from userbot.events import humanbytes, progress, time_formatter
 from userbot import CMD_HELP, GITHUB_ACCESS_TOKEN, GIT_REPO_NAME, bot
+
 
 GIT_TEMP_DIR = "./userbot/temp/"
 # @borg.on(admin_cmd(pattern="commit ?(.*)", allow_sudo=True))
@@ -85,7 +87,8 @@ async def git_commit(file_name,mone):
             await mone.edit("Cannot Upload Plugin")
     else:
         return await mone.edit("`Committed Suicide`")
-
+        
+        
 CMD_HELP.update({
     "commit": 
     ".commit\

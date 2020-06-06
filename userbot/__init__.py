@@ -186,6 +186,7 @@ else:
     # pylint: disable=invalid-name
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
+
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
         LOGS.info(
@@ -208,6 +209,7 @@ async def check_botlog_chatid():
             "Your account doesn't have rights to send messages to BOTLOG_CHATID "
             "group. Check if you typed the Chat ID correctly.")
         quit(1)
+
 
 with bot:
     try:

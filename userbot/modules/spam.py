@@ -10,6 +10,7 @@ from asyncio import wait, sleep
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
+
 @register(outgoing=True, pattern="^.cspam (.*)")
 async def tmeme(e):
     cspam = str(e.pattern_match.group(1))
@@ -21,6 +22,7 @@ async def tmeme(e):
         await e.client.send_message(
             BOTLOG_CHATID, "#CSPAM\n"
             "TSpam was executed successfully")
+
 
 @register(outgoing=True, pattern="^.wspam (.*)")
 async def tmeme(e):
@@ -34,6 +36,7 @@ async def tmeme(e):
             BOTLOG_CHATID, "#WSPAM\n"
             "WSpam was executed successfully")
 
+
 @register(outgoing=True, pattern="^.spam (.*)")
 async def spammer(e):
     counter = int(e.pattern_match.group(1).split(' ', 1)[0])
@@ -43,6 +46,7 @@ async def spammer(e):
     if BOTLOG:
         await e.client.send_message(BOTLOG_CHATID, "#SPAM\n"
                                     "Spam was executed successfully")
+
 
 @register(outgoing=True, pattern="^.picspam")
 async def tiny_pic_spam(e):
@@ -58,6 +62,7 @@ async def tiny_pic_spam(e):
             BOTLOG_CHATID, "#PICSPAM\n"
             "PicSpam was executed successfully")
 
+
 @register(outgoing=True, pattern="^.delayspam (.*)")
 async def spammer(e):
     spamDelay = float(e.pattern_match.group(1).split(' ', 2)[0])
@@ -71,6 +76,7 @@ async def spammer(e):
         await e.client.send_message(
             BOTLOG_CHATID, "#DelaySPAM\n"
             "DelaySpam was executed successfully")
+
 
 CMD_HELP.update({
     "spam":

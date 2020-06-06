@@ -2,6 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
+# Based code + improve from AdekMaulana and aidilaryanto
 
 from io import BytesIO
 from PIL import Image
@@ -37,6 +39,7 @@ from userbot.modules.upload_download import progress, humanbytes, time_formatter
 from userbot import bot, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, QUOTES_API_TOKEN
 from userbot.events import register
 
+
 if 1 == 1:
     strings = {
         "name": "Quotes",
@@ -64,7 +67,9 @@ if 1 == 1:
                                                               "#62d4e3", "#65bdf3", "#ff5694"],
                                           "default_username_color": "#b48bf2"})
 
+
 THUMB_IMAGE_PATH = "./thumb_image.jpg"
+
 
 @register(outgoing=True, pattern="^.pch(?: |$)(.*)")
 async def quotecmd(message):  # noqa: C901
@@ -199,6 +204,7 @@ async def quotecmd(message):  # noqa: C901
                 await message.edit(strings["cannot_send_stickers"])
             file.close()
 
+
 def get_markdown(reply):
     if not reply.entities:
         return []
@@ -230,6 +236,7 @@ def get_markdown(reply):
 
         markdown.append(md_item)
     return markdown
+
 
 @register(outgoing=True, pattern="^.mmf(?: |$)(.*)")
 async def mim(event):
@@ -335,6 +342,7 @@ async def silently_send_message(conv, text):
     await conv.mark_read(message=response)
     return response
 
+
 @register(outgoing=True, pattern="^.q(?: |$)(.*)")
 async def quotes(qotlti):
     if qotlti.fwd_from:
@@ -365,6 +373,7 @@ async def quotes(qotlti):
           else: 
              await qotlti.delete()   
              await bot.forward_messages(qotlti.chat_id, response.message)
+
 
 @register(outgoing=True, pattern=r'^.hz(:? |$)(.*)?')
 async def _(hazmat):
@@ -438,6 +447,7 @@ async def _(hazmat):
     await hazmat.delete()
     return os.remove(downloaded_file_name)
 
+
 @register(outgoing=True, pattern=r'^.df(:? |$)([1-8])?')
 async def fryerrr(fry):
     await fry.edit("`Sending information...`")
@@ -498,6 +508,7 @@ async def fryerrr(fry):
                     [msg.id, response.id, r.id, msg_level.id])
     await fry.delete()
     return os.remove(downloaded_file_name)
+
 
 CMD_HELP.update({
         "memify": 

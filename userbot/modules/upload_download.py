@@ -24,6 +24,7 @@ from telethon.tl.types import DocumentAttributeVideo
 from userbot import LOGS, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
+
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
@@ -50,6 +51,7 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         else:
             await event.edit("{}\n{}".format(type_of_ps, tmp))
 
+
 def humanbytes(size):
     """Input size in bytes,
     outputs in a human readable format"""
@@ -65,6 +67,7 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+
 def time_formatter(milliseconds: int) -> str:
     """Inputs time in milliseconds, to get beautified time,
     as string"""
@@ -78,6 +81,7 @@ def time_formatter(milliseconds: int) -> str:
         ((str(seconds) + " second(s), ") if seconds else "") + \
         ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     return tmp[:-2]
+
 
 @register(pattern=r".download(?: |$)(.*)", outgoing=True)
 async def download(target_file):
@@ -152,6 +156,7 @@ async def download(target_file):
     else:
         await target_file.edit(
             "Reply to a message to download to my local server.")
+
 
 @register(pattern=r".uploadir (.*)", outgoing=True)
 async def uploadir(udir_event):
@@ -228,6 +233,7 @@ async def uploadir(udir_event):
     else:
         await udir_event.edit("404: Directory Not Found")
 
+
 @register(pattern=r".upload (.*)", outgoing=True)
 async def upload(u_event):
     """ For .upload command, allows you to upload a file from the userbot's server """
@@ -250,6 +256,7 @@ async def upload(u_event):
         await u_event.edit("Uploaded successfully !!")
     else:
         await u_event.edit("404: File Not Found")
+
 
 def get_video_thumb(file, output=None, width=90):
     """ Get video thumbnail """
@@ -277,6 +284,7 @@ def get_video_thumb(file, output=None, width=90):
         return output
     return None
 
+
 def extract_w_h(file):
     """ Get width and height of media """
     command_to_run = [
@@ -301,6 +309,7 @@ def extract_w_h(file):
         width = int(response_json["streams"][0]["width"])
         height = int(response_json["streams"][0]["height"])
         return width, height
+
 
 @register(pattern=r".uploadas(stream|vn|all) (.*)", outgoing=True)
 async def uploadas(uas_event):
@@ -393,6 +402,7 @@ async def uploadas(uas_event):
             await uas_event.edit(str(err))
     else:
         await uas_event.edit("404: File Not Found")
+
 
 CMD_HELP.update({
     "download":

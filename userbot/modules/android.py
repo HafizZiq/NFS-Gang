@@ -16,6 +16,7 @@ GITHUB = 'https://github.com'
 DEVICES_DATA = 'https://raw.githubusercontent.com/wulan17/' \
                'certified-android-devices/master/devices.json'
 
+
 @register(outgoing=True, pattern="^.magisk$")
 async def magisk(request):
     """ magisk latest releases """
@@ -36,6 +37,7 @@ async def magisk(request):
                     f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | ' \
                     f'[Uninstaller]({data["uninstaller"]["link"]})\n'
     await request.edit(releases)
+
 
 @register(outgoing=True, pattern=r"^.device(?: |$)(\S*)")
 async def device_info(request):
@@ -65,6 +67,7 @@ async def device_info(request):
     else:
         reply = f"`Couldn't find info about {device}!`\n"
     await request.edit(reply)
+
 
 @register(outgoing=True, pattern=r"^.codename(?: |)([\S]*)(?: |)([\s\S]*)")
 async def codename_info(request):
@@ -98,6 +101,7 @@ async def codename_info(request):
     else:
         reply = f"`Couldn't find {device} codename!`\n"
     await request.edit(reply)
+
 
 @register(outgoing=True, pattern=r"^.specs(?: |)([\S]*)(?: |)([\s\S]*)")
 async def devices_specifications(request):
@@ -150,6 +154,7 @@ async def devices_specifications(request):
             reply += f'**{title}**: {data}\n'
     await request.edit(reply)
 
+
 @register(outgoing=True, pattern=r"^.twrp(?: |$)(\S*)")
 async def twrp(request):
     """ get android device twrp """
@@ -175,6 +180,7 @@ async def twrp(request):
         f'[{dl_file}]({dl_link}) - __{size}__\n' \
         f'**Updated:** __{date}__\n'
     await request.edit(reply)
+
 
 CMD_HELP.update({
     "android":

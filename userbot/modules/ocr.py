@@ -2,6 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
 
 from telethon import events
 import os
@@ -9,6 +10,7 @@ import requests
 import logging
 from userbot import bot, OCR_SPACE_API_KEY, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
+
 
 async def ocr_space_file(filename,
                          overlay=False,
@@ -26,6 +28,7 @@ async def ocr_space_file(filename,
                     Defaults to 'en'.
     :return: Result in JSON format.
     """
+
     payload = {
         'isOverlayRequired': overlay,
         'apikey': api_key,
@@ -38,6 +41,7 @@ async def ocr_space_file(filename,
             data=payload,
         )
     return r.json()
+
 
 @register(pattern=r".ocr (.*)", outgoing=True)
 async def ocr(event):
@@ -57,6 +61,7 @@ async def ocr(event):
         await event.edit(f"`Here's what I could read from it:`\n\n{ParsedText}"
                          )
     os.remove(downloaded_file_name)
+
 
 CMD_HELP.update({
     'ocr':

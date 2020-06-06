@@ -17,6 +17,7 @@ from telethon import events
 
 from userbot import bot, BOTLOG_CHATID, LOGSPAMMER
 
+
 def register(**args):
     """ Register a new event. """
     pattern = args.get('pattern', None)

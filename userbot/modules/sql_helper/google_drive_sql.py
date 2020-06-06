@@ -1,6 +1,7 @@
 from userbot.modules.sql_helper import SESSION, BASE
 from sqlalchemy import Column, String, Text
 
+
 class GoogleDriveCreds(BASE):
     __tablename__ = 'gdrive'
     user = Column(String, primary_key=True)
@@ -9,7 +10,9 @@ class GoogleDriveCreds(BASE):
     def __init__(self, user):
         self.user = user
 
+
 GoogleDriveCreds.__table__.create(checkfirst=True)
+
 
 def save_credentials(user, credentials):
     saved_credentials = SESSION.query(GoogleDriveCreds).get(user)
@@ -22,6 +25,7 @@ def save_credentials(user, credentials):
     SESSION.commit()
     return True
 
+
 def get_credentials(user):
     try:
         saved_credentials = SESSION.query(GoogleDriveCreds).get(user)
@@ -32,6 +36,7 @@ def get_credentials(user):
         return creds
     finally:
         SESSION.close()
+
 
 def clear_credentials(user):
     saved_credentials = SESSION.query(GoogleDriveCreds).get(user)

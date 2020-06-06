@@ -1,6 +1,7 @@
 from sqlalchemy import Column, UnicodeText, LargeBinary, Numeric
 from sql_helpers import SESSION, BASE
 
+
 class LydiaAI(BASE):
     __tablename__ = "lydia_ai"
     user_id = Column(Numeric, primary_key=True)
@@ -20,7 +21,9 @@ class LydiaAI(BASE):
         self.session_id = session_id
         self.session_expires = session_expires
 
+
 LydiaAI.__table__.create(checkfirst=True)
+
 
 def get_s(user_id, chat_id):
     try:
@@ -30,6 +33,7 @@ def get_s(user_id, chat_id):
     finally:
         SESSION.close()
 
+
 def get_all_s():
     try:
         return SESSION.query(LydiaAI).all()
@@ -37,6 +41,7 @@ def get_all_s():
         return None
     finally:
         SESSION.close()
+
 
 def add_s(
     user_id,
@@ -57,6 +62,7 @@ def add_s(
         )
     SESSION.add(adder)
     SESSION.commit()
+
 
 def remove_s(
     user_id,

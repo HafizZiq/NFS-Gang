@@ -2,6 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
+# Port to UserBot by @MoveAngel
 
 from datetime import datetime
 from covid import Covid
@@ -27,6 +29,7 @@ async def corona(event):
     else:
         output_text = "No information yet about this country!"
     await event.edit(f"Corona Virus Info in {country}:\n\n{output_text}")
+
 
 CMD_HELP.update({
         "covid": 

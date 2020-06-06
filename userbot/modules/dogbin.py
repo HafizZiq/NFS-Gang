@@ -13,6 +13,7 @@ from userbot.events import register
 
 DOGBIN_URL = "https://del.dog/"
 
+
 @register(outgoing=True, pattern=r"^.paste(?: |$)([\s\S]*)")
 async def paste(pstl):
     """ For .paste command, pastes the text directly to dogbin. """
@@ -70,6 +71,7 @@ async def paste(pstl):
             f"Paste query was executed successfully",
         )
 
+
 @register(outgoing=True, pattern="^.getpaste(?: |$)(.*)")
 async def get_dogbin_content(dog_url):
     """ For .getpaste command, fetches the content of a dogbin URL. """
@@ -118,6 +120,7 @@ async def get_dogbin_content(dog_url):
             BOTLOG_CHATID,
             "Get dogbin content query was executed successfully",
         )
+
 
 CMD_HELP.update({
     "dogbin":

@@ -81,6 +81,7 @@ async def set_afk(afk_e):
     afk_time = datetime.now()  # pylint:disable=E0602
     raise StopPropagation
 
+
 @register(outgoing=True)
 async def type_afk_is_not_true(notafk):
     """ This sets your status as not afk automatically when you write something while being afk """
@@ -116,6 +117,7 @@ async def type_afk_is_not_true(notafk):
         COUNT_MSG = 0
         USERS = {}
         AFKREASON = None
+
 
 @register(incoming=True, disable_edited=True)
 async def mention_afk(mention):
@@ -179,6 +181,7 @@ async def mention_afk(mention):
                 else:
                     USERS[mention.sender_id] = USERS[mention.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
+
 
 @register(incoming=True, disable_errors=True)
 async def afk_on_pm(sender):
@@ -254,6 +257,7 @@ async def afk_on_pm(sender):
                 else:
                     USERS[sender.sender_id] = USERS[sender.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
+
 
 CMD_HELP.update({
     "afk":

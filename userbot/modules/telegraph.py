@@ -17,6 +17,7 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
+
 @register(outgoing=True, pattern="^.telegraph (media|text)$")
 async def telegraphs(graph):
     """ For .telegraph command, upload media & text to telegraph site. """
@@ -77,11 +78,13 @@ async def telegraphs(graph):
                 ms = (end - start).seconds
                 await graph.edit("Pasted to https://telegra.ph/{} in {} seconds.".format(response["path"], ms), link_preview=True)
         else:
-            await graph.edit("Reply to a message to get a permanent telegra.ph link.")
+            await graph.edit("Reply to a message to get a permanent telegra.ph link. (Inspired by @ControllerBot)")
+
 
 def resize_image(image):
     im = Image.open(image)
     im.save(image, "PNG")
+
 
 CMD_HELP.update({
     'telegraph': '.telegraph media | text\

@@ -1,11 +1,13 @@
 # https://github.com/andy-gh/prettyjson/blob/master/prettyjson.py
 
+
 def prettyjson(obj, indent=2, maxlinelength=80):
     """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
     Only dicts, lists and basic types are supported"""
 
     items, _ = getsubitems(obj, itemkey="", islast=True, maxlinelength=maxlinelength - indent, indent=indent)
     return indentitems(items, indent, level=0)
+
 
 def getsubitems(obj, itemkey, islast, maxlinelength, indent):
     items = []
@@ -98,6 +100,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
                 else:
                     is_inline = False
 
+
         # attempt to render the outer brackets + inner tokens in one line 
         if is_inline:
             item_text = ""
@@ -115,6 +118,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
 
     return items, is_inline
 
+
 def basictype2str(obj):
     if isinstance (obj, str):
         strobj = "\"" + str(obj) + "\""
@@ -123,6 +127,7 @@ def basictype2str(obj):
     else:
         strobj = str(obj)
     return strobj
+
 
 def indentitems(items, indent, level):
     """Recursively traverses the list of json lines, adds indentation based on the current depth"""

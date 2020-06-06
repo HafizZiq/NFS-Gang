@@ -15,6 +15,7 @@ from pytz import timezone as tz
 from userbot import CMD_HELP, COUNTRY, TZ_NUMBER
 from userbot.events import register
 
+
 async def get_tz(con):
     """ Get time zone of the given country. """
     if "(Uk)" in con:
@@ -38,6 +39,7 @@ async def get_tz(con):
             return c_tz[con]
     except KeyError:
         return
+
 
 @register(outgoing=True, pattern="^.time(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?")
 async def time_func(tdata):
@@ -101,6 +103,7 @@ async def time_func(tdata):
                          f"({time_zone} timezone).`")
         return
 
+
 @register(outgoing=True, pattern="^.date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?")
 async def date_func(dat):
     """ For .date command, return the date of
@@ -162,6 +165,7 @@ async def date_func(dat):
         await dat.edit(f"`It's`  **{dtnow}**  `here, in {COUNTRY}"
                        f"({time_zone} timezone).`")
         return
+
 
 CMD_HELP.update({
     "time":

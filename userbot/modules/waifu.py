@@ -10,6 +10,7 @@ import random
 from userbot import CMD_HELP, bot
 from userbot.events import register
 
+
 EMOJI_PATTERN = re.compile(
     "["
     "\U0001F1E0-\U0001F1FF"  # flags (iOS)
@@ -25,8 +26,10 @@ EMOJI_PATTERN = re.compile(
     "\U00002702-\U000027B0"  # Dingbats
     "]+")
 
+
 def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, '', inputString)
+
 
 @register(outgoing=True, pattern="^.waifu(?: |$)(.*)")
 async def waifu(animu):
@@ -46,8 +49,10 @@ async def waifu(animu):
                             hide_via=True)
     await animu.delete()
 
+
 CMD_HELP.update({
         "waifu": 
         ".waifu \
-          \nUsage: Enchance your text with beautiful anime girl templates."
+          \nUsage: Enchance your text with beautiful anime girl templates. \
+          \n@StickerizerBot"
      })

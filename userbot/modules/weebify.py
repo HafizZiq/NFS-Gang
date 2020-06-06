@@ -23,7 +23,6 @@ async def weebify(event):
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
     await event.edit(string)
-
 CMD_HELP.update({
 "weebify":
 "weebifys your text.\
