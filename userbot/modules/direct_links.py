@@ -74,7 +74,7 @@ async def direct_link_generator(request):
             reply += androidfilehost(link)
         else:
             reply += re.findall(r"\bhttps?://(.*?[^/]+)",
-                                link)[0] + 'is not supported'
+                                link)[0] + ' is not supported'
     await request.edit(reply)
 
 
