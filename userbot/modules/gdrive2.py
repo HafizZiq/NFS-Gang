@@ -97,6 +97,69 @@ logger.setLevel(logging.ERROR)
 #                                                             #
 # =========================================================== #
 
+@register(pattern="^.gdauth2(?: |$)", outgoing=True)
+async def generate_credentials(gdrive):
+    """ - Only generate once for long run - """
+    if helper.get_credentials(str(gdrive.from_id)) is not None:
+        await gdrive.edit("`You already authorized token...`")
+        await asyncio.sleep(1.5)
+        return await gdrive.delete()
+    """ - Generate credentials - """
+    if G_DRIVE_DATA is not None:
+        try:
+            configs = json.loads(G_DRIVE_DATA)
+        except json.JSONDecodeError:
+            return await gdrive.edit(
+                "`[AUTHENTICATE - ERROR]`\n\n"
+                "`Status` : **BAD**\n"
+                "`Reason` : **G_DRIVE_DATA** entity is not valid!"
+            )
+    else:
+        """ - Only for old user - """
+        if G_DRIVE_CLIENT_ID is None and G_DRIVE_CLIENT_SECRET is None:
+            return await gdrive.edit(
+                "`[AUTHENTICATE - ERROR]`\n\n"
+                "`Status` : **BAD**\n"
+                "`Reason` : please get your **G_DRIVE_DATA** "
+                "[here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
+            )
+        configs = {
+            "installed": {
+                "client_id": G_DRIVE_CLIENT_ID,
+                "client_secret": G_DRIVE_CLIENT_SECRET,
+                "auth_uri": GOOGLE_AUTH_URI,
+                "token_uri": GOOGLE_TOKEN_URI,
+            }
+        }
+    await gdrive.edit("`Creating credentials...`")
+    flow = InstalledAppFlow.from_client_config(
+         configs, SCOPES, redirect_uri=REDIRECT_URI)
+    auth_url, _ = flow.authorization_url(
+                access_type='offline', prompt='consent')
+    msg = await gdrive.respond(
+        "`Go to your BOTLOG group to authenticate token...`"
+        )
+    async with gdrive.client.conversation(BOTLOG_CHATID) as conv:
+        url_msg = await conv.send_message(
+                      "Please go to this URL:\n"
+                      f"{auth_url}\nauthorize then reply the code"
+                  )
+        r = conv.wait_event(
+          events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
+        r = await r
+        code = r.message.message.strip()
+        flow.fetch_token(code=code)
+        creds = flow.credentials
+        await asyncio.sleep(3.5)
+        await gdrive.client.delete_messages(gdrive.chat_id, msg.id)
+        await gdrive.client.delete_messages(BOTLOG_CHATID, [url_msg.id, r.id])
+        """ - Unpack credential objects into strings - """
+        creds = base64.b64encode(pickle.dumps(creds)).decode()
+        await gdrive.edit("`Credentials created...`")
+    helper.save_credentials(str(gdrive.from_id), creds)
+    await gdrive.delete()
+    return
+
 async def create_app(gdrive):
     """ - Create google drive service app - """
     creds = helper.get_credentials(str(gdrive.from_id))
@@ -117,9 +180,20 @@ async def create_app(gdrive):
     service = build('drive', 'v3', credentials=creds, cache_discovery=False)
     return service
 
+@register(pattern="^.gdreset2(?: |$)", outgoing=True)
+async def reset_credentials(gdrive):
+    """ - Reset credentials or change account - """
+    await gdrive.edit("`Resetting information...`")
+    helper.clear_credentials(str(gdrive.from_id))
+    await gdrive.edit("`Done...`")
+    await asyncio.sleep(1)
+    return await gdrive.delete()
+
+
 async def get_raw_name(file_path):
     """ - Get file_name from file_path - """
     return file_path.split("/")[-1]
+
 
 async def get_mimeType(name):
     """ - Check mimeType given file - """
@@ -611,7 +685,7 @@ async def reset_parentId():
         del parent_Id
     return
 
-@register(pattern=r"^.gdlist2 (?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)",
+@register(pattern=r"^.gdlist2(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)",
           outgoing=True)
 async def lists(gdrive):
     await gdrive.edit("`Getting information...`")
@@ -867,7 +941,7 @@ async def google_drive_managers(gdrive):
     await gdrive.edit(reply)
     return
 
-@register(pattern="^.gdabort2 (?: |$)", outgoing=True)
+@register(pattern="^.gdabort2(?: |$)", outgoing=True)
 async def cancel_process(gdrive):
     """
        Abort process for download and upload
@@ -882,7 +956,7 @@ async def cancel_process(gdrive):
     await asyncio.sleep(3.5)
     await gdrive.delete()
 
-@register(pattern="^.gd2 (?: |$)(.*)", outgoing=True)
+@register(pattern="^.gd(?: |$)(.*)", outgoing=True)
 async def google_drive(gdrive):
     reply = ''
     """ - Parsing all google drive function - """
@@ -1196,8 +1270,13 @@ async def check_progress_for_dl(gdrive, gid, previous):
                     pass
 
 CMD_HELP.update({
-    "gdrigd2":
-    "gd2"
+    "gdrive2":
+    ".gdauth2"
+    "\nUsage: generate token to enable all cmd google drive service."
+    "\nThis only need to run once in life time."
+    "\n\n.gdreset2"
+    "\nUsage: reset your token if something bad happened or change drive acc."
+    "\n\n.gd2"
     "\nUsage: Upload file from local or uri/url/drivelink into google drive."
     "\nfor drivelink it's upload only if you want to."
     "\n\n.gdabort2"
