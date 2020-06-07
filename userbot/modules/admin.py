@@ -169,6 +169,7 @@ async def demote(dmod):
 
     # If passing, declare that we're going to demote
     await dmod.edit("`Demoting...`")
+    rank = "admeme"  # dummy rank, lol.
     user = await get_user_from_event(dmod)
     user = user[0]
     if user:
@@ -186,14 +187,14 @@ async def demote(dmod):
     # Edit Admin Permission
     try:
         await dmod.client(
-            EditAdminRequest(dmod.chat_id, user.id, newrights))
+            EditAdminRequest(dmod.chat_id, user.id, newrights, rank))
 
     # If we catch BadRequestError from Telethon
     # Assume we don't have permission to demote
     except BadRequestError:
         await dmod.edit(NO_PERM)
         return
-    await dmod.edit("`Demote Successfully!`")
+    await dmod.edit("`Demoted Successfully!`")
 
     # Announce to the logging group if we have demoted successfully
     if BOTLOG:
@@ -516,7 +517,7 @@ async def rm_deletedacc(show):
 
     con = show.pattern_match.group(1).lower()
     del_u = 0
-    del_status = "`No deleted accounts found, Group is clean`"
+    del_status = "`No deleted accounts found, Group is clean as hell`"
 
     if con != "clean":
         await show.edit("`Searching for ghost/deleted/zombie accounts...`")
@@ -527,7 +528,7 @@ async def rm_deletedacc(show):
                 await sleep(1)
         if del_u > 0:
             del_status = f"`Found` **{del_u}** `ghost/deleted/zombie account(s) in this group,\
-            \nclean them by using` `.zombies` `clean`"
+            \nclean them by using` `.zombies clean`"
         await show.edit(del_status)
         return
 
