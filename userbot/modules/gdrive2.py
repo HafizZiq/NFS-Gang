@@ -956,7 +956,7 @@ async def cancel_process(gdrive):
     await asyncio.sleep(3.5)
     await gdrive.delete()
 
-@register(pattern="^.gd(?: |$)(.*)", outgoing=True)
+@register(pattern="^.gd2(?: |$)(.*)", outgoing=True)
 async def google_drive(gdrive):
     reply = ''
     """ - Parsing all google drive function - """
