@@ -542,19 +542,15 @@ async def youtube_search(query,
         nexttok = "KeyError, try again."
         return (nexttok, videos)
 
-os.system("rm -rf *.mp3")
-
-def bruh(name):
-    os.system("instantmusic -q -s "+name)
-
 @register(outgoing=True, pattern=r"^.song ?(.*)")
 async def download_song(song):
     if song.fwd_from:
         return
-    DELAY_BETWEEN_EDITS = 0.3
-    PROCESS_RUN_TIME = 100
     cmd = song.pattern_match.group(1)
     reply_to_id = song.message.id
+    os.system("rm -rf *.mp3")
+    def bruh(name):
+        os.system("instantmusic -q -s "+name)
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
     await song.edit("Ok finding the song...")
