@@ -130,7 +130,7 @@ async def promote(promt):
     await promt.edit("`Promoting...`")
     user, rank = await get_user_from_event(promt)
     if not rank:
-        rank = "Administrator"  # Just in case.
+        rank = "Fapper"  # Just in case.
     if user:
         pass
     else:
@@ -141,8 +141,6 @@ async def promote(promt):
         await promt.client(
             EditAdminRequest(promt.chat_id, user.id, new_rights, rank))
         await promt.edit("`Promoted Successfully!`")
-        await sleep(3)
-        await promt.delete()
 
     # If Telethon spit BadRequestError, assume
     # we don't have Promote permission
@@ -156,7 +154,6 @@ async def promote(promt):
             BOTLOG_CHATID, "#PROMOTE\n"
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {promt.chat.title}(`{promt.chat_id}`)")
-
 
 @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
 async def demote(dmod):
@@ -172,7 +169,6 @@ async def demote(dmod):
 
     # If passing, declare that we're going to demote
     await dmod.edit("`Demoting...`")
-    rank = "admeme"  # dummy rank, lol.
     user = await get_user_from_event(dmod)
     user = user[0]
     if user:
@@ -190,16 +186,14 @@ async def demote(dmod):
     # Edit Admin Permission
     try:
         await dmod.client(
-            EditAdminRequest(dmod.chat_id, user.id, newrights, rank))
+            EditAdminRequest(dmod.chat_id, user.id, newrights))
 
     # If we catch BadRequestError from Telethon
     # Assume we don't have permission to demote
     except BadRequestError:
         await dmod.edit(NO_PERM)
         return
-    await dmod.edit("`Demoted Successfully!`")
-    await sleep(3)
-    await dmod.delete()
+    await dmod.edit("`Demote Successfully!`")
 
     # Announce to the logging group if we have demoted successfully
     if BOTLOG:
@@ -229,8 +223,6 @@ async def ban(bon):
 
     # Announce that we're going to whack the pest
     await bon.edit("`Whacking the pest!`")
-    await sleep(3)
-    await bon.delete()
 
     try:
         await bon.client(EditBannedRequest(bon.chat_id, user.id,
@@ -289,8 +281,6 @@ async def nothanos(unbon):
         await unbon.client(
             EditBannedRequest(unbon.chat_id, user.id, UNBAN_RIGHTS))
         await unbon.edit("```Unbanned Successfully```")
-        await sleep(3)
-        await unbon.delete()
         if BOTLOG:
             await unbon.client.send_message(
                 BOTLOG_CHATID, "#UNBAN\n"
@@ -348,8 +338,6 @@ async def spider(spdr):
                 await spdr.edit(f"`Safely taped !!`\nReason: {reason}")
             else:
                 await spdr.edit("`Safely taped !!`")
-                await sleep(3)
-                await spdr.delete()
             # Announce to logging group
             if BOTLOG:
                 await spdr.client.send_message(
@@ -396,8 +384,6 @@ async def unmoot(unmot):
             await unmot.client(
                 EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
             await unmot.edit("```Unmuted Successfully```")
-            await sleep(3)
-            await unmot.delete()
         except UserIdInvalidError:
             await unmot.edit("`Uh oh my unmute logic broke!`")
             return
@@ -541,7 +527,7 @@ async def rm_deletedacc(show):
                 await sleep(1)
         if del_u > 0:
             del_status = f"`Found` **{del_u}** `ghost/deleted/zombie account(s) in this group,\
-            \nclean them by using .zombies clean`"
+            \nclean them by using` `.zombies` `clean`"
         await show.edit(del_status)
         return
 
@@ -583,8 +569,6 @@ async def rm_deletedacc(show):
 
 
     await show.edit(del_status)
-    await sleep(2)
-    await show.delete()
 
     if BOTLOG:
         await show.client.send_message(
@@ -688,8 +672,6 @@ async def pin(msg):
         return
 
     await msg.edit("`Pinned Successfully!`")
-    await sleep(3)
-    await msg.delete()
 
     user = await get_user_from_id(msg.from_id, msg)
 
@@ -734,8 +716,6 @@ async def kick(usr):
     else:
         await usr.edit(
             f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
-        await sleep(3)
-        await usr.delete()
 
     if BOTLOG:
         await usr.client.send_message(
