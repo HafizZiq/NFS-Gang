@@ -15,7 +15,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import bot, BOTLOG_CHATID, LOGSPAMMER
+from userbot import bot, UB_BLACK_LIST_CHAT, BOTLOG_CHATID, LOGSPAMMER
 
 
 def register(**args):
@@ -49,6 +49,12 @@ def register(**args):
 
     if "insecure" in args:
         del args['insecure']
+
+    # add blacklist chats, UB should not respond in these chats
+    args["blacklist_chats"] = True
+    black_list_chats = list(UB_BLACK_LIST_CHAT)
+    if len(black_list_chats) > 0:
+        args["chats"] = black_list_chats
 
     if pattern:
         if not ignore_unsafe:
