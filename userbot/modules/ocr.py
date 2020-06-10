@@ -2,6 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
 
 from telethon import events
 import os
@@ -9,6 +10,7 @@ import requests
 import logging
 from userbot import bot, OCR_SPACE_API_KEY, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
+
 
 async def ocr_space_file(filename,
                          overlay=False,
@@ -26,6 +28,7 @@ async def ocr_space_file(filename,
                     Defaults to 'en'.
     :return: Result in JSON format.
     """
+
     payload = {
         'isOverlayRequired': overlay,
         'apikey': api_key,
@@ -39,8 +42,13 @@ async def ocr_space_file(filename,
         )
     return r.json()
 
+
 @register(pattern=r".ocr (.*)", outgoing=True)
 async def ocr(event):
+    if not OCR_SPACE_API_KEY:
+        return await event.edit(
+            "`Error: OCR.Space API key is missing! Add it to environment variables or config.env.`"
+        )
     await event.edit("`Reading...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
@@ -58,7 +66,10 @@ async def ocr(event):
                          )
     os.remove(downloaded_file_name)
 
+
 CMD_HELP.update({
-    'ocr':
-    ".ocr <language>\nUsage: Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi)"
+    "ocr":
+    ".ocr <language> \
+    \nUsage: Reply to an image or sticker to extract text from it. \
+    \n\nGet language codes from [here](https://ocr.space/OCRAPI#PostParameters)."
 })

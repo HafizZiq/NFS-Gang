@@ -2,6 +2,7 @@ from userbot.events import register
 from userbot import CMD_HELP, bot, LOGS, CLEAN_WELCOME, BOTLOG_CHATID
 from telethon.events import ChatAction
 
+
 @bot.on(ChatAction)
 async def welcome_to_chat(event):
     try:
@@ -74,6 +75,7 @@ async def welcome_to_chat(event):
                 file=file_media)
             update_previous_welcome(event.chat_id, current_message.id)
 
+
 @register(outgoing=True, pattern=r"^.setwelcome(?: |$)(.*)")
 async def save_welcome(event):
     try:
@@ -111,6 +113,7 @@ async def save_welcome(event):
     else:
         await event.edit(success.format('updated'))
 
+
 @register(outgoing=True, pattern="^.checkwelcome$")
 async def show_welcome(event):
     try:
@@ -133,6 +136,7 @@ async def show_welcome(event):
             "`I am currently welcoming new users with this welcome note.`")
         await event.reply(cws.reply)
 
+
 @register(outgoing=True, pattern="^.rmwelcome$")
 async def del_welcome(event):
     try:
@@ -145,6 +149,7 @@ async def del_welcome(event):
     else:
         await event.edit("`Do I have a welcome note here ?`")
 
+
 CMD_HELP.update({
     "welcome":
     "\
@@ -155,5 +160,6 @@ CMD_HELP.update({
 \n\n.checkwelcome\
 \nUsage: Check whether you have a welcome note in the chat.\
 \n\n.rmwelcome\
-\nUsage: Deletes the welcome note for the current chat."
+\nUsage: Deletes the welcome note for the current chat.\
+"
 })

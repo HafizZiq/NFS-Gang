@@ -2,7 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-
+#
 """ Userbot module containing various scrapers. """
 
 import os
@@ -44,18 +44,11 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot.utils import progress, humanbytes, time_formatter
 from userbot.utils.google_images_download import googleimagesdownload
-import subprocess
-import io
-import glob
-try:
-    import instantmusic , subprocess
-except:
-    os.system("pip install instantmusic")
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
-TEMP_DOWNLOAD_DIRECTORY = "/root/One4uBot/.bin"
+TEMP_DOWNLOAD_DIRECTORY = "/root/TESLA/.bin"
 
 
 @register(outgoing=True, pattern="^.crblang (.*)")
@@ -63,6 +56,7 @@ async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
+
 
 @register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
@@ -129,6 +123,7 @@ async def carbon_api(e):
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
 
+
 @register(outgoing=True, pattern="^.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
@@ -140,7 +135,7 @@ async def img_sampler(event):
         lim = lim.replace("lim=", "")
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
-        lim = 10
+        lim = 7
     response = googleimagesdownload()
 
     # creating list of arguments
@@ -158,6 +153,7 @@ async def img_sampler(event):
         await event.client.get_input_entity(event.chat_id), lst)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
     await event.delete()
+
 
 @register(outgoing=True, pattern="^.currency (.*)")
 async def moni(event):
@@ -185,6 +181,7 @@ async def moni(event):
     else:
         await event.edit("`Invalid syntax.`")
         return
+
 
 @register(outgoing=True, pattern=r"^.google (.*)")
 async def gsearch(q_event):
@@ -219,6 +216,7 @@ async def gsearch(q_event):
             "Google Search query `" + match + "` was executed successfully",
         )
 
+
 @register(outgoing=True, pattern=r"^.wiki (.*)")
 async def wiki(wiki_q):
     """ For .wiki command, fetch content from Wikipedia. """
@@ -249,6 +247,7 @@ async def wiki(wiki_q):
     if BOTLOG:
         await wiki_q.client.send_message(
             BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully")
+
 
 @register(outgoing=True, pattern="^.ud (.*)")
 async def urban_dict(ud_e):
@@ -288,6 +287,7 @@ async def urban_dict(ud_e):
                 "ud query `" + query + "` executed successfully.")
     else:
         await ud_e.edit("No result found for **" + query + "**")
+
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
@@ -332,6 +332,7 @@ async def text_to_speech(query):
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
         await query.delete()
+
 
 # kanged from Blank-x ;---;
 @register(outgoing=True, pattern="^.imdb (.*)")
@@ -416,6 +417,7 @@ async def imdb(e):
     except IndexError:
         await e.edit("Plox enter **Valid movie name** kthx")
 
+
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
 async def translateme(trans):
     """ For .trt command, translate the given text using Google Translate. """
@@ -446,6 +448,7 @@ async def translateme(trans):
             BOTLOG_CHATID,
             f"Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.",
         )
+
 
 @register(pattern=".lang (trt|tts) (.*)", outgoing=True)
 async def lang(value):
@@ -481,6 +484,7 @@ async def lang(value):
             BOTLOG_CHATID,
             f"`Language for {scraper} changed to {LANG.title()}.`")
 
+
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
@@ -506,6 +510,7 @@ async def yt_search(video_q):
     reply_text = f"**Search Query:**\n`{query}`\n\n**Results:**\n\n{result}"
 
     await video_q.edit(reply_text)
+
 
 async def youtube_search(query,
                          order="relevance",
@@ -542,38 +547,8 @@ async def youtube_search(query,
         nexttok = "KeyError, try again."
         return (nexttok, videos)
 
-@register(outgoing=True, pattern=r"^.song ?(.*)")
-async def download_song(song):
-    if song.fwd_from:
-        return
-    cmd = song.pattern_match.group(1)
-    reply_to_id = song.message.id
-    os.system("rm -rf *.mp3")
-    def bruh(name):
-        os.system("instantmusic -q -s "+name)
-    if song.reply_to_msg_id:
-        reply_to_id = song.reply_to_msg_id
-    await song.edit("Ok finding the song...")
-    bruh(str(cmd))
-    l = glob.glob("*.mp3")
-    try:
-        loa = l[0]
-    except IndexError:
-        await song.edit("Search failed.")
-        return False
-    await song.edit("Sending song...")
-    await song.client.send_file(
-                song.chat_id,
-                loa,
-                force_document=True,
-                allow_cache=False,
-                caption=cmd,
-                reply_to=reply_to_id
-            )
-    os.system("rm -rf *.mp3")
-    subprocess.check_output("rm -rf *.mp3",shell=True)
 
-@register(outgoing=True, pattern=r".ytd(a|v) (.*)")
+@register(outgoing=True, pattern=r".rip(audio|video) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -581,7 +556,7 @@ async def download_video(v_url):
 
     await v_url.edit("`Preparing to download...`")
 
-    if type == "a":
+    if type == "audio":
         opts = {
             'format':
             'bestaudio',
@@ -612,7 +587,7 @@ async def download_video(v_url):
         video = False
         song = True
 
-    elif type == "v":
+    elif type == "video":
         opts = {
             'format':
             'best',
@@ -709,9 +684,11 @@ async def download_video(v_url):
         os.remove(f"{rip_data['id']}.mp4")
         await v_url.delete()
 
+
 def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
     return get_emoji_regexp().sub(u'', inputString)
+
 
 @register(outgoing=True, pattern="^.netease(?: |$)(.*)")
 async def WooMai(netase):
@@ -739,6 +716,7 @@ async def WooMai(netase):
     await netase.client.delete_messages(conv.chat_id,
                                        [msg.id, response.id, respond.id])
     await netase.delete()
+
 
 @register(outgoing=True, pattern="^.sdd(?: |$)(.*)")
 async def DeezLoader(Deezlod):
@@ -768,6 +746,7 @@ async def DeezLoader(Deezlod):
                                              [msg_start.id, response.id, r.id, msg.id, details.id, song.id])
           await Deezlod.delete()
 
+
 @register(outgoing=True, pattern="^.smd(?: |$)(.*)")
 async def SpoMusDown(TifyDown):
     if TifyDown.fwd_from:
@@ -793,6 +772,7 @@ async def SpoMusDown(TifyDown):
     await TifyDown.client.delete_messages(conv.chat_id,
                                        [msg.id, r.id, respond.id])
     await TifyDown.delete()
+
 
 CMD_HELP.update({
     'img':
@@ -833,13 +813,8 @@ CMD_HELP.update({'yt': '.yt <text>\
 CMD_HELP.update(
     {"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
 CMD_HELP.update({
-    'song':
-    '.song title\
-        \nUsage: Instantly download any songs from YouTube and many other sites.'
-})
-CMD_HELP.update({
-    'ytdl':
-    '.ytda <url> or ytdv <url>\
+    'rip':
+    '.ripaudio <url> or ripvideo <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
 CMD_HELP.update({

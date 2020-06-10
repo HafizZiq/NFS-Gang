@@ -16,11 +16,12 @@ from telethon.utils import get_input_location
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
+
 @register(pattern=".whois(?: |$)(.*)", outgoing=True)
 async def who(event):
 
     await event.edit(
-        "`Sit tight while I steal some data from FBI Database 😈`")
+        "`Sit tight while I steal some data from *Global Network Zone*...`")
 
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
@@ -53,6 +54,7 @@ async def who(event):
 
     except TypeError:
         await event.edit(caption, parse_mode="html")
+
 
 async def get_user(event):
     """ Get the user from argument or replied message. """
@@ -87,6 +89,7 @@ async def get_user(event):
             return None
 
     return replied_user
+
 
 async def fetch_info(replied_user, event):
     """ Get details from the User object. """
@@ -142,6 +145,7 @@ async def fetch_info(replied_user, event):
     caption += f"<a href=\"tg://user?id={user_id}\">{first_name}</a>"
 
     return photo, caption
+
 
 CMD_HELP.update({
     "whois":

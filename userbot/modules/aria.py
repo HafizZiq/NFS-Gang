@@ -13,6 +13,7 @@ from userbot.events import register
 from userbot.utils import humanbytes
 from requests import get
 
+
 def subprocess_run(cmd):
     subproc = Popen(cmd, stdout=PIPE, stderr=PIPE,
                     shell=True, universal_newlines=True)
@@ -21,6 +22,7 @@ def subprocess_run(cmd):
     if exitCode != 0:
         return
     return talk
+
 
 # Get best trackers for improved download speeds, thanks K-E-N-W-A-Y.
 trackers_list = get(
@@ -54,6 +56,7 @@ aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800,
 
 aria2.set_global_options({'dir': download_path})
 
+
 @register(outgoing=True, pattern="^.amag(?: |$)(.*)")
 async def magnet_download(event):
     magnet_uri = event.pattern_match.group(1)
@@ -69,6 +72,7 @@ async def magnet_download(event):
     new_gid = await check_metadata(gid)
     await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
+
 @register(outgoing=True, pattern="^.ator(?: |$)(.*)")
 async def torrent_download(event):
     torrent_file_path = event.pattern_match.group(1)
@@ -82,6 +86,7 @@ async def torrent_download(event):
         return await event.edit(str(e))
     gid = download.gid
     await check_progress_for_dl(gid=gid, event=event, previous=None)
+
 
 @register(outgoing=True, pattern="^.aurl(?: |$)(.*)")
 async def aurl_download(event):
@@ -98,6 +103,7 @@ async def aurl_download(event):
         new_gid = await check_metadata(gid)
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
+
 @register(outgoing=True, pattern="^.aclear(?: |$)(.*)")
 async def remove_all(event):
     try:
@@ -112,6 +118,7 @@ async def remove_all(event):
     await event.edit("`Successfully cleared all downloads.`")
     await sleep(2.5)
 
+
 @register(outgoing=True, pattern="^.apause(?: |$)(.*)")
 async def pause_all(event):
     # Pause ALL Currently Running Downloads.
@@ -121,6 +128,7 @@ async def pause_all(event):
     await event.edit("`Successfully paused on-going downloads.`")
     await sleep(2.5)
 
+
 @register(outgoing=True, pattern="^.aresume(?: |$)(.*)")
 async def resume_all(event):
     await event.edit("`Resuming downloads...`")
@@ -129,6 +137,7 @@ async def resume_all(event):
     await event.edit("`Downloads resumed.`")
     await sleep(2.5)
     await event.delete()
+
 
 @register(outgoing=True, pattern="^.ashow(?: |$)(.*)")
 async def show_all(event):
@@ -161,11 +170,13 @@ async def show_all(event):
             reply_to=event.message.id,
         )
 
+
 async def check_metadata(gid):
     file = aria2.get_download(gid)
     new_gid = file.followed_by_ids[0]
     LOGS.info("Changing GID " + gid + " to" + new_gid)
     return new_gid
+
 
 async def check_progress_for_dl(gid, event, previous):
     complete = None
@@ -216,6 +227,7 @@ async def check_progress_for_dl(gid, event, previous):
                 await event.edit(
                     "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead."
                     .format(file.name))
+
 
 CMD_HELP.update({
     "aria":

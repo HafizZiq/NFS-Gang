@@ -2,6 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+# credits to @AvinashReddy3108
+#
 """
 This module updates the userbot based on upstream revision
 """
@@ -19,12 +21,14 @@ from userbot.events import register
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), 'requirements.txt')
 
+
 async def gen_chlog(repo, diff):
     ch_log = ''
     d_form = "%d/%m/%y"
     for c in repo.iter_commits(diff):
         ch_log += f'•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n'
     return ch_log
+
 
 async def update_requirements():
     reqs = str(requirements_path)
@@ -37,6 +41,7 @@ async def update_requirements():
         return process.returncode
     except Exception as e:
         return repr(e)
+
 
 async def deploy(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is not None:
@@ -60,7 +65,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 f'{txt}\n`Invalid Heroku credentials for deploying userbot dyno.`'
             )
             return repo.__del__()
-        await event.edit('`[ALEXA]:'
+        await event.edit('`[HEROKU]:'
                          '\nUserbot dyno build in progress, please wait...`'
                          )
         ups_rem.fetch(ac_br)
@@ -77,19 +82,20 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         except GitCommandError as error:
             await event.edit(f'{txt}\n`Here is the error log:\n{error}`')
             return repo.__del__()
-        await event.edit('`[ALEXA]:\n Successfully Updated Userbot!\n'
+        await event.edit('`Successfully Updated!\n'
                          'Restarting, please wait...`')
 
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID, "#UPDATE \n"
-                "[ALEXA]:\nYour Dirty Meh was successfully updated")
+                "Your TESLA was successfully updated")
 
     else:
-        await event.edit('`[ALEXA]:'
+        await event.edit('`[HEROKU]:'
                          '\nPlease set up` **HEROKU_API_KEY** `variable.`'
                          )
     return
+
 
 async def update(event, repo, ups_rem, ac_br):
     try:
@@ -97,23 +103,24 @@ async def update(event, repo, ups_rem, ac_br):
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
-    await event.edit('`[ALEXA]:\n Successfully Updated!\n'
-                     'Bot is restarted... Wait for some seconds to get it alive!`')
+    await event.edit('`Successfully Updated!\n'
+                     'Bot is restarting... Wait for a second!`')
 
     if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID, "#UPDATE \n"
-                "[ALEXA]:\n Your Dirty Meh was successfully updated")
+                "Your TESLA was successfully updated")
 
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
     return
 
-@register(outgoing=True, pattern=r"^.update(?: |$)(now|deploy)?")
+
+@register(outgoing=True, pattern=r"^.ota(?: |$)(now|deploy)?")
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
-    await event.edit("`[ALEXA]:\nChecking for updates, please wait....`")
+    await event.edit("`Checking for updates, please wait....`")
     conf = event.pattern_match.group(1)
     off_repo = UPSTREAM_REPO_URL
     force_update = False
@@ -162,11 +169,11 @@ async def upstream(event):
 
     if changelog == '' and force_update is False:
         await event.edit(
-            f'\n`[ALEXA]:\n Your Dirty Meh is`  **up-to-date**  `with`  **{UPSTREAM_REPO_BRANCH}** branch\n')
+            f'\n`Your USERBOT is`  **up-to-date**  `with`  **{UPSTREAM_REPO_BRANCH}**\n')
         return repo.__del__()
 
     if conf is None and force_update is False:
-        changelog_str = f'**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`'
+        changelog_str = f'**New OTA UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`'
         if len(changelog_str) > 4096:
             await event.edit("`Changelog is too big, view the file to see it.`")
             file = open("output.txt", "w+")
@@ -180,25 +187,26 @@ async def upstream(event):
             remove("output.txt")
         else:
             await event.edit(changelog_str)
-        return await event.respond('`do ".update now/deploy" to update`')
+        return await event.respond('`do ".ota now/deploy" to update`')
 
     if force_update:
         await event.edit(
             '`Force-Syncing to latest stable userbot code, please wait...`')
     else:
-        await event.edit('`[ALEXA]:\nUpdating Dirty Meh, please wait....`')
+        await event.edit('`Updating TESLA, please wait....`')
     if conf == "now":
         await update(event, repo, ups_rem, ac_br)
     elif conf == "deploy":
         await deploy(event, repo, ups_rem, ac_br, txt)
     return
 
+
 CMD_HELP.update({
-    'update':
-    ".update"
+    'ota':
+    ".ota"
     "\nUsage: Checks if the main userbot repository has any updates and shows a changelog if so."
-    "\n\n.update now"
+    "\n\n.ota now"
     "\nUsage: Update your userbot, if there are any updates in your userbot repository."
-    "\n\n.update deploy"
+    "\n\n..ota deploy"
     "\nUsage: Deploy your userbot at heroku, if there are any updates in your userbot repository."
 })

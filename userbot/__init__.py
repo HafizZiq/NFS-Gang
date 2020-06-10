@@ -64,9 +64,6 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", None))
 BOTLOG = sb(os.environ.get("BOTLOG", "False"))
 LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 
-# set blacklist_chats where you do not want userbot's features
-UB_BLACK_LIST_CHAT = set(int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split())
-
 # Bleep Blop, this is a bot ;)
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 
@@ -82,9 +79,9 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 # Custom (forked) repo URL and BRANCH for updater.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
-    "https://github.com/HafizZiq/Dirty-meh.git")
+    "https://github.com/ElytrA8/TESLA.git")
 UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "master")
+    "UPSTREAM_REPO_BRANCH", "TESLA")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
@@ -106,8 +103,8 @@ GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", None)
 
-# Genius lyrics  API Token
-GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
+# Genius lyrics API
+GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
 
 # Lydia API
 LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
@@ -122,9 +119,6 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 # Youtube API key
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
-# Telegraph 
-TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", None)
-
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
@@ -133,7 +127,7 @@ COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
 # User Terminal alias
-USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS", "Dirty-meh")
+USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS", "root@TESLA")
 
 # Clean Welcome
 CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
@@ -161,7 +155,6 @@ G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
 G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
 G_DRIVE_AUTH_TOKEN_DATA = os.environ.get("G_DRIVE_AUTH_TOKEN_DATA", None)
 G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID", None)
-G_DRIVE_FOLDER_ID_2 = os.environ.get("G_DRIVE_FOLDER_ID_2", None)
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY",
                                          "./downloads")
 
@@ -190,6 +183,7 @@ else:
     # pylint: disable=invalid-name
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
+
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
         LOGS.info(
@@ -212,6 +206,7 @@ async def check_botlog_chatid():
             "Your account doesn't have rights to send messages to BOTLOG_CHATID "
             "group. Check if you typed the Chat ID correctly.")
         quit(1)
+
 
 with bot:
     try:

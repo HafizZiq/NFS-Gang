@@ -5,6 +5,7 @@ except ImportError:
 
 from sqlalchemy import Column, String, UnicodeText
 
+
 class GMute(BASE):
     __tablename__ = "gmute"
     sender = Column(String(14), primary_key=True)
@@ -12,7 +13,9 @@ class GMute(BASE):
     def __init__(self, sender):
         self.sender = str(sender)
 
+
 GMute.__table__.create(checkfirst=True)
+
 
 def is_gmuted(sender_id):
     try:
@@ -22,10 +25,12 @@ def is_gmuted(sender_id):
     finally:
         SESSION.close()
 
+
 def gmute(sender):
     adder = GMute(str(sender))
     SESSION.add(adder)
     SESSION.commit()
+
 
 def ungmute(sender):
     rem = SESSION.query(GMute).get((str(sender)))

@@ -68,6 +68,7 @@ MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 # ================================================
 
+
 @register(outgoing=True, pattern="^.setgpic$")
 async def set_group_photo(gpic):
     """ For .setgpic command, changes the picture of a group """
@@ -106,6 +107,7 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.edit(PP_ERROR)
 
+
 @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
 async def promote(promt):
     """ For .promote command, promotes the replied/tagged person """
@@ -130,7 +132,7 @@ async def promote(promt):
     await promt.edit("`Promoting...`")
     user, rank = await get_user_from_event(promt)
     if not rank:
-        rank = "Fapper"  # Just in case.
+        rank = "Administrator"  # Just in case.
     if user:
         pass
     else:
@@ -141,6 +143,8 @@ async def promote(promt):
         await promt.client(
             EditAdminRequest(promt.chat_id, user.id, new_rights, rank))
         await promt.edit("`Promoted Successfully!`")
+        await sleep(3)
+        await promt.delete()
 
     # If Telethon spit BadRequestError, assume
     # we don't have Promote permission
@@ -154,6 +158,7 @@ async def promote(promt):
             BOTLOG_CHATID, "#PROMOTE\n"
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {promt.chat.title}(`{promt.chat_id}`)")
+
 
 @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
 async def demote(dmod):
@@ -195,6 +200,8 @@ async def demote(dmod):
         await dmod.edit(NO_PERM)
         return
     await dmod.edit("`Demoted Successfully!`")
+    await sleep(3)
+    await dmod.delete()
 
     # Announce to the logging group if we have demoted successfully
     if BOTLOG:
@@ -202,6 +209,7 @@ async def demote(dmod):
             BOTLOG_CHATID, "#DEMOTE\n"
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {dmod.chat.title}(`{dmod.chat_id}`)")
+
 
 @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
 async def ban(bon):
@@ -224,6 +232,8 @@ async def ban(bon):
 
     # Announce that we're going to whack the pest
     await bon.edit("`Whacking the pest!`")
+    await sleep(3)
+    await bon.delete()
 
     try:
         await bon.client(EditBannedRequest(bon.chat_id, user.id,
@@ -255,6 +265,7 @@ async def ban(bon):
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {bon.chat.title}(`{bon.chat_id}`)")
 
+
 @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
 async def nothanos(unbon):
     """ For .unban command, unbans the replied/tagged person """
@@ -282,6 +293,8 @@ async def nothanos(unbon):
         await unbon.client(
             EditBannedRequest(unbon.chat_id, user.id, UNBAN_RIGHTS))
         await unbon.edit("```Unbanned Successfully```")
+        await sleep(3)
+        await unbon.delete()
         if BOTLOG:
             await unbon.client.send_message(
                 BOTLOG_CHATID, "#UNBAN\n"
@@ -289,6 +302,7 @@ async def nothanos(unbon):
                 f"CHAT: {unbon.chat.title}(`{unbon.chat_id}`)")
     except UserIdInvalidError:
         await unbon.edit("`Uh oh my unban logic broke!`")
+
 
 @register(outgoing=True, pattern="^.mute(?: |$)(.*)")
 async def spider(spdr):
@@ -339,6 +353,8 @@ async def spider(spdr):
                 await spdr.edit(f"`Safely taped !!`\nReason: {reason}")
             else:
                 await spdr.edit("`Safely taped !!`")
+                await sleep(3)
+                await spdr.delete()
             # Announce to logging group
             if BOTLOG:
                 await spdr.client.send_message(
@@ -347,6 +363,7 @@ async def spider(spdr):
                     f"CHAT: {spdr.chat.title}(`{spdr.chat_id}`)")
         except UserIdInvalidError:
             return await spdr.edit("`Uh oh my mute logic broke!`")
+
 
 @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
 async def unmoot(unmot):
@@ -385,6 +402,8 @@ async def unmoot(unmot):
             await unmot.client(
                 EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
             await unmot.edit("```Unmuted Successfully```")
+            await sleep(3)
+            await unmot.delete()
         except UserIdInvalidError:
             await unmot.edit("`Uh oh my unmute logic broke!`")
             return
@@ -425,6 +444,7 @@ async def muter(moot):
     for i in gmuted:
         if i.sender == str(moot.sender_id):
             await moot.delete()
+
 
 @register(outgoing=True, pattern="^.ungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
@@ -467,6 +487,7 @@ async def ungmoot(un_gmute):
                 BOTLOG_CHATID, "#UNGMUTE\n"
                 f"USER: [{user.first_name}](tg://user?id={user.id})\n"
                 f"CHAT: {un_gmute.chat.title}(`{un_gmute.chat_id}`)")
+
 
 @register(outgoing=True, pattern="^.gmute(?: |$)(.*)")
 async def gspider(gspdr):
@@ -511,13 +532,14 @@ async def gspider(gspdr):
                 f"USER: [{user.first_name}](tg://user?id={user.id})\n"
                 f"CHAT: {gspdr.chat.title}(`{gspdr.chat_id}`)")
 
+
 @register(outgoing=True, pattern="^.zombies(?: |$)(.*)", groups_only=False)
 async def rm_deletedacc(show):
     """ For .zombies command, list all the ghost/deleted/zombie accounts in a chat. """
 
     con = show.pattern_match.group(1).lower()
     del_u = 0
-    del_status = "`No deleted accounts found, Group is clean as hell`"
+    del_status = "`No deleted accounts found, Group is clean`"
 
     if con != "clean":
         await show.edit("`Searching for ghost/deleted/zombie accounts...`")
@@ -525,9 +547,10 @@ async def rm_deletedacc(show):
 
             if user.deleted:
                 del_u += 1
+                await sleep(1)
         if del_u > 0:
             del_status = f"`Found` **{del_u}** `ghost/deleted/zombie account(s) in this group,\
-            \nclean them by using` `.zombies clean`"
+            \nclean them by using .zombies clean`"
         await show.edit(del_status)
         return
 
@@ -560,6 +583,7 @@ async def rm_deletedacc(show):
                 EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
             del_u += 1
 
+
     if del_u > 0:
         del_status = f"Cleaned **{del_u}** deleted account(s)"
 
@@ -569,12 +593,16 @@ async def rm_deletedacc(show):
 
 
     await show.edit(del_status)
+    await sleep(2)
+    await show.delete()
+
 
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID, "#CLEANUP\n"
             f"Cleaned **{del_u}** deleted account(s) !!\
             \nCHAT: {show.chat.title}(`{show.chat_id}`)")
+
 
 @register(outgoing=True, pattern="^.all$")
 async def tagaso(event):
@@ -588,6 +616,7 @@ async def tagaso(event):
         mentions += f"[\u2063](tg://user?id={user.id})"
     await bot.send_message(
         chat, mentions, reply_to=event.message.reply_to_msg_id)
+
 
 @register(outgoing=True, pattern="^.admins(?: |$)(.*)")
 async def _(event):
@@ -638,6 +667,7 @@ async def _(event):
     else:
         await event.edit(mentions)
 
+
 @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
 async def pin(msg):
     """ For .pin command, pins the replied/tagged message on the top the chat. """
@@ -672,6 +702,8 @@ async def pin(msg):
         return
 
     await msg.edit("`Pinned Successfully!`")
+    await sleep(3)
+    await msg.delete()
 
     user = await get_user_from_id(msg.from_id, msg)
 
@@ -681,6 +713,7 @@ async def pin(msg):
             f"ADMIN: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {msg.chat.title}(`{msg.chat_id}`)\n"
             f"LOUD: {not is_silent}")
+
 
 @register(outgoing=True, pattern="^.kick(?: |$)(.*)")
 async def kick(usr):
@@ -716,12 +749,15 @@ async def kick(usr):
     else:
         await usr.edit(
             f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
+        await sleep(3)
+        await usr.delete()
 
     if BOTLOG:
         await usr.client.send_message(
             BOTLOG_CHATID, "#KICK\n"
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {usr.chat.title}(`{usr.chat_id}`)\n")
+
 
 @register(outgoing=True, pattern="^.users ?(.*)")
 async def get_users(show):
@@ -761,6 +797,7 @@ async def get_users(show):
             reply_to=show.id,
         )
         remove("userslist.txt")
+
 
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
@@ -810,6 +847,7 @@ async def get_user_from_id(user, event):
         return None
 
     return user_obj
+
   
 @register(outgoing=True, pattern="^.usersdel ?(.*)")
 async def get_usersdel(show):
@@ -887,6 +925,7 @@ async def get_userdel_from_event(event):
 
     return user_obj, extra
 
+
 async def get_userdel_from_id(user, event):
     if isinstance(user, str):
         user = int(user)
@@ -928,6 +967,7 @@ async def _(event):
         mentions += " " + str(e) + "\n"
     await event.edit(mentions)
 
+  
 
 CMD_HELP.update({
     "admin":

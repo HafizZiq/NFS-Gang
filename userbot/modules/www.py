@@ -13,6 +13,7 @@ from telethon import functions
 from userbot import CMD_HELP
 from userbot.events import register
 
+
 @register(outgoing=True, pattern="^.speed$")
 async def speedtst(spd):
     """ For .speed command, use SpeedTest to check server speeds. """
@@ -38,6 +39,7 @@ async def speedtst(spd):
                    f"{result['client']['isp']}"
                    "`")
 
+
 def speed_convert(size):
     """
     Hi human, you can't read bytes?
@@ -50,6 +52,7 @@ def speed_convert(size):
         zero += 1
     return f"{round(size, 2)} {units[zero]}"
 
+
 @register(outgoing=True, pattern="^.dc$")
 async def neardc(event):
     """ For .dc command, get the nearest datacenter information. """
@@ -57,6 +60,7 @@ async def neardc(event):
     await event.edit(f"Country : `{result.country}`\n"
                      f"Nearest Datacenter : `{result.nearest_dc}`\n"
                      f"This Datacenter : `{result.this_dc}`")
+
 
 @register(outgoing=True, pattern="^.ping$")
 async def pingme(pong):
@@ -67,6 +71,7 @@ async def pingme(pong):
     duration = (end - start).microseconds / 1000
     await pong.edit("`Pong!\n%sms`" % (duration))
 
+
 CMD_HELP.update(
     {"speed": ".speed\
     \nUsage: Does a speedtest and shows the results."})
@@ -75,5 +80,4 @@ CMD_HELP.update(
     \nUsage: Finds the nearest datacenter from your server."})
 CMD_HELP.update(
     {"ping": ".ping\
-    \nUsage: Shows how long it takes to ping your bot."
-})
+    \nUsage: Shows how long it takes to ping your bot."})

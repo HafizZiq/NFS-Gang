@@ -2,6 +2,7 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
 
 from asyncio import sleep
 from pylast import User, WSError
@@ -42,6 +43,7 @@ LASTFMCHECK = False
 RUNNING = False
 LastLog = False
 # ================================================
+
 
 @register(outgoing=True, pattern="^.lastfm$")
 async def last_fm(lastFM):
@@ -86,6 +88,7 @@ async def last_fm(lastFM):
     else:
         await lastFM.edit(f"{output}", parse_mode='md')
 
+
 async def gettags(track=None, isNowPlaying=None, playing=None):
     if isNowPlaying:
         tags = playing.get_top_tags()
@@ -103,8 +106,10 @@ async def gettags(track=None, isNowPlaying=None, playing=None):
     tags = sub("_#", " #", tags)
     return tags
 
+
 async def artist_and_song(track):
     return f"{track.track}"
+
 
 async def get_curr_track(lfmbio):
     global ARTIST
@@ -171,6 +176,7 @@ async def get_curr_track(lfmbio):
         await sleep(2)
     RUNNING = False
 
+
 @register(outgoing=True, pattern=r"^.lastbio (on|off)")
 async def lastbio(lfmbio):
     arg = lfmbio.pattern_match.group(1).lower()
@@ -194,6 +200,7 @@ async def lastbio(lfmbio):
     else:
         await lfmbio.edit(LFM_BIO_ERR)
 
+
 @register(outgoing=True, pattern=r"^.lastlog (on|off)")
 async def lastlog(lstlog):
     arg = lstlog.pattern_match.group(1).lower()
@@ -207,6 +214,7 @@ async def lastlog(lstlog):
         await lstlog.edit(LFM_LOG_DISABLED)
     else:
         await lstlog.edit(LFM_LOG_ERR)
+
 
 CMD_HELP.update({
     'lastfm':

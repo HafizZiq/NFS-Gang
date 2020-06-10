@@ -2,8 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-
-""" Userbot module for kanging stickers or making new ones."""
+#
+""" Userbot module for kanging stickers or making new ones. Thanks @rupansh"""
 
 import io
 import math
@@ -23,15 +23,14 @@ KANGING_STR = [
     "Plagiarising hehe...",
     "Inviting this sticker over to my pack...",
     "Kanging this sticker...",
-    "Hey that's a nice sticker!\nMind if I kang sar?!..",
+    "Hey that's a nice sticker!\nMind if I kang?!..",
     "hehe me stel ur stikér\nhehe.",
     "Ay look over there (☉｡☉)!→\nWhile I kang this...",
-    "Roses are red violets are blue, kanging this sticker so my pack looks cool",
+    "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal Your Sticker is stealing this sticker... ",
-    "That's a nois sticker that deserves to live in my pack boi",
-    "你好，我在偷你的贴纸",
 ]
+
 
 @register(outgoing=True, pattern="^.kang")
 async def kang(args):
@@ -75,7 +74,7 @@ async def kang(args):
             await args.edit("`Unsupported File!`")
             return
     else:
-        await args.edit("`Sed, is this even a sticker?`")
+        await args.edit("`I can't kang that...`")
         return
 
     if photo:
@@ -241,6 +240,7 @@ async def kang(args):
             \nPack can be found [here](t.me/addstickers/{packname})",
                         parse_mode='md')
 
+
 async def resize_photo(photo):
     """ Resize the given photo to 512x512 """
     image = Image.open(photo)
@@ -264,6 +264,7 @@ async def resize_photo(photo):
         image.thumbnail(maxsize)
 
     return image
+
 
 @register(outgoing=True, pattern="^.stkrinfo$")
 async def get_pack_info(event):
@@ -307,6 +308,37 @@ async def get_pack_info(event):
 
     await event.edit(OUTPUT)
 
+
+@register(outgoing=True, pattern="^.getsticker$")
+async def sticker_to_png(sticker):
+    if not sticker.is_reply:
+        await sticker.edit("`NULL information to fetch...`")
+        return False
+
+    img = await sticker.get_reply_message()
+    if not img.document:
+        await sticker.edit("`Reply to a sticker...`")
+        return False
+
+    try:
+        img.document.attributes[1]
+    except Exception:
+        await sticker.edit("`This is not a sticker...`")
+        return
+
+    with io.BytesIO() as image:
+        await sticker.client.download_media(img, image)
+        image.name = 'sticker.png'
+        image.seek(0)
+        try:
+            await img.reply(file=image, force_document=True)
+        except Exception:
+            await sticker.edit("`Error, can't send file...`")
+        else:
+            await sticker.delete()
+    return
+
+
 CMD_HELP.update({
     "stickers":
     ".kang\
@@ -318,5 +350,7 @@ CMD_HELP.update({
 \n\n.kang [emoji('s)] [number]\
 \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked.\
 \n\n.stkrinfo\
-\nUsage: Gets info about the sticker pack."
+\nUsage: Gets info about the sticker pack.\
+\n\n.getsticker\
+\nUsage: reply to a sticker to get 'PNG' file of sticker."
 })

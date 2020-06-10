@@ -1,7 +1,7 @@
 {
-  "name": "Dirty Meh",
-  "description": "A modular Telegram userbot running on Python 3.8+ with an sqlalchemy database.",
-  "logo": "",
+  "name": "𝙿𝚁𝙾𝙹𝙴𝙲𝚃 丅乇丂乚卂 ©",
+  "description": "[TESLA] A modular Telegram userbot running on Python 3.8+ with an sqlalchemy database.",
+  "logo": "https://telegra.ph/file/7a68593c92c85faa388f9.png",
   "keywords": [
     "telegram",
     "userbot",
@@ -9,9 +9,9 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/HafizZiq/Dirty-meh",
-  "website": "https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02",
-  "success_url": "https://t.me/joinchat/LaUTKFNxyEk7cC_pnvQckQ",
+  "repository": "https://github.com/ElytrA8/TESLA",
+  "website": "https://telegram.dog/ElytrA8",
+  "success_url": "https://t.me/userbotindo",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -41,7 +41,8 @@
     },
     "GITHUB_ACCESS_TOKEN": {
       "description": "Your GITHUB_ACCESS_TOKEN, get it from 'https://github.com/settings/tokens'",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "GIT_REPO_NAME": {
       "description": "Add the GIT_REPO_NAME here. It helps with commit on GitHub.",
@@ -64,11 +65,6 @@
       "value": "1",
       "required": false
     },
-    "TELEGRAPH_SHORT_NAME": {
-      "description": "Fill the value up to you.",
-      "value": "Userbot",
-      "required": true
-    },
     "CHROME_DRIVER": {
       "description": "ChromeDriver location for selenium based modules.",
       "value": "/usr/bin/chromedriver",
@@ -83,8 +79,8 @@
       "description": "Get your own APPID (API key)from https://api.openweathermap.org/data/2.5/weather",
       "required": false
     },
-    "GENIUS_API_TOKEN": {
-      "description": "Get your own api token from https://genius.com/developers",
+    "GENIUS_ACCESS_TOKEN": {
+      "description": "Client Access Token from https://genius.com/api-clients.",
       "required": false
     },
     "BOTLOG": {
@@ -129,7 +125,7 @@
     },
     "USER_TERM_ALIAS": {
       "description": "Set alias name of user for term bash command",
-      "value": "Dirty"
+      "required": false
     },
     "QUOTES_API_TOKEN": {
       "description": "Enhance ur text to sticker. Get your own API token from http://antiddos.systems.",

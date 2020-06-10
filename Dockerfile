@@ -69,9 +69,9 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone -b master https://github.com/HafizZiq/Dirty-meh /root/dirtymeh
-RUN mkdir /root/dirtymeh/bin/
-WORKDIR /root/dirtymeh/
+RUN git clone -b TESLA https://github.com/ElytrA8/TESLA /root/TESLA
+RUN mkdir /root/TESLA/bin/
+WORKDIR /root/TESLA/
 
 #
 # Copies session and config (if it exists)

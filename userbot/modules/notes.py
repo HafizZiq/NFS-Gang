@@ -2,12 +2,13 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-
+#
 """ Userbot module containing commands for keeping notes. """
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 from asyncio import sleep
+
 
 @register(outgoing=True, pattern="^.notes$")
 async def notes_active(svd):
@@ -27,6 +28,7 @@ async def notes_active(svd):
             message += "`#{}`\n".format(note.keyword)
     await svd.edit(message)
 
+
 @register(outgoing=True, pattern=r"^.clear (\w*)")
 async def remove_notes(clr):
     """ For .clear command, clear note with the given name."""
@@ -41,6 +43,7 @@ async def remove_notes(clr):
     else:
         return await clr.edit(
             "`Successfully deleted note:` **{}**".format(notename))
+
 
 @register(outgoing=True, pattern=r"^.save (\w*)")
 async def add_note(fltr):
@@ -81,6 +84,7 @@ async def add_note(fltr):
     else:
         return await fltr.edit(success.format('added', keyword))
 
+
 @register(pattern=r"#\w*",
           disable_edited=True,
           disable_errors=True,
@@ -113,6 +117,7 @@ async def incom_note(getnt):
     except AttributeError:
         pass
 
+
 @register(outgoing=True, pattern="^.rmbotnotes (.*)")
 async def kick_marie_notes(kick):
     """ For .rmbotnotes command, allows you to kick all \
@@ -137,6 +142,7 @@ async def kick_marie_notes(kick):
     if BOTLOG:
         await kick.client.send_message(
             BOTLOG_CHATID, "I cleaned all Notes at " + str(kick.chat_id))
+
 
 CMD_HELP.update({
     "notes":

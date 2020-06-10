@@ -2,6 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
+# Many improve from adekmaulana
 
 """
     Google Drive manager for Userbot
@@ -97,6 +99,7 @@ logger.setLevel(logging.ERROR)
 #                                                             #
 # =========================================================== #
 
+
 @register(pattern="^.gdauth(?: |$)", outgoing=True)
 async def generate_credentials(gdrive):
     """ - Only generate once for long run - """
@@ -160,6 +163,7 @@ async def generate_credentials(gdrive):
     await gdrive.delete()
     return
 
+
 async def create_app(gdrive):
     """ - Create google drive service app - """
     creds = helper.get_credentials(str(gdrive.from_id))
@@ -179,6 +183,7 @@ async def create_app(gdrive):
             return False
     service = build('drive', 'v3', credentials=creds, cache_discovery=False)
     return service
+
 
 @register(pattern="^.gdreset(?: |$)", outgoing=True)
 async def reset_credentials(gdrive):
@@ -201,6 +206,7 @@ async def get_mimeType(name):
     if not mimeType:
         mimeType = 'text/plain'
     return mimeType
+
 
 async def download(gdrive, service, uri=None):
     global is_cancelled
@@ -320,6 +326,7 @@ async def download(gdrive, service, uri=None):
         )
         return reply
     return
+
 
 async def download_gdrive(gdrive, service, uri):
     reply = ''
@@ -531,6 +538,7 @@ async def download_gdrive(gdrive, service, uri):
         )
         return reply
 
+
 async def change_permission(service, Id):
     permission = {
         "role": "reader",
@@ -545,11 +553,13 @@ async def change_permission(service, Id):
         pass
     return True
 
+
 async def get_information(service, Id):
     r = service.files().get(fileId=Id, fields="name, id, size, mimeType, "
                             "webViewLink, webContentLink,"
                             "description").execute()
     return r
+
 
 async def create_dir(service, folder_name):
     metadata = {
@@ -574,6 +584,7 @@ async def create_dir(service, folder_name):
         pass
     return folder
 
+
 async def upload(gdrive, service, file_path, file_name, mimeType):
     try:
         await gdrive.edit("`Processing upload...`")
@@ -581,7 +592,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
         pass
     body = {
         "name": file_name,
-        "description": "Uploaded from Telegram using ProjectBish userbot.",
+        "description": "Uploaded from Telegram using TESLA Ai.",
         "mimeType": mimeType,
     }
     try:
@@ -648,6 +659,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
         pass
     return int(file_size), downloadURL
 
+
 async def task_directory(gdrive, service, folder_path):
     global parent_Id
     global is_cancelled
@@ -673,6 +685,7 @@ async def task_directory(gdrive, service, folder_path):
             root_parent_Id = parent_Id
     return root_parent_Id
 
+
 async def reset_parentId():
     global parent_Id
     try:
@@ -684,6 +697,7 @@ async def reset_parentId():
     else:
         del parent_Id
     return
+
 
 @register(pattern=r"^.gdlist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)",
           outgoing=True)
@@ -793,6 +807,7 @@ async def lists(gdrive):
             "**Google Drive Query**:\n"
             f"`{query}`\n\n**Results**\n\n{message}")
     return
+
 
 @register(pattern="^.gdf (mkdir|rm|chck) (.*)", outgoing=True)
 async def google_drive_managers(gdrive):
@@ -941,6 +956,7 @@ async def google_drive_managers(gdrive):
     await gdrive.edit(reply)
     return
 
+
 @register(pattern="^.gdabort(?: |$)", outgoing=True)
 async def cancel_process(gdrive):
     """
@@ -955,6 +971,7 @@ async def cancel_process(gdrive):
     is_cancelled = True
     await asyncio.sleep(3.5)
     await gdrive.delete()
+
 
 @register(pattern="^.gd(?: |$)(.*)", outgoing=True)
 async def google_drive(gdrive):
@@ -1125,6 +1142,7 @@ async def google_drive(gdrive):
     await gdrive.delete()
     return
 
+
 @register(pattern="^.gdfset (put|rm)(?: |$)(.*)", outgoing=True)
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
@@ -1209,6 +1227,7 @@ async def set_upload_folder(gdrive):
         )
     return
 
+
 async def check_progress_for_dl(gdrive, gid, previous):
     complete = None
     global is_cancelled
@@ -1268,6 +1287,7 @@ async def check_progress_for_dl(gdrive, gid, previous):
                     )
                 except Exception:
                     pass
+
 
 CMD_HELP.update({
     "gdrive":

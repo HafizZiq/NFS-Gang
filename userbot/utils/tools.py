@@ -7,12 +7,14 @@
 import re
 import hashlib
 
+
 async def md5(fname: str) -> str:
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
 
 def humanbytes(size: int) -> str:
     if size is None or isinstance(size, str):
@@ -26,6 +28,7 @@ def humanbytes(size: int) -> str:
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+
 def time_formatter(seconds: int) -> str:
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
@@ -37,6 +40,7 @@ def time_formatter(seconds: int) -> str:
         ((str(seconds) + " second(s), ") if seconds else "")
     )
     return tmp[:-2]
+
 
 def human_to_bytes(size: str) -> int:
     units = {

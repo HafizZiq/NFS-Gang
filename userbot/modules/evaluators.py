@@ -12,6 +12,7 @@ from sys import executable
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, USER_TERM_ALIAS
 from userbot.events import register
 
+
 @register(outgoing=True, pattern="^.eval(?: |$)(.*)")
 async def evaluate(query):
     """ For .eval command, evaluates the given Python expression. """
@@ -64,6 +65,7 @@ async def evaluate(query):
         await query.client.send_message(
             BOTLOG_CHATID,
             f"Eval query {expression} was executed successfully")
+
 
 @register(outgoing=True, pattern=r"^.exec(?: |$)([\s\S]*)")
 async def run(run_q):
@@ -129,6 +131,7 @@ execute. Use .help exec for an example.```")
             BOTLOG_CHATID,
             "Exec query " + codepre + " was executed successfully")
 
+
 @register(outgoing=True, pattern="^.term(?: |$)(.*)")
 async def terminal_runner(term):
     """ For .term command, runs bash commands and scripts on your server. """
@@ -185,8 +188,8 @@ async def terminal_runner(term):
             "Terminal Command " + command + " was executed sucessfully",
         )
 
-CMD_HELP.update(
-    {"eval": ".eval 2 + 3\nUsage: Evalute mini-expressions."})
+
+CMD_HELP.update({"eval": ".eval 2 + 3\nUsage: Evalute mini-expressions."})
 CMD_HELP.update(
     {"exec": ".exec print('hello')\nUsage: Execute small python scripts."})
 CMD_HELP.update(

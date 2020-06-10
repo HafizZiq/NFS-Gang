@@ -2,11 +2,12 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-
+#
 """ Userbot help command """
 
 from userbot import CMD_HELP
 from userbot.events import register
+
 
 @register(outgoing=True, pattern="^.help(?: |$)(.*)")
 async def help(event):
@@ -20,8 +21,8 @@ async def help(event):
     else:
         string = ""
         for i in CMD_HELP:
-            string += "|\t\t\t`" + str(i)
-            string += "`"
+            string += "`" + str(i)
+            string += "`\t\t\t||\t\t\t "
         await event.edit(f"{string}"
                         "\n\nSpecify which module do you want help for !!\
                         \n**Usage:** `.help` <module name>")

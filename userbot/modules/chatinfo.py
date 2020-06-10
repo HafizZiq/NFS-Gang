@@ -2,6 +2,8 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
+#
+# Credits to Hitalo-Sama and FTG Modules
 
 from datetime import datetime
 from emoji import emojize
@@ -25,6 +27,7 @@ async def info(event):
         print("Exception:", e)
         await event.edit("`An unexpected error has occurred.`")
     return
+
 
 async def get_chatinfo(event):
     chat = event.pattern_match.group(1)
@@ -59,6 +62,7 @@ async def get_chatinfo(event):
             await event.edit(str(err))
             return None
     return chat_info
+
 
 async def fetch_info(chat, event):
     # chat.chats is a list so we use get_entity() to avoid IndexError
