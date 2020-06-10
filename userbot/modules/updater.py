@@ -2,7 +2,6 @@
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
-# credits to @AvinashReddy3108
 #
 """
 This module updates the userbot based on upstream revision
@@ -88,7 +87,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID, "#UPDATE \n"
-                "Your TESLA was successfully updated")
+                "Your NFS-Gang was successfully updated")
 
     else:
         await event.edit('`[HEROKU]:'
@@ -109,7 +108,7 @@ async def update(event, repo, ups_rem, ac_br):
     if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID, "#UPDATE \n"
-                "Your TESLA was successfully updated")
+                "Your NFS-Gang was successfully updated")
 
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
@@ -193,7 +192,7 @@ async def upstream(event):
         await event.edit(
             '`Force-Syncing to latest stable userbot code, please wait...`')
     else:
-        await event.edit('`Updating TESLA, please wait....`')
+        await event.edit('`Updating NFS-Gang, please wait....`')
     if conf == "now":
         await update(event, repo, ups_rem, ac_br)
     elif conf == "deploy":

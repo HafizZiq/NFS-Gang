@@ -3,7 +3,6 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-# Many improve from adekmaulana
 
 """
     Google Drive manager for Userbot
@@ -592,7 +591,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
         pass
     body = {
         "name": file_name,
-        "description": "Uploaded from Telegram using TESLA Ai.",
+        "description": "Uploaded from Telegram using NFS-Gang Ai.",
         "mimeType": mimeType,
     }
     try:

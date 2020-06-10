@@ -132,7 +132,7 @@ async def promote(promt):
     await promt.edit("`Promoting...`")
     user, rank = await get_user_from_event(promt)
     if not rank:
-        rank = "Administrator"  # Just in case.
+        rank = "Fapper"  # Just in case.
     if user:
         pass
     else:

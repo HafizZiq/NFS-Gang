@@ -71,36 +71,6 @@ async def killdabot(event):
     exit()
 
 
-@register(outgoing=True, pattern="^.community$")
-async def bot_community(community):
-    """ For .community command, just returns OG Paperplane's group link. """
-    await community.edit(
-        "Join ElytrA8's awesome userbot community: @PROJECT_TESLA")
-
-
-@register(outgoing=True, pattern="^.support$")
-async def bot_support(wannahelp):
-    """ For .support command, just returns the group link. """
-    await wannahelp.edit(
-        "Join PROJECT TESLA Group : @PROJECT_TESLA \
-        \nJoin Userbot offtopic Support Group: @ElytrA8CT")
-
-
-@register(outgoing=True, pattern="^.creator$")
-async def creator(ereee):
-    """ See who create this userbot. """
-    await ereee.edit(
-        "Creator of this userbot:"
-        "\n• ⚡ [ElytrA8](https://github.com/ElytrA8) 💘")
-
-
-@register(outgoing=True, pattern="^.readme$")
-async def reedme(e):
-    await e.edit(
-        "Here's something for you to read:\n"
-        "\n[One4uBot's README.md file](https://github.com/ElytrA8/TESLA/blob/TESLA/README.md)")
-    
-
 # Copyright (c) Gegham Zakaryan | 2019
 @register(outgoing=True, pattern="^.repeat (.*)")
 async def repeat(rep):
@@ -120,7 +90,7 @@ async def repeat(rep):
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
     await wannasee.edit(
-        "[Click here](https://github.com/ElytrA8/TESLA) to open TESLA GitHub page."
+        "[Click here](https://github.com/HafizZiq/NFS-Gang) to open MFS-Gang GitHub page."
     )
 
 
@@ -167,31 +137,11 @@ CMD_HELP.update({
 hear Windows XP shutdown sound... but you don't."
 })
 
-CMD_HELP.update(
-    {'support': ".support\
-\nUsage: If you need help, use this command."})
-
-CMD_HELP.update({
-    'community':
-    ".community\
-\nUsage: Join the awesome Paperplane userbot community !!"
-})
-
 CMD_HELP.update({
     'repo':
     '.repo\
 \nUsage: If you are curious what makes the userbot work, this is what you need.'
 })
-
-CMD_HELP.update({
-    "readme":
-    ".readme\
-\nUsage: Provide links to setup the userbot and it's modules."
-})
-
-CMD_HELP.update(
-    {"creator": ".creator\
-\nUsage: Know who created this awesome userbot !!"})
 
 CMD_HELP.update({
     "repeat":

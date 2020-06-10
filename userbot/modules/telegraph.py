@@ -3,7 +3,6 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-# Port From UniBorg to UserBot by @afdulfauzan
 
 from telethon import events
 import os
@@ -14,7 +13,7 @@ from userbot import (TEMP_DOWNLOAD_DIRECTORY, BOTLOG_CHATID, CMD_HELP, bot)
 from userbot.events import register
 
 telegraph = Telegraph()
-r = telegraph.create_account(short_name="telegraph")
+r = telegraph.create_account(short_name="Hafiz")
 auth_url = r["auth_url"]
 
 
@@ -78,7 +77,7 @@ async def telegraphs(graph):
                 ms = (end - start).seconds
                 await graph.edit("Pasted to https://telegra.ph/{} in {} seconds.".format(response["path"], ms), link_preview=True)
         else:
-            await graph.edit("Reply to a message to get a permanent telegra.ph link. (Inspired by @ControllerBot)")
+            await graph.edit("Reply to a message to get a permanent telegra.ph link.")
 
 
 def resize_image(image):

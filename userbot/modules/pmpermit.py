@@ -17,11 +17,11 @@ from userbot.events import register
 
 # ========================= CONSTANTS ============================
 UNAPPROVED_MSG = (
-    "`Hey!, I am TESLA`\n"
+    "`Hey!, I am NFS-Gang"
     "`Please wait for my master to look in`\n"
-    "`Until then, please don't spam PM..`\n"
+    "`Until then, please don't spam in my PM..`\n"
     "`Thank you for being patient.`\n\n"
-    "`*This PM is Powered by TESLA Ai`")
+    "`*This PM is Powered by NFS-Gang Ai`")
 # =================================================================
 
 

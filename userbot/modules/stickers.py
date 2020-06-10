@@ -3,7 +3,7 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-""" Userbot module for kanging stickers or making new ones. Thanks @rupansh"""
+""" Userbot module for kanging stickers or making new ones. Thanks"""
 
 import io
 import math
@@ -23,10 +23,10 @@ KANGING_STR = [
     "Plagiarising hehe...",
     "Inviting this sticker over to my pack...",
     "Kanging this sticker...",
-    "Hey that's a nice sticker!\nMind if I kang?!..",
+    "Hey that's a nice sticker!\nMind if I kang sar?!..",
     "hehe me stel ur stikér\nhehe.",
     "Ay look over there (☉｡☉)!→\nWhile I kang this...",
-    "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
+    "Roses are red violets are blue, kanging this sticker so my pack looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal Your Sticker is stealing this sticker... ",
 ]
@@ -74,7 +74,7 @@ async def kang(args):
             await args.edit("`Unsupported File!`")
             return
     else:
-        await args.edit("`I can't kang that...`")
+        await args.edit("`Sed, is this even a sticker?`")
         return
 
     if photo:

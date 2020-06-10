@@ -138,8 +138,8 @@ async def amireallyalive(alive):
 	                 "===================== \n"
                      f"`User : `{DEFAULTUSER} \n"
 		             "===================== \n"
-                     f"__Running on branch :- {UPSTREAM_REPO_BRANCH}__ \n"
-                     f"𝙿𝚁𝙾𝙹𝙴𝙲𝚃 丅乇丂乚卂 © By ElytrA8 ©\n")
+                     f"__Running on branch :- {UPSTREAM_REPO_BRANCH}__\n"
+                     f"#NFSGang @nfsinjector By @HafizZiq\n")
 
 @register(outgoing=True, pattern="^.aliveu")
 async def amireallyaliveuser(username):

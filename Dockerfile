@@ -69,9 +69,9 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone -b TESLA https://github.com/ElytrA8/TESLA /root/TESLA
-RUN mkdir /root/TESLA/bin/
-WORKDIR /root/TESLA/
+RUN git clone -b master https://github.com/HafizZiq/NFS-Gang /root/NFSGang
+RUN mkdir /root/NFSGang/bin/
+WORKDIR /root/NFSGang/
 
 #
 # Copies session and config (if it exists)

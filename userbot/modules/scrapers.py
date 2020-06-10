@@ -48,7 +48,7 @@ from userbot.utils.google_images_download import googleimagesdownload
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
-TEMP_DOWNLOAD_DIRECTORY = "/root/TESLA/.bin"
+TEMP_DOWNLOAD_DIRECTORY = "/root/NFSGang/.bin"
 
 
 @register(outgoing=True, pattern="^.crblang (.*)")
@@ -135,7 +135,7 @@ async def img_sampler(event):
         lim = lim.replace("lim=", "")
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
-        lim = 7
+        lim = 10
     response = googleimagesdownload()
 
     # creating list of arguments
