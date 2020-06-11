@@ -60,6 +60,10 @@
       "description": "Set your Country to be used in the .time and .date commands.",
       "required": false
     },
+    "UB_BLACK_LIST_CHAT": {
+      "description": "set blacklist_chats where you do not want userbot features",
+      "required": false
+    },
     "TZ_NUMBER": {
       "description": "Change this value in case your country has multiple Time Zones.",
       "value": "1",
