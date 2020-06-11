@@ -44,6 +44,12 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot.utils import progress, humanbytes, time_formatter
 from userbot.utils.google_images_download import googleimagesdownload
+import subprocess
+import glob
+try:
+    import instantmusic , subprocess
+except:
+    os.system("pip install instantmusic")
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
@@ -485,6 +491,38 @@ async def lang(value):
             f"`Language for {scraper} changed to {LANG.title()}.`")
 
 
+@register(outgoing=True, pattern=r"^.song ?(.*)")
+async def download_song(song):
+    if song.fwd_from:
+        return
+    cmd = song.pattern_match.group(1)
+    reply_to_id = song.message.id
+    os.system("rm -rf *.mp3")
+    def bruh(name):
+        os.system("instantmusic -q -s "+name)
+    if song.reply_to_msg_id:
+        reply_to_id = song.reply_to_msg_id
+    await song.edit("Ok finding the song...")
+    bruh(str(cmd))
+    l = glob.glob("*.mp3")
+    try:
+        loa = l[0]
+    except IndexError:
+        await song.edit("Search failed.")
+        return False
+    await song.edit("Sending song...")
+    await song.client.send_file(
+                song.chat_id,
+                loa,
+                force_document=True,
+                allow_cache=False,
+                caption=cmd,
+                reply_to=reply_to_id
+            )
+    os.system("rm -rf *.mp3")
+    subprocess.check_output("rm -rf *.mp3",shell=True)
+
+
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
@@ -548,7 +586,7 @@ async def youtube_search(query,
         return (nexttok, videos)
 
 
-@register(outgoing=True, pattern=r".rip(audio|video) (.*)")
+@register(outgoing=True, pattern=r".ytd(a|v) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -556,7 +594,7 @@ async def download_video(v_url):
 
     await v_url.edit("`Preparing to download...`")
 
-    if type == "audio":
+    if type == "a":
         opts = {
             'format':
             'bestaudio',
@@ -587,7 +625,7 @@ async def download_video(v_url):
         video = False
         song = True
 
-    elif type == "video":
+    elif type == "v":
         opts = {
             'format':
             'best',
@@ -808,13 +846,18 @@ CMD_HELP.update({
     '.trt <text> [or reply]\
         \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English)'
 })
+CMD_HELP.update({
+    'song':
+    '.song title\
+        \nUsage: Instantly download any songs from YouTube and many other sites.'
+})
 CMD_HELP.update({'yt': '.yt <text>\
         \nUsage: Does a YouTube search.'})
 CMD_HELP.update(
     {"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
 CMD_HELP.update({
-    'rip':
-    '.ripaudio <url> or ripvideo <url>\
+    'ytd':
+    '.ytda <url> or ytdv <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
 CMD_HELP.update({
