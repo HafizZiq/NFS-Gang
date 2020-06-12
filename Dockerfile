@@ -69,7 +69,7 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone -b v2 https://github.com/HafizZiq/NFS-Gang /root/NFSGang
+RUN git clone -b master https://github.com/HafizZiq/NFS-Gang /root/NFSGang
 RUN mkdir /root/NFSGang/bin/
 WORKDIR /root/NFSGang/
 
