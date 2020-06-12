@@ -511,23 +511,23 @@ async def gspider(gspdr):
                 f"USER: [{user.first_name}](tg://user?id={user.id})\n"
                 f"CHAT: {gspdr.chat.title}(`{gspdr.chat_id}`)")
 
-@register(outgoing=True, pattern="^.zombies(?: |$)(.*)", groups_only=False)
+@register(outgoing=True, pattern="^.ded(?: |$)(.*)", groups_only=False)
 async def rm_deletedacc(show):
-    """ For .zombies command, list all the ghost/deleted/zombie accounts in a chat. """
+    """ For .ded command, list all the ded accounts in a chat. """
 
     con = show.pattern_match.group(1).lower()
     del_u = 0
-    del_status = "`No deleted accounts found, Group is clean as hell`"
+    del_status = "`No ded accounts found, Group is clean as hell`"
 
     if con != "clean":
-        await show.edit("`Searching for ghost/deleted/zombie accounts...`")
+        await show.edit("`Searching for ded accounts...`")
         async for user in show.client.iter_participants(show.chat_id):
 
             if user.deleted:
                 del_u += 1
         if del_u > 0:
-            del_status = f"`Found` **{del_u}** `ghost/deleted/zombie account(s) in this group,\
-            \nclean them by using` `.zombies clean`"
+            del_status = f"`Found` **{del_u}** `ded account(s) in this group,\
+            \nclean them by using` `.ded clean`"
         await show.edit(del_status)
         return
 
@@ -541,7 +541,7 @@ async def rm_deletedacc(show):
         await show.edit("`I am not an admin here!`")
         return
 
-    await show.edit("`Deleting deleted accounts...\nOh I can do that?!?!`")
+    await show.edit("`Deleting ded accounts...\nOh I can do that?!?!`")
     del_u = 0
     del_a = 0
 
@@ -561,11 +561,11 @@ async def rm_deletedacc(show):
             del_u += 1
 
     if del_u > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s)"
+        del_status = f"Cleaned **{del_u}** ded account(s)"
 
     if del_a > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s) \
-        \n**{del_a}** deleted admin accounts are not removed"
+        del_status = f"Cleaned **{del_u}** ded account(s) \
+        \n**{del_a}** def admin accounts are not removed"
 
 
     await show.edit(del_status)
@@ -573,7 +573,7 @@ async def rm_deletedacc(show):
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID, "#CLEANUP\n"
-            f"Cleaned **{del_u}** deleted account(s) !!\
+            f"Cleaned **{del_u}** ded account(s) !!\
             \nCHAT: {show.chat.title}(`{show.chat_id}`)")
 
 @register(outgoing=True, pattern="^.all$")
@@ -810,46 +810,6 @@ async def get_user_from_id(user, event):
         return None
 
     return user_obj
-  
-@register(outgoing=True, pattern="^.usersdel ?(.*)")
-async def get_usersdel(show):
-    """ For .usersdel command, list all of the deleted users in a chat. """
-    info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "this chat"
-    mentions = 'deletedUsers in {}: \n'.format(title)
-    try:
-        if not show.pattern_match.group(1):
-            async for user in show.client.iter_participants(show.chat_id):
-                if not user.deleted:
-                    mentions += f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-         #       else:
-    #                mentions += f"\nDeleted Account `{user.id}`"
-        else:
-            searchq = show.pattern_match.group(1)
-            async for user in show.client.iter_participants(
-                   show.chat_id, search=f'{searchq}'):
-                if not user.deleted:
-                    mentions += f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-         #       else:
-      #              mentions += f"\nDeleted Account `{user.id}`"
-    except ChatAdminRequiredError as err:
-        mentions += " " + str(err) + "\n"
-    try:
-        await show.edit(mentions)
-    except MessageTooLongError:
-        await show.edit(
-            "Damn, this is a huge group. Uploading deletedusers lists as file.")
-        file = open("userslist.txt", "w+")
-        file.write(mentions)
-        file.close()
-        await show.client.send_file(
-            show.chat_id,
-            "deleteduserslist.txt",
-            caption='Users in {}'.format(title),
-            reply_to=show.id,
-        )
-        remove("deleteduserslist.txt")
-
 
 async def get_userdel_from_event(event):
     """ Get the deleted user from argument or replied message. """
@@ -947,8 +907,8 @@ CMD_HELP.update({
 \nUsage: Mutes the person in all groups you have in common with them.\
 \n\n.ungmute <username/reply>\
 \nUsage: Reply someone's message with .ungmute to remove them from the gmuted list.\
-\n\n.zombies\
-\nUsage: Searches for deleted accounts in a group. Use .zombies clean to remove deleted accounts from the group.\
+\n\n.ded\
+\nUsage: Searches for ded accounts in a group. Use .ded clean to remove deleted accounts from the group.\
 \n\n.all\
 \nUsage: Tag all member in the group chat.\
 \n\n.admins\

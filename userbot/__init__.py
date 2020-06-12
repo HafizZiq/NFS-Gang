@@ -130,7 +130,7 @@ COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
 # User Terminal alias
-USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS", "root@TESLA")
+USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS", "root@NFS-Gang")
 
 # Clean Welcome
 CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
