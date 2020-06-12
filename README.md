@@ -1,5 +1,5 @@
 # 𝙿𝚁𝙾𝙹𝙴𝙲𝚃 𠘨下丂 厶卂𠘨厶
-[![Build](https://github.com/HafizZiq/NFS-Gang/workflows/FailedChecker/badge.svg?branch=TESLA)](https://github.com/HafizZiq/NFS-Gang/actions "build")
+[![Build](https://github.com/HafizZiq/NFS-Gang/workflows/FailedChecker/badge.svg?branch=master)](https://github.com/HafizZiq/NFS-Gang/actions "build")
 
 
 ```
