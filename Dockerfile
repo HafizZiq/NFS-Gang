@@ -74,6 +74,11 @@ RUN mkdir /root/NFSGang/bin/
 WORKDIR /root/NFSGang/
 
 #
+# Copies session and config (if it exists)
+#
+COPY ./sample_config.env ./userbot.session* ./config.env* /root/userbot/
+
+#
 # Install requirements
 #
 RUN pip3 install -r requirements.txt
