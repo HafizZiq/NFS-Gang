@@ -13,22 +13,28 @@ from userbot.events import register
 async def corona(event):
     await event.edit("`Processing...`")
     country = event.pattern_match.group(1)
-    covid = Covid()
+    covid = Covid(source="worldometers")
     country_data = covid.get_status_by_country_name(country)
     if country_data:
-        output_text =  f"`Confirmed   : {country_data['confirmed']}`\n"
+        output_text =  f"`Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n"
         output_text += f"`Active      : {country_data['active']}`\n"
-        output_text += f"`Deaths      : {country_data['deaths']}`\n"
+        output_text += f"`Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
         output_text += f"`Recovered   : {country_data['recovered']}`\n"
-        output_text += (
-            "`Last update : "
-            f"{datetime.utcfromtimestamp(country_data['last_update'] // 1000).strftime('%Y-%m-%d %H:%M:%S')}`\n"
-        )
-        output_text += f"Data provided by [Johns Hopkins University](https://j.mp/2xf6oxF)"
+        output_text += f"`Total tests : {country_data['total_tests']}`\n"
+        covid2 = Covid(source="john_hopkins")
+        country_data = covid2.get_status_by_country_name(country)
+        if country_data:
+            output_text += (
+                "`Last update : "
+                f"{datetime.utcfromtimestamp(country_data['last_update'] // 1000).strftime('%Y-%m-%d %H:%M:%S')}`\n"
+            )
+            output_text += f"`Date provided by `[Johns Hopkins University](https://j.mp/2xf6oxF)"
+        else:
+            output_text = "No date information yet about this country!"
     else:
         output_text = "No information yet about this country!"
-    await event.edit(f"Corona Virus Info in {country}:\n\n{output_text}")
 
+    await event.edit(f"`Corona Virus Info in {country}:`\n\n{output_text}")
 
 CMD_HELP.update({
         "covid": 
