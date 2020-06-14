@@ -85,13 +85,6 @@ execute. Use .help exec for an example.```")
         await run_q.edit("`That's a dangerous operation! Not Permitted!`")
         return
 
-    if len(code.splitlines()) <= 5:
-        codepre = code
-    else:
-        clines = code.splitlines()
-        codepre = clines[0] + "\n" + clines[1] + "\n" + clines[2] + \
-            "\n" + clines[3] + "..."
-
     command = "".join(f"\n {l}" for l in code.split("\n.strip()"))
     process = await asyncio.create_subprocess_exec(
         executable,
@@ -117,19 +110,19 @@ execute. Use .help exec for an example.```")
             remove("output.txt")
             return
         await run_q.edit("**Query: **\n`"
-                         f"{codepre}"
+                         f"{code}"
                          "`\n**Result: **\n`"
                          f"{result}"
                          "`")
     else:
         await run_q.edit("**Query: **\n`"
-                         f"{codepre}"
+                         f"{code}"
                          "`\n**Result: **\n`No Result Returned/False`")
 
     if BOTLOG:
         await run_q.client.send_message(
             BOTLOG_CHATID,
-            "Exec query " + codepre + " was executed successfully")
+            "Exec query " + code + " was executed successfully")
 
 
 @register(outgoing=True, pattern="^.term(?: |$)(.*)")
