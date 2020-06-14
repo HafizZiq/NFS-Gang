@@ -46,6 +46,7 @@ from userbot.utils import progress, humanbytes, time_formatter
 from userbot.utils.google_images_download import googleimagesdownload
 import subprocess
 import io
+import sys
 import glob
 try:
     import instantmusic , subprocess
