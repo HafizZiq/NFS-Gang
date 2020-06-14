@@ -497,6 +497,8 @@ async def download_song(song):
         return
     cmd = song.pattern_match.group(1)
     reply_to_id = song.message.id
+    def bruh(name):
+        os.system("instantmusic -q -s "+name)
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
     await song.edit("Ok finding the song...\nBe patience plox")
