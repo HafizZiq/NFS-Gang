@@ -141,7 +141,7 @@ async def img_sampler(event):
         lim = lim.replace("lim=", "")
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
-        lim = 10
+        lim = 9
     response = googleimagesdownload()
 
     # creating list of arguments
@@ -499,7 +499,7 @@ async def download_song(song):
     reply_to_id = song.message.id
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
-    await song.edit("Ok finding the song...")
+    await song.edit("Ok finding the song...\nBe patience plox")
     bruh(str(cmd))
     l = glob.glob("*.mp3")
     try:
