@@ -21,10 +21,6 @@ async def corona(event):
         output_text += f"`Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
         output_text += f"`Recovered   : {country_data['recovered']}`\n"
         output_text += f"`Total tests : {country_data['total_tests']}`\n"
-        output_text += (
-            "`Last update : "
-            f"{datetime.utcfromtimestamp(country_data['last_update'] // 1000).strftime('%Y-%m-%d %H:%M:%S')}`\n"
-        )
 
     await event.edit(f"`Corona Virus Info in {country}:`\n\n{output_text}")
 
