@@ -44,14 +44,12 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot.utils import progress, humanbytes, time_formatter
 from userbot.utils.google_images_download import googleimagesdownload
-import subprocess
 import io
-import sys
 import glob
 try:
     import instantmusic , subprocess
 except:
-    asyncio.create_subprocess_exec(sys.executable, "pip", "install","instantmusic")
+    os.system("pip install instantmusic")
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
@@ -499,8 +497,6 @@ async def download_song(song):
         return
     cmd = song.pattern_match.group(1)
     reply_to_id = song.message.id
-    def bruh(name):
-        asyncio.create_subprocess_exec(sys.executable,"instantmusic","-q","-s",+name)
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
     await song.edit("Ok finding the song...")
