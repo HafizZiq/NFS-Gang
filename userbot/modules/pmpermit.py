@@ -17,7 +17,7 @@ from userbot.events import register
 
 # ========================= CONSTANTS ============================
 UNAPPROVED_MSG = (
-    "`Hey!, I am NFS-Gang"
+    "`Hey!, I am NFS-Gang`\n"
     "`Please wait for my master to look in`\n"
     "`Until then, please don't spam in my PM..`\n"
     "`Thank you for being patient.`\n\n"
