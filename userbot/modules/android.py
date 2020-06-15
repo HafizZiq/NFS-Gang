@@ -49,19 +49,19 @@ async def magisk(request):
 async def device_info(request):
     """ get android device basic info from its codename """
     textx = await request.get_reply_message()
-    devices = request.pattern_match.group(1)
-    if devices:
+    device = request.pattern_match.group(1)
+    if device:
         pass
     elif textx:
-        devices = textx.text
+        device = textx.text
     else:
         return await request.edit("`Usage: .device <codename> / <model>`")
     found = [
         i for i in get(DEVICES_DATA).json()
-        if i["device"] == devices or i["model"] == devices
+        if i["device"] == device or i["model"] == device
     ]
     if found:
-        reply = f'Search results for {devices}:\n\n'
+        reply = f'Search results for {device}:\n\n'
         for item in found:
             brand = item['brand']
             name = item['name']
@@ -71,7 +71,7 @@ async def device_info(request):
                 f'**Codename**: `{codename}`\n' \
                 f'**Model**: {model}\n\n'
     else:
-        reply = f"`Couldn't find info about {devices}!`\n"
+        reply = f"`Couldn't find info about {device}!`\n"
     await request.edit(reply)
 
 
