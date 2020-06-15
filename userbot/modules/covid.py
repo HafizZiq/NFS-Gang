@@ -37,7 +37,7 @@ async def corona(event):
         output_text += f"`Data provided by worldometers`"
         if country:
             pass
-        elif country = "s. korea":
+        elif country == "s. korea":
             country = "Korea, South"
         elif country.lower() == "world":
             output_text += f"`📅Last update : Timer are not yet available for World status`"
