@@ -13,10 +13,6 @@ from userbot.events import register
 async def corona(event):
     await event.edit("`Processing...`")
     country = event.pattern_match.group(1)
-    if country.lower() == "south korea" or "korea":
-        country = "s. korea"
-    elif not country:
-        country = "World"
     covid = Covid(source="worldometers")
     country_data = covid.get_status_by_country_name(country)
     if country_data:
@@ -25,16 +21,8 @@ async def corona(event):
         output_text += f"`🤕Critical    : {country_data['critical']}`\n"
         output_text += f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
         output_text += f"`😇Recovered   : {country_data['recovered']}`\n"
-        if country.lower() == "world":
-            output_text += f"`🧪Total tests : N/A`\n"
-        else:
-            output_text += f"`🧪Total tests : {country_data['total_tests']}`\n"
+        output_text += f"`🧪Total tests : {country_data['total_tests']}`\n"
         output_text += f"`Data provided by worldometers`\n"
-        if country == "s. korea":
-            country = "Korea, South"
-        elif country.lower() == "world":
-            output_text += f"`📅Last update : Timer are not yet available for World status`"
-            return
         covid2 = Covid(source="john_hopkins")
         country_data = covid2.get_status_by_country_name(country)
         if country_data:
@@ -73,7 +61,6 @@ async def corona(event):
 @register(outgoing=True, pattern="^.covidsk$")
 async def corona(event):
     await event.edit("`Processing...`")
-    country = event.pattern_match.group(1)
     country = "s. korea"
     covid = Covid(source="worldometers")
     country_data = covid.get_status_by_country_name(country)
