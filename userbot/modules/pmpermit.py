@@ -5,11 +5,13 @@
 #
 """ Userbot module for keeping control who PM you. """
 
+import asyncio
+import io
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 from sqlalchemy.exc import IntegrityError
-
+import userbot.modules.sql_helper.pm_permit_sql as pmpermit_sql
 from userbot import (COUNT_PM, CMD_HELP, BOTLOG, BOTLOG_CHATID, PM_AUTO_BAN,
                      LASTMSG, LOGS)
 
@@ -278,6 +280,36 @@ async def unblockpm(unblock):
             f"[{name0}](tg://user?id={replied_user.id})"
             " was unblocc'd!.",
         )
+
+
+@register(outgoing=True, pattern="^.listapproved$")
+async def approve_p_m(event):
+    if event.fwd_from:
+        return
+    approved_users = pmpermit_sql.get_all_approved()
+    APPROVED_PMs = "Current Approved PMs\n"
+    if len(approved_users) > 0:
+        for a_user in approved_users:
+            if a_user.reason:
+                APPROVED_PMs += f"ðŸ‘‰ [{a_user.chat_id}](tg://user?id={a_user.chat_id}) for {a_user.reason}\n"
+            else:
+                APPROVED_PMs += f"ðŸ‘‰ [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n"
+    else:
+        APPROVED_PMs = "no Approved PMs (yet)"
+    if len(APPROVED_PMs) > 4095:
+        with io.BytesIO(str.encode(APPROVED_PMs)) as out_file:
+            out_file.name = "approved.pms.text"
+            await event.client.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                caption="Current Approved PMs",
+                reply_to=event
+            )
+            await event.delete()
+    else:
+        await event.edit(APPROVED_PMs)
 
 
 CMD_HELP.update({
