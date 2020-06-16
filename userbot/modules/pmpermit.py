@@ -162,7 +162,7 @@ async def notifon(non_event):
     await non_event.edit("`Notifications from unapproved PM's unmuted!`")
 
 
-@register(outgoing=True, pattern="^.approve$")
+@register(outgoing=True, pattern="^.approve ?(.*)")
 async def approvepm(apprvpm):
     """ For .approve command, give someone the permissions to PM you. """
     try:
@@ -174,22 +174,23 @@ async def approvepm(apprvpm):
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
         replied_user = await apprvpm.client.get_entity(reply.from_id)
+        reason = event.pattern_match.group(1)
         aname = replied_user.id
         name0 = str(replied_user.first_name)
         uid = replied_user.id
-
     else:
+        reason = event.pattern_match.group(1)
         aname = await apprvpm.client.get_entity(apprvpm.chat_id)
         name0 = str(aname.first_name)
         uid = apprvpm.chat_id
 
     try:
-        approve(uid)
+        approve(uid, reason)
     except IntegrityError:
-        await apprvpm.edit("`User may already be approved.`")
+        await apprvpm.edit("`This nibba may already be approved.`")
         return
 
-    await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
+    await apprvpm.edit(f"`Nibba `[{name0}](tg://user?id={uid})` approved to PM!`")
 
     async for message in apprvpm.client.iter_messages(apprvpm.chat_id,
                                                       from_user='me',
@@ -199,7 +200,8 @@ async def approvepm(apprvpm):
     if BOTLOG:
         await apprvpm.client.send_message(
             BOTLOG_CHATID,
-            "#APPROVED\n" + "User: " + f"[{name0}](tg://user?id={uid})",
+            "#APPROVED\n" + "User: " +
+            f"[{name0}](tg://user?id={uid})",
         )
 
 
@@ -223,13 +225,13 @@ async def disapprovepm(disapprvpm):
         name0 = str(aname.first_name)
 
     await disapprvpm.edit(
-        f"[{name0}](tg://user?id={disapprvpm.chat_id}) `Disaproved to PM!`")
+        f"`Nibba `[{name0}](tg://user?id={disapprvpm.chat_id})` disaproved to PM!`")
 
     if BOTLOG:
         await disapprvpm.client.send_message(
             BOTLOG_CHATID,
-            f"[{name0}](tg://user?id={disapprvpm.chat_id})"
-            " was disapproved to PM you.",
+            "#DISAPPROVED\n" + "User: " +
+            f"[{name0}](tg://user?id={disapprvpm.chat_id})",
         )
 
 
@@ -260,7 +262,8 @@ async def blockpm(block):
     if BOTLOG:
         await block.client.send_message(
             BOTLOG_CHATID,
-            "#BLOCKED\n" + "User: " + f"[{name0}](tg://user?id={uid})",
+            "#BLOCKED\n" + "User: " +
+            f"[{name0}](tg://user?id={uid})",
         )
 
 
@@ -277,8 +280,8 @@ async def unblockpm(unblock):
     if BOTLOG:
         await unblock.client.send_message(
             BOTLOG_CHATID,
-            f"[{name0}](tg://user?id={replied_user.id})"
-            " was unblocc'd!.",
+            "#UNBLOCKED\n" + "User: " +
+            f"[{name0}](tg://user?id={replied_user.id})",
         )
 
 
@@ -315,8 +318,10 @@ async def approve_p_m(event):
 CMD_HELP.update({
     "pmpermit":
     "\
-.approve\
-\nUsage: Approves the mentioned/replied person to PM.\
+.listapproved\
+\nUsage: Get a list of approved user with reason (if applicable).\
+\n\n.approve <reason>\
+\nUsage: Approves the mentioned/replied person to PM with reason (if applicable).\
 \n\n.disapprove\
 \nUsage: Disapproves the mentioned/replied person to PM.\
 \n\n.block\
