@@ -5,13 +5,11 @@
 #
 """ Userbot module for keeping control who PM you. """
 
-import asyncio
-import io
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 from sqlalchemy.exc import IntegrityError
-import userbot.modules.sql_helper.pm_permit_sql as pmpermit_sql
+
 from userbot import (COUNT_PM, CMD_HELP, BOTLOG, BOTLOG_CHATID, PM_AUTO_BAN,
                      LASTMSG, LOGS)
 
@@ -162,7 +160,7 @@ async def notifon(non_event):
     await non_event.edit("`Notifications from unapproved PM's unmuted!`")
 
 
-@register(outgoing=True, pattern="^.approve ?(.*)")
+@register(outgoing=True, pattern="^.approve$")
 async def approvepm(apprvpm):
     """ For .approve command, give someone the permissions to PM you. """
     try:
@@ -174,18 +172,17 @@ async def approvepm(apprvpm):
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
         replied_user = await apprvpm.client.get_entity(reply.from_id)
-        reason = apprvpm.pattern_match.group(1)
         aname = replied_user.id
         name0 = str(replied_user.first_name)
         uid = replied_user.id
+
     else:
-        reason = apprvpm.pattern_match.group(1)
         aname = await apprvpm.client.get_entity(apprvpm.chat_id)
         name0 = str(aname.first_name)
         uid = apprvpm.chat_id
 
     try:
-        approve(uid, reason)
+        approve(uid)
     except IntegrityError:
         await apprvpm.edit("`This nibba may already be approved.`")
         return
@@ -285,43 +282,11 @@ async def unblockpm(unblock):
         )
 
 
-@register(outgoing=True, pattern="^.listapproved$")
-async def approve_p_m(event):
-    if event.fwd_from:
-        return
-    approved_users = pmpermit_sql.get_all_approved()
-    APPROVED_PMs = "Current Approved PMs\n"
-    if len(approved_users) > 0:
-        for a_user in approved_users:
-            if a_user.reason:
-                APPROVED_PMs += f"ðŸ‘‰ [{a_user.chat_id}](tg://user?id={a_user.chat_id}) for {a_user.reason}\n"
-            else:
-                APPROVED_PMs += f"ðŸ‘‰ [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n"
-    else:
-        APPROVED_PMs = "no Approved PMs (yet)"
-    if len(APPROVED_PMs) > 4095:
-        with io.BytesIO(str.encode(APPROVED_PMs)) as out_file:
-            out_file.name = "approved.pms.text"
-            await event.client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption="Current Approved PMs",
-                reply_to=event
-            )
-            await event.delete()
-    else:
-        await event.edit(APPROVED_PMs)
-
-
 CMD_HELP.update({
     "pmpermit":
     "\
-.listapproved\
-\nUsage: Get a list of approved user with reason (if applicable).\
-\n\n.approve <reason>\
-\nUsage: Approves the mentioned/replied person to PM with reason (if applicable).\
+.approve\
+\nUsage: Approves the mentioned/replied person to PM.\
 \n\n.disapprove\
 \nUsage: Disapproves the mentioned/replied person to PM.\
 \n\n.block\
