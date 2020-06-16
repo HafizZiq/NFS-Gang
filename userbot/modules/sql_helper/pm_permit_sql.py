@@ -11,7 +11,7 @@ class PMPermit(BASE):
     reason = Column(String(127))
 
     def __init__(self, chat_id, reason=""):
-        self.chat_id = str(chat_id)  # ensure string
+        self.chat_id = chat_id
         self.reason = reason
 
 
