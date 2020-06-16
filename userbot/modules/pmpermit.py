@@ -174,12 +174,12 @@ async def approvepm(apprvpm):
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
         replied_user = await apprvpm.client.get_entity(reply.from_id)
-        reason = event.pattern_match.group(1)
+        reason = apprvpm.pattern_match.group(1)
         aname = replied_user.id
         name0 = str(replied_user.first_name)
         uid = replied_user.id
     else:
-        reason = event.pattern_match.group(1)
+        reason = apprvpm.pattern_match.group(1)
         aname = await apprvpm.client.get_entity(apprvpm.chat_id)
         name0 = str(aname.first_name)
         uid = apprvpm.chat_id
