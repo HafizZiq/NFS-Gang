@@ -39,6 +39,6 @@ async def figlet(event):
 
 CMD_HELP.update({
         "figlet": 
-        ".figlet \
-          \nUsage: Enhance ur text to strip line with anvil.\n"
+        "`.figlet` <text>\
+          \n`Usage: Enhance ur text to strip line with anvil.`\n"
     })
