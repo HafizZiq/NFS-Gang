@@ -319,6 +319,9 @@ async def sticker_to_png(sticker):
     if not img.document:
         await sticker.edit("`Reply to a sticker...`")
         return False
+    elif "tgsticker" in message.media.document.mime_type:
+        await sticker.edit("`Only available for non-animated sticker...`")
+        return False
 
     try:
         img.document.attributes[1]
