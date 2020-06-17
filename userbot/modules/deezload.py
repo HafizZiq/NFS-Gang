@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 #
 # requires: deezloader hachoir Pillow
-# Ported from UniBorg by AnggaR96s
+#
  
 import deezloader
 import os
@@ -20,8 +20,6 @@ from telethon.tl.types import DocumentAttributeAudio
 
 @register(outgoing=True, pattern="^\.deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
 async def _(event):
-    """DeezLoader by @An0nimia
-    Ported for UniBorg by @SpEcHlDe"""
     if event.fwd_from:
         return
  
