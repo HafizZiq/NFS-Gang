@@ -20,7 +20,7 @@ UNAPPROVED_MSG = (
     "`Hey!, I am NFS-Gang`\n"
     "`Sorry, I haven't approved you to PM yet.`\n"
     "`Please wait for my master to look in`\n"
-    "`Until then, please don't spam in my PM..`\n"
+    "`Until then, please don't spam more than 4 message in my PM..`\n"
     "`Thank you for being patient.`\n\n"
     "`*This is an automated message Powered by NFS-Gang AI`")
 # =================================================================
