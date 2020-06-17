@@ -354,7 +354,7 @@ CMD_HELP.update({
 \nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji.\
 \n\n.kang [emoji('s)] [number]\
 \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked.\
-\n\n.stkrinfo\
+\n\n.stinfo\
 \nUsage: Gets info about the sticker pack.\
 \n\n.getsticker\
 \nUsage: reply to a sticker to get 'PNG' file of sticker.\
