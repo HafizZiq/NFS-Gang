@@ -12,17 +12,12 @@ import time
 from datetime import datetime
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
-# from sample_config import Config
-# from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 from userbot.events import register
-# from userbot.events import humanbytes, progress, time_formatter
 from userbot import CMD_HELP, GITHUB_ACCESS_TOKEN, GIT_REPO_NAME, bot
 
 
 GIT_TEMP_DIR = "./userbot/temp/"
-# @borg.on(admin_cmd(pattern="commit ?(.*)", allow_sudo=True))
 @register(outgoing=True, pattern="^.commit(?: |$)(.*)")
-# @register(pattern=r".commit (.*)", outgoing=True)
 async def download(event):
     if event.fwd_from:
         return	
@@ -81,7 +76,7 @@ async def git_commit(file_name,mone):
             print("Committed File")
             ccess = GIT_REPO_NAME
             ccess = ccess.strip()
-            await mone.edit(f"`Commited On Your Github Repo`\n\n[Your Modules](https://github.com/{ccess}/tree/master/userbot/modules/)")
+            await mone.edit(f"`Committed On Your Github Repo.`\n\n░░░░░░░░░░░█▀▀░░█░░░░░░\n░░░░░░▄▀▀▀▀░░░░░█▄▄░░░░\n░░░░░░█░█░░░░░░░░░░▐░░░ \n░░░░░░▐▐░░░░░░░░░▄░▐░░░\n░░░░░░█░░░░░░░░▄▀▀░▐░░░ \n░░░░▄▀░░░░░░░░▐░▄▄▀░░░░ \n░░▄▀░░░▐░░░░░█▄▀░▐░░░░░ \n░░█░░░▐░░░░░░░░▄░█░░░░░ \n░░░█▄░░▀▄░░░░▄▀▐░█░░░░░ \n░░░█▐▀▀▀░▀▀▀▀░░▐░█░░░░░ \n░░▐█▐▄░░▀░░░░░░▐░█▄▄░░░ \n░░░▀▀░▄[Modules](https://github.com/{ccess}/tree/master/userbot/modules/)░▐▄▄▄▀░░░\n░░░░░░░░░░░░░░░░░░░░░░░ ")
         except:    
             print("Cannot Create Plugin")
             await mone.edit("Cannot Upload Plugin")
@@ -91,7 +86,8 @@ async def git_commit(file_name,mone):
         
 CMD_HELP.update({
     "commit": 
-    ".commit\
-    \nUsage: GITHUB File Uploader Plugin for userbot. Heroku Automation should be Enabled. Else u r not that lazy , For lazy people\
-\nInstructions:- Set GITHUB_ACCESS_TOKEN and GIT_REPO_NAME Variables in Heroku vars First\
-\n.commit reply_to_any_plugin can be any type of file too. but for plugin must be in .py ."})
+    "`.commit`\
+    \n`Usage: reply_to_any_plugin can be any type of file too. but for plugin must be in .py.`\
+    \n\n`Info: GITHUB File Uploader Plugin for userbot. Heroku Automation should be Enabled. Else u r not that lazy.`\
+    \n`Instructions for lazy people:- Set GITHUB_ACCESS_TOKEN and GIT_REPO_NAME Variables in Heroku vars First.`"
+})
