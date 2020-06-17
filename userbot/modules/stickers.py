@@ -357,6 +357,6 @@ CMD_HELP.update({
 \n\n.stkrinfo\
 \nUsage: Gets info about the sticker pack.\
 \n\n.getsticker\
-\nUsage: reply to a sticker to get 'PNG' file of sticker.
+\nUsage: reply to a sticker to get 'PNG' file of sticker.\
 \nOnly for un-animated sticker only!"
 })
