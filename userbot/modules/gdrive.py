@@ -157,9 +157,8 @@ async def generate_credentials(gdrive):
         await gdrive.client.delete_messages(BOTLOG_CHATID, [url_msg.id, r.id])
         """ - Unpack credential objects into strings - """
         creds = base64.b64encode(pickle.dumps(creds)).decode()
-        await gdrive.edit("`Credentials created...`")
+        await gdrive.edit("`Credentials created.`")
     helper.save_credentials(str(gdrive.from_id), creds)
-    await gdrive.delete()
     return
 
 
