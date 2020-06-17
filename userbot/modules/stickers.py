@@ -319,12 +319,14 @@ async def sticker_to_png(sticker):
     if not img.document:
         await sticker.edit("`Reply to a sticker...`")
         return False
-    elif "tgsticker" in message.media.document.mime_type:
+
+    if "tgsticker" in img.media.document.mime_type:
         await sticker.edit("`Only available for non-animated sticker...`")
         return False
 
     try:
         img.document.attributes[1]
+        await sticker.edit("`Processing...`")
     except Exception:
         await sticker.edit("`This is not a sticker...`")
         return
@@ -355,5 +357,6 @@ CMD_HELP.update({
 \n\n.stkrinfo\
 \nUsage: Gets info about the sticker pack.\
 \n\n.getsticker\
-\nUsage: reply to a sticker to get 'PNG' file of sticker."
+\nUsage: reply to a sticker to get 'PNG' file of sticker.
+\nOnly for un-animated sticker only!"
 })
