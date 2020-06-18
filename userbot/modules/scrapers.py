@@ -491,7 +491,7 @@ async def lang(value):
             f"`Language for {scraper} changed to {LANG.title()}.`")
 
 
-@register(outgoing=True, pattern=r"^.song ?(.*)")
+@register(outgoing=True, pattern=r"^.song(?: |$)(.*)")
 async def download_song(song):
     if song.fwd_from:
         return
