@@ -9,13 +9,10 @@ from asyncio import sleep
 from random import choice, getrandbits, randint
 from re import sub
 import time
-
+import asyncio
 from collections import deque
-
 import requests
-
 from cowpy import cow
-
 from userbot import CMD_HELP, LOGS
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
@@ -1303,6 +1300,16 @@ async def nou(e):
                      "`\n┃┈╰╰━━━━╯`"
                      "`\n┗━━┻━┛`")
 
+@register(outgoing=True,pattern="^.earth$")
+async def _(event):
+	if event.fwd_from:
+		return
+	deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
+	for _ in range(48):
+		await asyncio.sleep(0.1)
+		await event.edit("".join(deq))
+		deq.rotate(1)
+
 CMD_HELP.update({
     "memes":
     ".cowsay\
@@ -1364,6 +1371,8 @@ CMD_HELP.update({
 \n\n.scam <action> <time>\
 \n[Available Actions: (typing, contact, game, location, voice, round, video, photo, document, cancel)]\
 \nUsage: Create fake chat actions, for fun. (Default action: typing)\
+\n\n.earth\
+\nEarth live emoji.\
 \n\nAnd many more\
 \n.nou ; .bot ; .gey ; .taco ; .nih ;\
 \n.fag ; .gtfo ; .stfu ; .lol ; .lool ; .fail ; .love\
