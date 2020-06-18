@@ -5,11 +5,11 @@
 
 """ Userbot module for having some fun with people. """
 
+import asyncio
 from asyncio import sleep
 from random import choice, getrandbits, randint
 from re import sub
 import time
-import asyncio
 from collections import deque
 import requests
 from cowpy import cow
@@ -1310,6 +1310,30 @@ async def _(event):
 		await event.edit("".join(deq))
 		deq.rotate(1)
 
+@register(outgoing=True, pattern="^.plane$")
+async def _(event):
+    if event.fwd_from:
+        return
+        
+        
+    await event.edit("✈-------------")
+    await event.edit("-✈------------")
+    await event.edit("--✈-----------")
+    await event.edit("---✈----------")
+    await event.edit("----✈---------")
+    await event.edit("-----✈--------")
+    await event.edit("------✈-------")
+    await event.edit("-------✈------")
+    await event.edit("--------✈-----") 
+    await event.edit("---------✈----")
+    await event.edit("----------✈---")
+    await event.edit("-----------✈--")
+    await event.edit("------------✈-")
+    await event.edit("-------------✈")
+    await event.edit("plane is gone, what are you waitin for.")
+    await asyncio.sleep(3)
+    await event.delete()
+
 CMD_HELP.update({
     "memes":
     ".cowsay\
@@ -1373,6 +1397,8 @@ CMD_HELP.update({
 \nUsage: Create fake chat actions, for fun. (Default action: typing)\
 \n\n.earth\
 \nEarth live emoji.\
+\n\n.plane\
+\nPlane live memes.\
 \n\nAnd many more\
 \n.nou ; .bot ; .gey ; .taco ; .nih ;\
 \n.fag ; .gtfo ; .stfu ; .lol ; .lool ; .fail ; .love\
