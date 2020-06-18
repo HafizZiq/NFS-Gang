@@ -501,15 +501,15 @@ async def download_song(song):
         os.system("instantmusic -q -s "+name)
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
-    await song.edit("Ok finding the song...\nBe patience plox")
+    await song.edit("`Ok finding the song...`")
     bruh(str(cmd))
     l = glob.glob("*.mp3")
     try:
         loa = l[0]
     except IndexError:
-        await song.edit("Search failed.")
+        await song.edit("`Search failed.`")
         return False
-    await song.edit("Sending song...")
+    await song.edit("`Sending song...`")
     await song.client.send_file(
                 song.chat_id,
                 loa,
@@ -518,6 +518,7 @@ async def download_song(song):
                 caption=cmd,
                 reply_to=reply_to_id
             )
+    await song.edit("`Done`")
     os.remove(loa)
 
 @register(outgoing=True, pattern="^.yt (.*)")
