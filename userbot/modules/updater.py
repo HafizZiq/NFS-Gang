@@ -206,6 +206,6 @@ CMD_HELP.update({
     "\nUsage: Checks if the main userbot repository has any updates and shows a changelog if so."
     "\n\n.ota now"
     "\nUsage: Update your userbot, if there are any updates in your userbot repository."
-    "\n\n..ota deploy"
+    "\n\n.ota deploy"
     "\nUsage: Deploy your userbot at heroku, if there are any updates in your userbot repository."
 })
