@@ -10,10 +10,9 @@ from userbot import CMD_HELP
 async def _(event):
     if event.fwd_from:
         return
-    # https://t.me/DirtyBlack_EXTENDED
     input_str = event.pattern_match.group(1)
     typing_symbol = "|"
-    DELAY_BETWEEN_EDITS = 0.3
+    DELAY_BETWEEN_EDITS = 0.1
     previous_text = ""
     await event.edit(typing_symbol)
     await asyncio.sleep(DELAY_BETWEEN_EDITS)
