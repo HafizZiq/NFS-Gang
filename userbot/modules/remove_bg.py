@@ -4,9 +4,6 @@
 # you may not use this file except in compliance with the License.
 #
 
-# (c) Shrimadhav U K - UniBorg
-# Thanks to Prakasaka for porting.
-
 import io
 import os
 import requests
