@@ -59,9 +59,10 @@ async def endecrypt(query):
         await query.reply("Decoded: `" + lething[:-1] + "`")
 
 
-CMD_HELP.update({"base64": "Find the base64 encoding of the given string"})
-
 CMD_HELP.update({
     "hash":
-    "Find the md5, sha1, sha256, sha512 of the string when written into a txt file."
+    "`.base64`\
+    \n`Usage: Find the base64 encoding of the given string.`\
+    \n\n`.hash`\
+    \n`Usage: Find the md5, sha1, sha256, sha512 of the string when written into a txt file.`"
 })
