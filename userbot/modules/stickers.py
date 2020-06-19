@@ -95,7 +95,7 @@ async def kang(args):
                 # pack
                 emoji = splat[1]
 
-        packname = f"a{user.id}_by_{user.username}_{pack}"
+        packname = f"{user.username}_sed_loif_pack{pack}"
         packnick = f"@{user.username}'s Lit Pack V{pack}"
         cmd = '/newpack'
         file = io.BytesIO()
@@ -123,7 +123,7 @@ async def kang(args):
                 x = await conv.get_response()
                 while "120" in x.text:
                     pack += 1
-                    packname = f"a{user.id}_by_{user.username}_{pack}"
+                    packname = f"{user.username}_sed_loif_pack{pack}"
                     packnick = f"@{user.username}'s kang pack Vol.{pack}"
                     await args.edit("`Switching to Pack " + str(pack) +
                                     " due to insufficient space`")
@@ -192,7 +192,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
         else:
-            await args.edit("`Brewing a new Pack...`")
+            await args.edit("`Rapping for new son...`")
             async with bot.conversation('Stickers') as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
