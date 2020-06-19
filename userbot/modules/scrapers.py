@@ -44,17 +44,11 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot.utils import progress, humanbytes, time_formatter
 from userbot.utils.google_images_download import googleimagesdownload
-import io
-import glob
-try:
-    import instantmusic , subprocess
-except:
-    os.system("pip install instantmusic")
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
-TEMP_DOWNLOAD_DIRECTORY = "/root/NFSGang/.bin"
+TEMP_DOWNLOAD_DIRECTORY = "/root/One4uBot/.bin"
 
 
 @register(outgoing=True, pattern="^.crblang (.*)")
@@ -141,7 +135,7 @@ async def img_sampler(event):
         lim = lim.replace("lim=", "")
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
-        lim = 9
+        lim = 7
     response = googleimagesdownload()
 
     # creating list of arguments
@@ -491,36 +485,6 @@ async def lang(value):
             f"`Language for {scraper} changed to {LANG.title()}.`")
 
 
-@register(outgoing=True, pattern=r"^.song(?: |$)(.*)")
-async def download_song(song):
-    if song.fwd_from:
-        return
-    cmd = song.pattern_match.group(1)
-    reply_to_id = song.message.id
-    def bruh(name):
-        os.system("instantmusic -q -s "+name)
-    if song.reply_to_msg_id:
-        reply_to_id = song.reply_to_msg_id
-    await song.edit("`Ok finding the song...`")
-    bruh(str(cmd))
-    l = glob.glob("*.mp3")
-    try:
-        loa = l[0]
-    except IndexError:
-        await song.edit("`Search failed.`")
-        return False
-    await song.edit("`Sending song...`")
-    await song.client.send_file(
-                song.chat_id,
-                loa,
-                force_document=True,
-                allow_cache=False,
-                caption=cmd,
-                reply_to=reply_to_id
-            )
-    await song.edit("`Done`")
-    os.remove(loa)
-
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
@@ -584,7 +548,7 @@ async def youtube_search(query,
         return (nexttok, videos)
 
 
-@register(outgoing=True, pattern=r".ytd(a|v) (.*)")
+@register(outgoing=True, pattern=r".rip(audio|video) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -592,7 +556,7 @@ async def download_video(v_url):
 
     await v_url.edit("`Preparing to download...`")
 
-    if type == "a":
+    if type == "audio":
         opts = {
             'format':
             'bestaudio',
@@ -623,7 +587,7 @@ async def download_video(v_url):
         video = False
         song = True
 
-    elif type == "v":
+    elif type == "video":
         opts = {
             'format':
             'best',
@@ -656,39 +620,30 @@ async def download_video(v_url):
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        await v_url.edit(f"`{str(DE)}`")
-        return
+        return await v_url.edit(f"`{str(DE)}`")
     except ContentTooShortError:
-        await v_url.edit("`The download content was too short.`")
-        return
+        return await v_url.edit("`The download content was too short.`")
     except GeoRestrictedError:
-        await v_url.edit(
-            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
+        return await v_url.edit(
+            "`Video is not available from your geographic location "
+            "due to geographic restrictions imposed by a website.`"
         )
-        return
     except MaxDownloadsReached:
-        await v_url.edit("`Max-downloads limit has been reached.`")
-        return
+        return await v_url.edit("`Max-downloads limit has been reached.`")
     except PostProcessingError:
-        await v_url.edit("`There was an error during post processing.`")
-        return
+        return await v_url.edit("`There was an error during post processing.`")
     except UnavailableVideoError:
-        await v_url.edit("`Media is not available in the requested format.`")
-        return
+        return await v_url.edit("`Media is not available in the requested format.`")
     except XAttrMetadataError as XAME:
-        await v_url.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
-        return
+        return await v_url.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
     except ExtractorError:
-        await v_url.edit("`There was an error during info extraction.`")
-        return
+        return await v_url.edit("`There was an error during info extraction.`")
     except Exception as e:
-        await v_url.edit(f"{str(type(e)): {str(e)}}")
-        return
+        return await v_url.edit(f"{str(type(e)): {str(e)}}")
     c_time = time.time()
     if song:
-        await v_url.edit(f"`Preparing to upload song:`\
-        \n**{rip_data['title']}**\
-        \nby *{rip_data['uploader']}*")
+        await v_url.edit(
+            f"`Preparing to upload song:`\n**{rip_data['title']}**")
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp3",
@@ -705,9 +660,8 @@ async def download_video(v_url):
         os.remove(f"{rip_data['id']}.mp3")
         await v_url.delete()
     elif video:
-        await v_url.edit(f"`Preparing to upload video:`\
-        \n**{rip_data['title']}**\
-        \nby *{rip_data['uploader']}*")
+        await v_url.edit(
+            f"`Preparing to upload video:`\n**{rip_data['title']}**")
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp4",
@@ -719,11 +673,6 @@ async def download_video(v_url):
                          f"{rip_data['title']}.mp4")))
         os.remove(f"{rip_data['id']}.mp4")
         await v_url.delete()
-
-
-def deEmojify(inputString):
-    """ Remove emojis and other non-safe characters from string """
-    return get_emoji_regexp().sub(u'', inputString)
 
 
 @register(outgoing=True, pattern="^.netease(?: |$)(.*)")
@@ -810,6 +759,11 @@ async def SpoMusDown(TifyDown):
     await TifyDown.delete()
 
 
+def deEmojify(inputString):
+    """ Remove emojis and other non-safe characters from string """
+    return get_emoji_regexp().sub(u'', inputString)
+
+
 CMD_HELP.update({
     'img':
     '.img <search_query>\
@@ -844,18 +798,13 @@ CMD_HELP.update({
     '.trt <text> [or reply]\
         \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English)'
 })
-CMD_HELP.update({
-    'song':
-    '.song title\
-        \nUsage: Instantly download any songs from YouTube and many other sites.'
-})
 CMD_HELP.update({'yt': '.yt <text>\
         \nUsage: Does a YouTube search.'})
 CMD_HELP.update(
     {"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
 CMD_HELP.update({
-    'ytd':
-    '.ytda <url> or ytdv <url>\
+    'rip':
+    '.ripaudio <url> or ripvideo <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
 CMD_HELP.update({
