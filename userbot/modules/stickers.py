@@ -24,8 +24,8 @@ KANGING_STR = [
     "Inviting this sticker over to my pack...",
     "Kanging this sticker...",
     "Hey that's a nice sticker!\nMind if I kang sar?!..",
-    "hehe me stel ur stikér\nhehe.",
-    "Ay look over there (☉｡☉)!→\nWhile I kang this...",
+    "hehe me stel ur stikÃ©r\nhehe.",
+    "Ay look over there (â˜‰ï½¡â˜‰)!â†’\nWhile I kang this...",
     "Roses are red violets are blue, kanging this sticker so my pack looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal Your Sticker is stealing this sticker... ",
@@ -80,7 +80,7 @@ async def kang(args):
     if photo:
         splat = args.text.split()
         if not emojibypass:
-            emoji = "🤔"
+            emoji = "ðŸ¤”"
         pack = 1
         if len(splat) == 3:
             pack = splat[2]  # User sent both
@@ -236,7 +236,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
 
-        await args.edit(f"\n\n     \n\n\n\n\n`This Sticker Is Raped! ( � �)`\n`Plox Help this Sticker by Clicking` [HERE](t.me/addstickers/{packname})",
+        await args.edit(f"▕╮╭┻┻╮╭┻┻╮╭▕╮╲\n▕╯┃╭╮┃┃╭╮┃╰▕╯╭▏\n▕╭┻┻┻┛┗┻┻┛   ▕  ╰▏\n▕╰━━━┓┈┈┈╭╮▕╭╮▏\n▕╭╮╰┳┳┳┳╯╰╯▕╰╯▏\n▕╰╯┈┗┛┗┛┈╭╮▕╮┈▏\n\n`This Sticker Is Raped! ( ͝° ͜ʖ͡°)ᕤ`\n`Plox Help this Sticker by Clicking` [HERE](t.me/addstickers/{packname})",
                         parse_mode='md')
 
 
@@ -350,7 +350,7 @@ CMD_HELP.update({
 \n\n.kang [emoji('s)]\
 \nUsage: Works just like .kang but uses the emoji('s) you picked.\
 \n\n.kang [number]\
-\nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji.\
+\nUsage: Kang's the sticker/image to the specified pack but uses ðŸ¤” as emoji.\
 \n\n.kang [emoji('s)] [number]\
 \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked.\
 \n\n.stinfo\
