@@ -604,7 +604,7 @@ async def kick(usr):
         await usr.edit(NO_ADMIN)
         return
 
-    user, reason = await get_user(usr)
+    user, reason = await get_user_from_event(usr)
     if not user:
         await usr.edit("`Couldn't fetch user.`")
         return
