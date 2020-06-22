@@ -52,6 +52,7 @@ async def time_func(tdata):
     tz_num = tdata.pattern_match.group(2)
 
     t_form = "%H:%M"
+    d_form = "%d/%m/%y - %A"
     c_name = None
 
     if len(con) > 4:
@@ -65,7 +66,8 @@ async def time_func(tdata):
         tz_num = TZ_NUMBER
         timezones = await get_tz(COUNTRY)
     else:
-        await tdata.edit(f"`It's`  **{dt.now().strftime(t_form)}**  `here.`")
+        await tdata.edit(f"`Time: `**{dt.now().strftime(t_form)}**\n" +
+                         f"`Date: `**{dt.now().strftime(d_form)}**")
         return
 
     if not timezones:
@@ -86,98 +88,34 @@ async def time_func(tdata):
 
             return_str += "\n`Choose one by typing the number "
             return_str += "in the command.`\n"
-            return_str += f"`Example: .time {c_name} 2`"
+            return_str += f"`Example:` `.time {c_name} 2`"
 
             await tdata.edit(return_str)
             return
 
-    dtnow = dt.now(tz(time_zone)).strftime(t_form)
+    tnow = dt.now(tz(time_zone)).strftime(t_form)
+    dtnow = dt.now(tz(time_zone)).strftime(d_form)
+    
 
     if c_name != COUNTRY:
         await tdata.edit(
-            f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
+            f"`Time: `**{tnow}**\n" +
+            f"`Date: `**{dtnow}**\n" +
+            f"`Country: `**{c_name}({time_zone} timezone)**")
         return
 
     elif COUNTRY:
-        await tdata.edit(f"`It's`  **{dtnow}**  `here, in {COUNTRY}"
-                         f"({time_zone} timezone).`")
-        return
-
-
-@register(outgoing=True, pattern="^.date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?")
-async def date_func(dat):
-    """ For .date command, return the date of
-        1. The country passed as an argument,
-        2. The default userbot country(set it by using .settime),
-        3. The server where the userbot runs.
-    """
-    con = dat.pattern_match.group(1).title()
-    tz_num = dat.pattern_match.group(2)
-
-    d_form = "%d/%m/%y - %A"
-    c_name = ''
-
-    if len(con) > 4:
-        try:
-            c_name = c_n[con]
-        except KeyError:
-            c_name = con
-        timezones = await get_tz(con)
-    elif COUNTRY:
-        c_name = COUNTRY
-        tz_num = TZ_NUMBER
-        timezones = await get_tz(COUNTRY)
-    else:
-        await dat.edit(f"`It's`  **{dt.now().strftime(d_form)}**  `here.`")
-        return
-
-    if not timezones:
-        await dat.edit("`Invaild country.`")
-        return
-
-    if len(timezones) == 1:
-        time_zone = timezones[0]
-    elif len(timezones) > 1:
-        if tz_num:
-            tz_num = int(tz_num)
-            time_zone = timezones[tz_num - 1]
-        else:
-            return_str = f"`{c_name} has multiple timezones:`\n"
-
-            for i, item in enumerate(timezones):
-                return_str += f"`{i+1}. {item}`\n"
-
-            return_str += "\n`Choose one by typing the number "
-            return_str += "in the command.`\n"
-            return_str += f"Example: .date {c_name} 2"
-
-            await dat.edit(return_str)
-            return
-
-    dtnow = dt.now(tz(time_zone)).strftime(d_form)
-
-    if c_name != COUNTRY:
-        await dat.edit(
-            f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
-        return
-
-    elif COUNTRY:
-        await dat.edit(f"`It's`  **{dtnow}**  `here, in {COUNTRY}"
-                       f"({time_zone} timezone).`")
+        await tdata.edit(
+            f"`Time: `**{tnow}**\n" +
+            f"`Date: `**{dtnow}**\n" +
+            f"`Country: `**{COUNTRY}({time_zone} timezone)**")
         return
 
 
 CMD_HELP.update({
     "time":
     ".time <country name/code> <timezone number>"
-    "\nUsage: Get the time of a country. If a country has "
-    "multiple timezones, it will list all of them "
-    "and let you select one."
-})
-CMD_HELP.update({
-    "date":
-    ".date <country name/code> <timezone number>"
-    "\nUsage: Get the date of a country. If a country has "
+    "\nUsage: Get the time and date of a country. If a country has "
     "multiple timezones, it will list all of them "
     "and let you select one."
 })
