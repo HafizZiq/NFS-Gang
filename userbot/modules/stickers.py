@@ -42,7 +42,7 @@ async def kang(args):
     photo = None
     emojibypass = False
     is_anim = False
-    emoji = 🤔
+    emoji = "🤔"
 
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
