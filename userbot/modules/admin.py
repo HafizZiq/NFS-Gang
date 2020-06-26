@@ -171,6 +171,7 @@ async def demote(dmod):
     await dmod.edit("`Demoting...`")
     rank = "admeme"  # dummy rank, lol.
     user = await get_user_from_event(dmod)
+    user = user[0]
     if user:
         pass
     else:
