@@ -114,6 +114,7 @@ async def promote(promt):
     # Grab admin status or creator in a chat
     admin = chat.admin_rights
     creator = chat.creator
+    user = await get_user_from_event(promt)
 
     # If not admin and not creator, also return
     if not admin and not creator:
