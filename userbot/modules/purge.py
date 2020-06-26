@@ -110,7 +110,7 @@ async def editer(edit):
                                        "Edit query was executed successfully")
 
 
-@register(outgoing=True, pattern="^.sd")
+@register(outgoing=True, pattern="^.sdm")
 async def selfdestruct(destroy):
     """ For .sd command, make seflf-destructable messages. """
     message = destroy.text
@@ -147,8 +147,9 @@ CMD_HELP.update({
 })
 
 CMD_HELP.update({
-    'sd':
-    '.sd <x> <message>\
+    'sdm':
+    '.sdm <x> <message>\
 \nUsage: Creates a message that selfdestructs in x seconds.\
 \nKeep the seconds under 100 since it puts your bot to sleep.'
 })
+
