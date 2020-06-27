@@ -185,6 +185,10 @@ async def approvepm(apprvpm):
         approve(uid)
     except IntegrityError:
         await apprvpm.edit("`This nibba may already be approved.`")
+        async for message in apprvpm.client.iter_messages(apprvpm.chat_id,
+                                                          from_user='me',
+                                                          search=UNAPPROVED_MSG):
+            await message.delete()
         return
 
     await apprvpm.edit(f"`Nibba `[{name0}](tg://user?id={uid})` approved to PM!`")
