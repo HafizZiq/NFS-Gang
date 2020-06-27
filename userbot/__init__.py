@@ -6,7 +6,7 @@
 """ Userbot initialization. """
 
 import os
-
+import heroku3
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
@@ -76,7 +76,9 @@ PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 # Heroku Credentials for updater.
 HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
+HEROKU_APP_FALLBACK_NAME = os.environ.get("HEROKU_APP_FALLBACK_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
+HEROKU_API_KEY_FALLBACK = os.environ.get("HEROKU_API_KEY_FALLBACK", None)
 
 # Github Credentials for updater and Gitupload.
 GIT_REPO_NAME = os.environ.get("GIT_REPO_NAME", None)
@@ -197,6 +199,22 @@ else:
     # pylint: disable=invalid-name
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
+#######################################################################
+#                        Initialization fallback                      #
+heroku = heroku3.from_key(HEROKU_API_KEY)
+fallback = None
+if HEROKU_API_KEY_FALLBACK and HEROKU_APP_FALLBACK_NAME:
+    fallback = heroku3.from_key(HEROKU_API_KEY_FALLBACK)
+    try:
+        fallback_app = fallback.app(HEROKU_APP_FALLBACK_NAME)
+    except HTTPError:
+        LOGS.info(
+            "Your HEROKU_API_KEY_FALLBACK and HEROKU_APP_FALLBACK_NAME"
+            " doesn't seem to be in the same account, or "
+            f"{HEROKU_APP_FALLBACK_NAME} not found."
+        )
+        quit(1)
+#######################################################################
 
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
