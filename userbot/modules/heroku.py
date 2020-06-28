@@ -254,21 +254,5 @@ CMD_HELP.update({
     \nUsage: Cancel deploy from main app.\
     \nGive build.id to specify build to cancel.\
     \n\n>`.dyno get log`\
-    \nUsage: Get your main dyno recent logs.\
-    \n\n>`.help dyno`\
-    \nUsage: print this help.\
-    \n\n>`.updatef`\
-    \nUsage: Check fallback if there are any updates.\
-    \n\n>`.updatef deploy`\
-    \nUsage: If there are any updates, you can deploy fallback app.\
-    \n\n>`.updatef now`\
-    \nUsage: If there are any updates, you can update fallback app.\
-    \n\n\
-    **FAQ**:\n\
-    `Q`: What's different >`.updatef now` and >`.updatef deploy`?\n\
-    `A`: >`.updatef now` update your fallback without deploying, \
-    but the app will back to latest successfully deployed state if \
-    fallback restarted.\n\
-    >`.updatef deploy` is more same but if fallback restarted it \
-    won't rollback."
+    \nUsage: Get your main dyno recent logs."
 })
