@@ -836,7 +836,7 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'song':
-    '.song title\
+    '.song title or .song <yt vid link>\
         \nUsage: Instantly download any songs from YouTube and many other sites.'
 })
 CMD_HELP.update({'yt': '.yt <text>\
