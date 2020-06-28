@@ -8,13 +8,12 @@ import os
 import asyncio
 import requests
 import math
-
 from operator import itemgetter
-
 from userbot import (
     heroku, fallback,
     HEROKU_APP_NAME, HEROKU_API_KEY, HEROKU_API_KEY_FALLBACK
 )
+from userbot import CMD_HELP
 from userbot.events import register
 
 
@@ -30,7 +29,7 @@ useragent = (
           pattern=(
               "^.dyno "
               "(on|restart|off|usage|cancel deploy|cancel build"
-              "|get log|help|update)(?: (.*)|$)")
+              "|get log)(?: (.*)|$)")
           )
 async def dyno_manage(dyno):
     """ - Restart/Kill dyno - """
@@ -239,39 +238,37 @@ async def dyno_manage(dyno):
         await asyncio.sleep(5)
         await dyno.delete()
         return os.remove('logs.txt')
-    elif exe == "help":
-        return await dyno.edit(
-            ">`.dyno usage`"
-            "\nUsage: Check your heroku App usage dyno quota."
-            "\nIf one of your app usage is empty, it won't be write in output."
-            "\n\n>`.dyno on`"
-            "\nUsage: Turn on your main dyno application."
-            "\n\n>`.dyno restart`"
-            "\nUsage: Restart your dyno application."
-            "\n\n>`.dyno off`"
-            "\nUsage: Shutdown dyno completly."
-            "\n\n>`.dyno cancel deploy` or >`.dyno cancel build`"
-            "\nUsage: Cancel deploy from main app "
-            "give build.id to specify build to cancel."
-            "\n\n>`.dyno get log`"
-            "\nUsage: Get your main dyno recent logs."
-            "\n\n>`.dyno help`"
-            "\nUsage: print this help."
-        )
-    elif exe == "update":
-        return await dyno.edit(
-            ">`.updatef`"
-            "\nUsage: Check fallback if there are any updates."
-            "\n\n>`.updatef deploy`"
-            "\nUsage: If there are any updates, you can deploy fallback app."
-            "\n\n>`.updatef now`"
-            "\nUsage: If there are any updates, you can update fallback app."
-            "\n\n"
-            "**FAQ**:\n"
-            "`Q`: What's different >`.updatef now` and >`.updatef deploy`?\n"
-            "`A`: >`.updatef now` update your fallback without deploying, "
-            "but the app will back to latest successfully deployed state if "
-            "fallback restarted.\n"
-            ">`.updatef deploy` is more same but if fallback restarted it "
-            "won't rollback."
-        )
+
+CMD_HELP.update({
+    "dyno":
+    ">`.dyno usage`\
+    \nUsage: Check your heroku App usage dyno quota.\
+    \nIf one of your app usage is empty, it won't be write in output.\
+    \n\n>`.dyno on`\
+    \nUsage: Turn on your main dyno application.\
+    \n\n>`.dyno restart`\
+    \nUsage: Restart your dyno application.\
+    \n\n>`.dyno off`\
+    \nUsage: Shutdown dyno completly.\
+    \n\n>`.dyno cancel deploy` or >`.dyno cancel build`\
+    \nUsage: Cancel deploy from main app.\
+    \nGive build.id to specify build to cancel.\
+    \n\n>`.dyno get log`\
+    \nUsage: Get your main dyno recent logs.\
+    \n\n>`.help dyno`\
+    \nUsage: print this help.\
+    \n\n>`.updatef`\
+    \nUsage: Check fallback if there are any updates.\
+    \n\n>`.updatef deploy`\
+    \nUsage: If there are any updates, you can deploy fallback app.\
+    \n\n>`.updatef now`\
+    \nUsage: If there are any updates, you can update fallback app.\
+    \n\n\
+    **FAQ**:\n\
+    `Q`: What's different >`.updatef now` and >`.updatef deploy`?\n\
+    `A`: >`.updatef now` update your fallback without deploying, \
+    but the app will back to latest successfully deployed state if \
+    fallback restarted.\n\
+    >`.updatef deploy` is more same but if fallback restarted it \
+    won't rollback."
+})
