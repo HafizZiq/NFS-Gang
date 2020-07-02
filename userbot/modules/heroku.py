@@ -6,7 +6,7 @@
 #
 
 """
-    - Heroku manager for your userbot with a fallback for main userbot - """
+    - Heroku manager for your userbot with a fallback for main userbot -
 """
 
 import heroku3
