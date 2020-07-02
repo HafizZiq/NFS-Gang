@@ -1,21 +1,27 @@
 # Copyright (C) 2020 Adek Maulana.
+# All rights reserved.
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-""" - a fallback for main userbot - """
+
+"""
+    - Heroku manager for your userbot with a fallback for main userbot - """
+"""
+
+import heroku3
+import aiohttp
 import os
 import asyncio
 import requests
 import math
 from operator import itemgetter
 from userbot import (
-    heroku, fallback,
-    HEROKU_APP_NAME, HEROKU_API_KEY, HEROKU_API_KEY_FALLBACK
+    CMD_HELP, heroku, fallback,
+    HEROKU_APP_NAME, HEROKU_API_KEY, HEROKU_API_KEY_FALLBACK,
+    BOTLOG, BOTLOG_CHATID
 )
-from userbot import CMD_HELP
 from userbot.events import register
-
 
 heroku_api = "https://api.heroku.com"
 useragent = (
@@ -23,6 +29,110 @@ useragent = (
     'AppleWebKit/537.36 (KHTML, like Gecko) '
     'Chrome/81.0.4044.117 Mobile Safari/537.36'
 )
+
+if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
+    Heroku = heroku3.from_key(HEROKU_API_KEY)
+    app = Heroku.app(HEROKU_APP_NAME)
+    heroku_var = app.config()
+else:
+    app = None
+
+
+"""
+   ConfigVars setting, get current var, set var or delete var...
+"""
+
+
+@register(outgoing=True,
+          pattern=r"^.(get|del) var(?: |$)(\w*)")
+async def variable(var):
+    exe = var.pattern_match.group(1)
+    if app is None:
+        await var.edit("`[HEROKU]"
+                       "\nPlease setup your`  **HEROKU_APP_NAME**.")
+        return False
+    if exe == "get":
+        await var.edit("`Getting information...`")
+        variable = var.pattern_match.group(2)
+        if variable != '':
+            if variable in heroku_var:
+                if BOTLOG:
+                    await var.client.send_message(
+                        BOTLOG_CHATID, "#CONFIGVAR\n\n"
+                        "**ConfigVar**:\n"
+                        f"`{variable}` = `{heroku_var[variable]}`\n"
+                    )
+                    await var.edit("`Received to BOTLOG_CHATID...`")
+                    return True
+                else:
+                    await var.edit("`Please set BOTLOG to True...`")
+                    return False
+            else:
+                await var.edit("`Information don't exists...`")
+                return True
+        else:
+            configvars = heroku_var.to_dict()
+            msg = ''
+            if BOTLOG:
+                for item in configvars:
+                    msg += f"`{item}` = `{configvars[item]}`\n"
+                await var.client.send_message(
+                    BOTLOG_CHATID, "#CONFIGVARS\n\n"
+                    "**ConfigVars**:\n"
+                    f"{msg}"
+                )
+                await var.edit("`Received to BOTLOG_CHATID...`")
+                return True
+            else:
+                await var.edit("`Please set BOTLOG to True...`")
+                return False
+    elif exe == "del":
+        await var.edit("`Deleting information...`")
+        variable = var.pattern_match.group(2)
+        if variable == '':
+            await var.edit("`Specify ConfigVars you want to del...`")
+            return False
+        if variable in heroku_var:
+            if BOTLOG:
+                await var.client.send_message(
+                    BOTLOG_CHATID, "#DELCONFIGVAR\n\n"
+                    "**Delete ConfigVar**:\n"
+                    f"`{variable}`"
+                )
+            await var.edit("`Information deleted...`")
+            del heroku_var[variable]
+        else:
+            await var.edit("`Information don't exists...`")
+            return True
+
+
+@register(outgoing=True, pattern=r'^.set var (\w*) ([\s\S]*)')
+async def set_var(var):
+    await var.edit("`Setting information...`")
+    variable = var.pattern_match.group(1)
+    value = var.pattern_match.group(2)
+    if variable in heroku_var:
+        if BOTLOG:
+            await var.client.send_message(
+                BOTLOG_CHATID, "#SETCONFIGVAR\n\n"
+                "**Change ConfigVar**:\n"
+                f"`{variable}` = `{value}`"
+            )
+        await var.edit("`Information sets...`")
+    else:
+        if BOTLOG:
+            await var.client.send_message(
+                BOTLOG_CHATID, "#ADDCONFIGVAR\n\n"
+                "**Add ConfigVar**:\n"
+                f"`{variable}` = `{value}`"
+            )
+        await var.edit("`Information added...`")
+    heroku_var[variable] = value
+
+
+"""
+    Check account quota, remaining quota, used quota, used app quota
+"""
 
 
 @register(outgoing=True,
@@ -239,9 +349,20 @@ async def dyno_manage(dyno):
         await dyno.delete()
         return os.remove('logs.txt')
 
+
 CMD_HELP.update({
-    "dyno":
-    ">`.dyno usage`\
+    "heroku":
+    ">.set var <NEW VAR> <VALUE>\
+    \nUsage: add new variable or update existing value variable\
+    \n!!! WARNING !!!, after setting a variable the bot will restarted\
+    \n\n>.get var or >.get var <VAR>\
+    \nUsage: get your existing varibles, use it only on your private group!\
+    \nThis returns all of your private information, please be caution...\
+    \n\n>.del var <VAR>\
+    \nUsage: delete existing variable\
+    \n!!! WARNING !!!, after deleting variable the bot will restarted\
+    \n\n**Dyno components.**\
+    \n>`.dyno usage`\
     \nUsage: Check your heroku App usage dyno quota.\
     \nIf one of your app usage is empty, it won't be write in output.\
     \n\n>`.dyno on`\
