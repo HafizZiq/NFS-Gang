@@ -40,12 +40,12 @@
     },
     "HEROKU_APP_NAME": {
       "description": "Add the Heroku app name here. It helps with userbot updates.",
-      "value": ""
+      "value": "",
       "required": false
     },
     "HEROKU_API_KEY_FALLBACK": {
       "description": "Your Heroku fallback account API key this is only needed if you choose to run fallback into different heroku account, get it from 'https://dashboard.heroku.com/account'",
-      "value": ""
+      "value": "",
       "required": false
     },
     "HEROKU_APP_FALLBACK_NAME": {
