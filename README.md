@@ -1,9 +1,9 @@
 # 𝙿𝚁𝙾𝙹𝙴𝙲𝚃 𠘨下丂 厶卂𠘨厶
 [![Build](https://github.com/HafizZiq/NFS-Gang/workflows/FailedChecker/badge.svg?branch=master)](https://github.com/HafizZiq/NFS-Gang/actions "build")
 
-[Revision](https://github.com/MoveAngel/One4uBot)
+[Revision](https://github.com/HafizZiq/NFS-Gang)
 
-[^ Commit](https://github.com/MoveAngel/One4uBot/commits/sql-extended)
+[^ Commit](https://github.com/HafizZiq/NFS-Gang/commits/master)
 
 ```
 #include <std/disclaimer.h>
