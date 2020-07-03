@@ -5,9 +5,9 @@ from userbot.events import register
 
 PLACE = ''
 
-@register(pattern="^.adzan(12|24) (?: |$)(.*)")
+@register(pattern="^.adzan(12|24) (.*)")
 async def get_adzan(adzan):
-    if not adzan.pattern_match.group(1):
+    if not adzan.pattern_match.group(2):
         LOCATION = PLACE
         if not LOCATION:
             await adzan.edit("Please specify a zone code.")
