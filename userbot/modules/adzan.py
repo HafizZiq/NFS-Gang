@@ -41,7 +41,7 @@ async def get_adzan(adzan):
         )
         await adzan.edit(result)
     except KeyError:
-        await adzan.edit(`parsed["error_desc"]`)
+        await adzan.edit(parsed["error_desc"])
         return
 
 CMD_HELP.update({
