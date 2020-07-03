@@ -1,0 +1,2 @@
+language = "python3"
+run = "pip3 install -q wheel telethon;clear;python3 string_session.py"
