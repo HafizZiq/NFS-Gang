@@ -35,8 +35,8 @@ from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
 from userbot import (
-    G_DRIVE_DATA_2, G_DRIVE_CLIENT_ID_2, G_DRIVE_CLIENT_SECRET_2,
-    G_DRIVE_FOLDER_ID_2, BOTLOG_CHATID, TEMP_DOWNLOAD_DIRECTORY, CMD_HELP, LOGS,
+    GDRIVE_DATA_2, GDRIVE_CLIENT_ID_2, GDRIVE_CLIENT_SECRET_2,
+    GDRIVE_FOLDER_ID_2, BOTLOG_CHATID, TEMP_DOWNLOAD_DIRECTORY, CMD_HELP, LOGS,
 )
 from userbot.events import register
 from userbot.utils import progress, humanbytes, time_formatter, human_to_bytes
@@ -53,25 +53,25 @@ SCOPES = [
 ]
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 # =========================================================== #
-#      STATIC CASE FOR G_DRIVE_FOLDER_ID_2 IF VALUE IS URL    #
+#      STATIC CASE FOR GDRIVE_FOLDER_ID_2 IF VALUE IS URL     #
 # =========================================================== #
-__ = G_DRIVE_FOLDER_ID_2
+__ = GDRIVE_FOLDER_ID_2
 if __ is not None:
-    if "uc?id=" in G_DRIVE_FOLDER_ID_2:
+    if "uc?id=" in GDRIVE_FOLDER_ID_2:
         LOGS.info(
-            "G_DRIVE_FOLDER_ID_2 is not a valid folderURL...")
-        G_DRIVE_FOLDER_ID_2 = None
+            "GDRIVE_FOLDER_ID_2 is not a valid folderURL...")
+        GDRIVE_FOLDER_ID_2 = None
     try:
-        G_DRIVE_FOLDER_ID_2 = __.split("folders/")[1]
+        GDRIVE_FOLDER_ID_2 = __.split("folders/")[1]
     except IndexError:
         try:
-            G_DRIVE_FOLDER_ID_2 = __.split("open?id=")[1]
+            GDRIVE_FOLDER_ID_2 = __.split("open?id=")[1]
         except IndexError:
             if "/view" in __:
-                G_DRIVE_FOLDER_ID_2 = __.split("/")[-2]
+                GDRIVE_FOLDER_ID_2 = __.split("/")[-2]
             else:
                 try:
-                    G_DRIVE_FOLDER_ID_2 = __.split(
+                    GDRIVE_FOLDER_ID_2 = __.split(
                                       "folderview?id=")[1]
                 except IndexError:
                     if any(map(str.isdigit, __)):
@@ -86,9 +86,9 @@ if __ is not None:
                         pass
                     else:
                         LOGS.info(
-                            "G_DRIVE_FOLDER_ID_2 "
+                            "GDRIVE_FOLDER_ID_2 "
                             "not a valid ID/URL...")
-                        G_DRIVE_FOLDER_ID_2 = None
+                        GDRIVE_FOLDER_ID_2 = None
 # =========================================================== #
 #                           LOG                               #
 # =========================================================== #
@@ -99,7 +99,7 @@ logger.setLevel(logging.ERROR)
 # =========================================================== #
 
 
-@register(pattern="^.gdauth2(?: |$)", outgoing=True)
+@register(pattern="^.g2dauth(?: |$)", outgoing=True)
 async def generate_credentials(gdrive):
     """ - Only generate once for long run - """
     if helper.get_credentials(str(gdrive.from_id)) is not None:
@@ -107,28 +107,28 @@ async def generate_credentials(gdrive):
         await asyncio.sleep(1.5)
         return await gdrive.delete()
     """ - Generate credentials - """
-    if G_DRIVE_DATA_2 is not None:
+    if GDRIVE_DATA_2 is not None:
         try:
-            configs = json.loads(G_DRIVE_DATA_2)
+            configs = json.loads(GDRIVE_DATA_2)
         except json.JSONDecodeError:
             return await gdrive.edit(
                 "`[AUTHENTICATE - ERROR]`\n\n"
                 "`Status` : **BAD**\n"
-                "`Reason` : **G_DRIVE_DATA_2** entity is not valid!"
+                "`Reason` : `GDRIVE_DATA_2` entity is not valid!"
             )
     else:
         """ - Only for old user - """
-        if G_DRIVE_CLIENT_ID_2 is None and G_DRIVE_CLIENT_SECRET_2 is None:
+        if GDRIVE_CLIENT_ID_2 is None and GDRIVE_CLIENT_SECRET_2 is None:
             return await gdrive.edit(
                 "`[AUTHENTICATE - ERROR]`\n\n"
                 "`Status` : **BAD**\n"
-                "`Reason` : please get your **G_DRIVE_DATA_2** "
+                "`Reason` : please get your `GDRIVE_DATA_2`"
                 "[here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
             )
         configs = {
             "installed": {
-                "client_id": G_DRIVE_CLIENT_ID_2,
-                "client_secret": G_DRIVE_CLIENT_SECRET_2,
+                "client_id": GDRIVE_CLIENT_ID_2,
+                "client_secret": GDRIVE_CLIENT_SECRET_2,
                 "auth_uri": GOOGLE_AUTH_URI,
                 "token_uri": GOOGLE_TOKEN_URI,
             }
@@ -183,7 +183,7 @@ async def create_app(gdrive):
     return service
 
 
-@register(pattern="^.gdreset2(?: |$)", outgoing=True)
+@register(pattern="^.g2dreset(?: |$)", outgoing=True)
 async def reset_credentials(gdrive):
     """ - Reset credentials or change account - """
     await gdrive.edit("`Resetting information...`")
@@ -568,11 +568,11 @@ async def create_dir(service, folder_name):
         if parent_Id is not None:
             pass
     except NameError:
-        """ - Fallback to G_DRIVE_FOLDER_ID_2 else root dir - """
-        if G_DRIVE_FOLDER_ID_2 is not None:
-            metadata['parents'] = [G_DRIVE_FOLDER_ID_2]
+        """ - Fallback to GDRIVE_FOLDER_ID_2 else root dir - """
+        if GDRIVE_FOLDER_ID_2 is not None:
+            metadata['parents'] = [GDRIVE_FOLDER_ID_2]
     else:
-        """ - Override G_DRIVE_FOLDER_ID_2 because parent_Id not empty - """
+        """ - Override GDRIVE_FOLDER_ID_2 because parent_Id not empty - """
         metadata['parents'] = [parent_Id]
     folder = service.files().create(
            body=metadata, fields="id, webViewLink").execute()
@@ -597,11 +597,11 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
         if parent_Id is not None:
             pass
     except NameError:
-        """ - Fallback to G_DRIVE_FOLDER_ID_2 else root dir - """
-        if G_DRIVE_FOLDER_ID_2 is not None:
-            body['parents'] = [G_DRIVE_FOLDER_ID_2]
+        """ - Fallback to GDRIVE_FOLDER_ID_2 else root dir - """
+        if GDRIVE_FOLDER_ID_2 is not None:
+            body['parents'] = [GDRIVE_FOLDER_ID_2]
     else:
-        """ - Override G_DRIVE_FOLDER_ID_2 because parent_Id not empty - """
+        """ - Override GDRIVE_FOLDER_ID_2 because parent_Id not empty - """
         body['parents'] = [parent_Id]
     media_body = MediaFileUpload(
         file_path,
@@ -690,14 +690,14 @@ async def reset_parentId():
         if parent_Id is not None:
             pass
     except NameError:
-        if G_DRIVE_FOLDER_ID_2 is not None:
-            parent_Id = G_DRIVE_FOLDER_ID_2
+        if GDRIVE_FOLDER_ID_2 is not None:
+            parent_Id = GDRIVE_FOLDER_ID_2
     else:
         del parent_Id
     return
 
 
-@register(pattern=r"^.gdlist2(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)",
+@register(pattern=r"^.g2dlist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)",
           outgoing=True)
 async def lists(gdrive):
     await gdrive.edit("`Getting information...`")
@@ -807,7 +807,7 @@ async def lists(gdrive):
     return
 
 
-@register(pattern="^.gdf2 (mkdir|rm|chck) (.*)", outgoing=True)
+@register(pattern="^.g2df (mkdir|rm|chck) (.*)", outgoing=True)
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
     await gdrive.edit("`Sending information...`")
@@ -829,11 +829,11 @@ async def google_drive_managers(gdrive):
             if parent_Id is not None:
                 pass
         except NameError:
-            """ - Fallback to G_DRIVE_FOLDER_ID_2 else to root dir - """
-            if G_DRIVE_FOLDER_ID_2 is not None:
-                metadata['parents'] = [G_DRIVE_FOLDER_ID_2]
+            """ - Fallback to GDRIVE_FOLDER_ID_2 else to root dir - """
+            if GDRIVE_FOLDER_ID_2 is not None:
+                metadata['parents'] = [GDRIVE_FOLDER_ID_2]
         else:
-            """ - Override G_DRIVE_FOLDER_ID_2 because parent_Id not empty - """
+            """ - Override GDRIVE_FOLDER_ID_2 because parent_Id not empty - """
             metadata['parents'] = [parent_Id]
         page_token = None
         result = service.files().list(
@@ -955,7 +955,7 @@ async def google_drive_managers(gdrive):
     return
 
 
-@register(pattern="^.gdabort2(?: |$)", outgoing=True)
+@register(pattern="^.g2dabort(?: |$)", outgoing=True)
 async def cancel_process(gdrive):
     """
        Abort process for download and upload
@@ -971,7 +971,7 @@ async def cancel_process(gdrive):
     await gdrive.delete()
 
 
-@register(pattern="^.gd2(?: |$)(.*)", outgoing=True)
+@register(pattern="^.g2d(?: |$)(.*)", outgoing=True)
 async def google_drive(gdrive):
     reply = ''
     """ - Parsing all google drive function - """
@@ -1141,18 +1141,18 @@ async def google_drive(gdrive):
     return
 
 
-@register(pattern="^.gdfset2 (put|rm)(?: |$)(.*)", outgoing=True)
+@register(pattern="^.g2dfset (put|rm)(?: |$)(.*)", outgoing=True)
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
     await gdrive.edit("`Sending information...`")
     global parent_Id
     exe = gdrive.pattern_match.group(1)
     if exe == "rm":
-        if G_DRIVE_FOLDER_ID_2 is not None:
-            parent_Id = G_DRIVE_FOLDER_ID_2
+        if GDRIVE_FOLDER_ID_2 is not None:
+            parent_Id = GDRIVE_FOLDER_ID_2
             return await gdrive.edit(
                 "`[FOLDER - SET]`\n\n"
-                "`Status` : **OK** - using `G_DRIVE_FOLDER_ID_2` now."
+                "`Status` : **OK** - using `GDRIVE_FOLDER_ID_2` now."
             )
         else:
             try:
@@ -1166,7 +1166,7 @@ async def set_upload_folder(gdrive):
                 return await gdrive.edit(
                     "`[FOLDER - SET]`\n\n"
                     "`Status` : **OK**"
-                    " - `G_DRIVE_FOLDER_ID_2` empty, will use root."
+                    " - `GDRIVE_FOLDER_ID_2` empty, will use root."
                 )
     inp = gdrive.pattern_match.group(2)
     if not inp:
@@ -1289,34 +1289,34 @@ async def check_progress_for_dl(gdrive, gid, previous):
 
 CMD_HELP.update({
     "gdrive2":
-    ".gdauth2"
+    ".g2dauth"
     "\nUsage: generate token to enable all cmd google drive service."
     "\nThis only need to run once in life time."
-    "\n\n.gdreset2"
+    "\n\n.g2dreset"
     "\nUsage: reset your token if something bad happened or change drive acc."
-    "\n\n.gd2"
+    "\n\n.g2d"
     "\nUsage: Upload file from local or uri/url/drivelink into google drive."
     "\nfor drivelink it's upload only if you want to."
-    "\n\n.gdabort2"
+    "\n\n.g2dabort"
     "\nUsage: Abort process uploading or downloading."
-    "\n\n.gdlist2"
+    "\n\n.g2dlist"
     "\nUsage: Get list of folders and files with default size 50."
     "\nUse flags `-l range[1-1000]` for limit output."
     "\nUse flags `-p parents-folder_id` for lists given folder in gdrive."
-    "\n\n.gdf2 mkdir"
+    "\n\n.g2df mkdir"
     "\nUsage: Create gdrive folder."
-    "\n\n.gdf2 chck"
+    "\n\n.g2df chck"
     "\nUsage: Check file/folder in gdrive."
-    "\n\n.gdf2 rm"
+    "\n\n.g2df rm"
     "\nUsage: Delete files/folders in gdrive."
     "\nCan't be undone, this method skipping file trash, so be caution..."
-    "\n\n.gdfset2 put"
+    "\n\n.g2dfset put"
     "\nUsage: Change upload directory in gdrive."
-    "\n\n.gdfset2 rm"
+    "\n\n.g2dfset rm"
     "\nUsage: remove set parentId from cmd\n.gdfset put "
-    "into **G_DRIVE_FOLDER_ID_2** and if empty upload will go to root."
+    "into `GDRIVE_FOLDER_ID_2` and if empty upload will go to root."
     "\n\nNOTE:"
-    "\nfor .gdlist2 you can combine -l and -p flags with or without name "
+    "\nfor .g2dlist you can combine -l and -p flags with or without name "
     "at the same time, it must be `-l` flags first before use `-p` flags.\n"
     "And by default it lists from latest 'modifiedTime' and then folders."
 })

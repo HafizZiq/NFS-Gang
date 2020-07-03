@@ -161,11 +161,11 @@
       "description": "Enter the Google Drive authentication data, as a JSON structure for 1st Google Drive.",
       "required": false
     },
-    "G_DRIVE_CLIENT_ID_2": {
+    "GDRIVE_CLIENT_ID_2": {
       "description": "Enter Your Client ID for 2nd Google Drive.",
       "required": false
     },
-    "G_DRIVE_DATA_2": {
+    "GDRIVE_DATA_2": {
       "description": "Enter the Google Drive authentication data, as a JSON structure for 2nd Google Drive.",
       "required": false
     },
@@ -202,7 +202,7 @@
       "description": "Enter Your Client Secret for 1st Google Drive.",
       "required": false
     },
-    "G_DRIVE_CLIENT_SECRET_2": {
+    "GDRIVE_CLIENT_SECRET_2": {
       "description": "Enter Your Client Secret for 2nd Google Drive.",
       "required": false
     },

@@ -169,10 +169,10 @@ TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY",
                                          "./downloads")
 
 # 2nd Google Drive Module
-G_DRIVE_DATA_2 = os.environ.get("G_DRIVE_DATA_2", None)
-G_DRIVE_CLIENT_ID_2 = os.environ.get("G_DRIVE_CLIENT_ID_2", None)
-G_DRIVE_CLIENT_SECRET_2 = os.environ.get("G_DRIVE_CLIENT_SECRET_2", None)
-G_DRIVE_FOLDER_ID_2 = os.environ.get("G_DRIVE_FOLDER_ID_2", None)
+GDRIVE_DATA_2 = os.environ.get("GDRIVE_DATA_2", None)
+GDRIVE_CLIENT_ID_2 = os.environ.get("GDRIVE_CLIENT_ID_2", None)
+GDRIVE_CLIENT_SECRET_2 = os.environ.get("GDRIVE_CLIENT_SECRET_2", None)
+GDRIVE_FOLDER_ID_2 = os.environ.get("GDRIVE_FOLDER_ID_2", None)
 
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
