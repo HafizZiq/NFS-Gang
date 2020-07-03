@@ -1214,16 +1214,16 @@ async def gtfo(e):
                      "`\n█▄▄▄▄▄▄▄███▄▄███▄▄██████▄▄▄▄▄▄█ `"
                      "`\n███████████████████████████████ `")
 
-@register(outgoing=True, pattern="^.nih$")
+@register(outgoing=True, pattern="^.nah$")
 async def nih(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`\n(\_/)`"
                      "`\n(●_●)`"
-                     "`\n />🌹 *ini buat kamu`"
+                     "`\n />🌹 *for you`"
                      "`\n`"
                      "`\n(\_/)`"
                      "`\n(●_●)`"
-                     "`\n🌹<\  *tapi boong`")
+                     "`\n🌹<\  *but i lied xD`")
 
 @register(outgoing=True, pattern="^.fag$")
 async def gtfo(e):
@@ -1400,7 +1400,7 @@ CMD_HELP.update({
 \n\n.plane\
 \nPlane live memes.\
 \n\nAnd many more\
-\n.nou ; .bot ; .gey ; .taco ; .nih ;\
+\n.nou ; .bot ; .gey ; .taco ; .nah ;\
 \n.fag ; .gtfo ; .stfu ; .lol ; .lool ; .fail ; .love\
 \n.rain ; .earth ; .iwi\
 \n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
