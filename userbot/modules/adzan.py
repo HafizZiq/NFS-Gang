@@ -5,7 +5,7 @@ from userbot.events import register
 
 PLACE = ''
 
-@register(pattern="^.adzan(?: |$)(.*)")
+@register(pattern="^.adzan(12|24) (?: |$)(.*)")
 async def get_adzan(adzan):
     if not adzan.pattern_match.group(1):
         LOCATION = PLACE
@@ -13,9 +13,18 @@ async def get_adzan(adzan):
             await adzan.edit("Please specify a zone code.")
             return
     else:
-        LOCATION = adzan.pattern_match.group(1).upper()
+        LOCATION = adzan.pattern_match.group(2).upper()
+        type = adzan.pattern_match.group(1)
     await adzan.edit("Processing...")
-    url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=12-hour'
+    if type == "12":
+        url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=12-hour'
+    elif type == "24":
+        url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=24-hour'
+    else:
+        await adzan.edit("Please use .adzan12 or .adzan24.\
+            \nElse, refer `.help adzan` how to use it."
+        )
+        return
     request = requests.get(url)
     parsed = json.loads(request.text)
     timezone = LOCATION
@@ -45,7 +54,7 @@ async def get_adzan(adzan):
         return
 
 CMD_HELP.update({
-        "adzan": ".adzan <zone code>\
+        "adzan": ".adzan12(12-hour format) or .adzan24(24-hour format) <zone code>\
         \nWARNING!! This Module only works with States in Malaysia ONLY!!\
         \nUsage: Gets the prayer time for Muslim.\
         \n[Here](https://telegra.ph/Zone-Code-07-03) the zone code instructions."
