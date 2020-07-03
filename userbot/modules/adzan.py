@@ -18,7 +18,8 @@ async def get_adzan(adzan):
     url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=12-hour'
     request = requests.get(url)
     parsed = json.loads(request.text)
-    if parsed["error_code"] == 400:
+    err = parsed["error_code"]
+    if err == 400:
         return await adzan.edit(parsed["error_desc"])
     parsed = json.loads(request.text)
     timezone = LOCATION
