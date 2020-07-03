@@ -18,32 +18,31 @@ async def get_adzan(adzan):
     url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=12-hour'
     request = requests.get(url)
     parsed = json.loads(request.text)
-    err = parsed["error_code"]
-    if err == 400:
-        return await adzan.edit(parsed["error_desc"])
-    parsed = json.loads(request.text)
     timezone = LOCATION
-    city = parsed["locations"]
-    date = parsed["prayer_times"]["date"]
-    imsak = parsed["prayer_times"]["imsak"].upper()
-    subuh = parsed["prayer_times"]["subuh"].upper()
-    syuruk = parsed["prayer_times"]["syuruk"].upper()
-    zohor = parsed["prayer_times"]["zohor"].upper()
-    asar = parsed["prayer_times"]["asar"].upper()
-    maghrib = parsed["prayer_times"]["maghrib"].upper()
-    isyak = parsed["prayer_times"]["isyak"].upper()
-    result = (f"**Jadual Solat**:\n"
-        f"📅 {date} | {timezone}\n"
-        f"📍 {city}\n\n"
-        f"**Imsak   :** {imsak}\n"
-        f"**Subuh   :** {subuh}\n"
-        f"**Zohor   :** {zohor}\n"
-        f"**Asar    :** {asar}\n"
-        f"**Maghrib :** {maghrib}\n"
-        f"**Isyak   :** {isyak}\n"
-    )
-
-    await adzan.edit(result)
+    try:
+        city = parsed["locations"]
+        date = parsed["prayer_times"]["date"]
+        imsak = parsed["prayer_times"]["imsak"].upper()
+        subuh = parsed["prayer_times"]["subuh"].upper()
+        syuruk = parsed["prayer_times"]["syuruk"].upper()
+        zohor = parsed["prayer_times"]["zohor"].upper()
+        asar = parsed["prayer_times"]["asar"].upper()
+        maghrib = parsed["prayer_times"]["maghrib"].upper()
+        isyak = parsed["prayer_times"]["isyak"].upper()
+        result = (f"**Jadual Solat**:\n"
+            f"📅 {date} | {timezone}\n"
+            f"📍 {city}\n\n"
+            f"**Imsak   :** {imsak}\n"
+            f"**Subuh   :** {subuh}\n"
+            f"**Zohor   :** {zohor}\n"
+            f"**Asar    :** {asar}\n"
+            f"**Maghrib :** {maghrib}\n"
+            f"**Isyak   :** {isyak}\n"
+        )
+        await adzan.edit(result)
+    except KeyError:
+        await adzan.edit(parsed["error_desc"])
+        return
 
 CMD_HELP.update({
         "adzan": ".adzan <zone code>\
