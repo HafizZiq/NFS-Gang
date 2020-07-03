@@ -1,6 +1,5 @@
 import json
 import requests
-
 from userbot import CMD_HELP
 from userbot.events import register
 
@@ -11,44 +10,43 @@ async def get_adzan(adzan):
     if not adzan.pattern_match.group(1):
         LOCATION = PLACE
         if not LOCATION:
-            await adzan.edit("Please specify a city or a state.")
+            await adzan.edit("Please specify a zone code.")
             return
     else:
-        LOCATION = adzan.pattern_match.group(1)
+        LOCATION = adzan.pattern_match.group(1).upper()
 
-    # url = f'http://muslimsalat.com/{LOKASI}.json?key=bd099c5825cbedb9aa934e255a81a5fc'
-    url = f'https://api.pray.zone/v2/times/today.json?city={LOCATION}'
+    url = f'http://api.azanpro.com/times/today.json?zone={LOCATION}&format=12-hour'
     request = requests.get(url)
-    if request.status_code == 500:
-        return await adzan.edit(f"Couldn't find city `{LOCATION}`")
-    
     parsed = json.loads(request.text)
-   
-    city = parsed["results"]["location"]["city"]
-    country = parsed["results"]["location"]["country"]
-    timezone = parsed["results"]["location"]["timezone"]
-    date = parsed["results"]["datetime"][0]["date"]["gregorian"]
-
-    imsak = parsed["results"]["datetime"][0]["times"]["Imsak"]
-    subuh = parsed["results"]["datetime"][0]["times"]["Fajr"]
-    zuhur = parsed["results"]["datetime"][0]["times"]["Dhuhr"]
-    ashar = parsed["results"]["datetime"][0]["times"]["Asr"]
-    maghrib = parsed["results"]["datetime"][0]["times"]["Maghrib"]
-    isya = parsed["results"]["datetime"][0]["times"]["Isha"]
-
-    result = (f"**Jadwal Sholat**:\n"
-                 f"📅 `{date} | {timezone}`\n"
-                 f"📍 `{city} | {country}`\n\n"
-                 f"**Imsak :** `{imsak}`\n"
-                 f"**Subuh :** `{subuh}`\n"
-                 f"**Zuhur :** `{zuhur}`\n"
-                 f"**Ashar :** `{ashar}`\n"
-                 f"**Maghrib :** `{maghrib}`\n"
-                 f"**Isya :** `{isya}`\n")
+    if parsed["error_code"] == 400:
+        return await adzan.edit(parsed["error_desc"])
+    parsed = json.loads(request.text)
+    timezone = LOCATION
+    city = parsed["locations"]
+    date = parsed["prayer_times"]["date"]
+    imsak = parsed["prayer_times"]["imsak"].upper()
+    subuh = parsed["prayer_times"]["subuh"].upper()
+    syuruk = parsed["prayer_times"]["syuruk"].upper()
+    zohor = parsed["prayer_times"]["zohor"].upper()
+    asar = parsed["prayer_times"]["asar"].upper()
+    maghrib = parsed["prayer_times"]["maghrib"].upper()
+    isyak = parsed["prayer_times"]["isyak"].upper()
+    result = (f"**Jadual Solat**:\n"
+        f"📅 {date} | {timezone}\n"
+        f"📍 {city}\n\n"
+        f"**Imsak   :** {imsak}\n"
+        f"**Subuh   :** {subuh}\n"
+        f"**Zohor   :** {zohor}\n"
+        f"**Asar    :** {asar}\n"
+        f"**Maghrib :** {maghrib}\n"
+        f"**Isyak   :** {isyak}\n"
+    )
 
     await adzan.edit(result)
 
 CMD_HELP.update({
-        "adzan": ".adzan <city>\
-        \nUsage: Gets the prayer time for moslem."
+        "adzan": ".adzan <zone code>\
+        \nWARNING!! This Module only works with States in Malaysia ONLY!!\
+        \nUsage: Gets the prayer time for Muslim.\
+        \n[Here](https://telegra.ph/Zone-Code-07-03) the zone code instructions."
     })
