@@ -122,8 +122,8 @@ async def generate_credentials(gdrive):
             return await gdrive.edit(
                 "`[AUTHENTICATE - ERROR]`\n\n"
                 "`Status` : **BAD**\n"
-                "`Reason` : please get your **G_DRIVE_DATA** "
-                "[here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
+                "`Reason` : please get your `G_DRIVE_DATA` "
+                " [here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
             )
         configs = {
             "installed": {
