@@ -776,14 +776,11 @@ async def SpoMusDown(TifyDown):
     chat = "@SpotifyMusicDownloaderBot"
     await TifyDown.edit("```Getting Your Music```")
     async with bot.conversation(chat) as conv:
-          await asyncio.sleep(2)
           await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
           try:
               response = conv.wait_event(events.NewMessage(incoming=True,from_users=752979930))
               msg = await bot.send_message(chat, link)
               respond = await response
-              res = conv.wait_event(events.NewMessage(incoming=True,from_users=752979930))
-              r = await res
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
@@ -791,7 +788,7 @@ async def SpoMusDown(TifyDown):
               return
           await bot.forward_messages(TifyDown.chat_id, respond.message)
     await TifyDown.client.delete_messages(conv.chat_id,
-                                       [msg.id, r.id, respond.id])
+                                       [msg.id, respond.id, respond.id])
     await TifyDown.delete()
 
 
