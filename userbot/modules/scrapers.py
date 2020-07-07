@@ -778,7 +778,7 @@ async def SpoMusDown(TifyDown):
     async with bot.conversation(chat) as conv:
           await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
           try:
-              msg_start = await conv.send_message("/start")
+              msg_start = await conv.send_message("/status")
               response = await conv.get_response()
               msg = await conv.send_message(link)
               song = await conv.get_response()
