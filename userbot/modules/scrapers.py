@@ -720,7 +720,6 @@ async def WooMai(netase):
     link = f"/netease {song}"
     await netase.edit("```Getting Your Music```")
     async with bot.conversation(chat) as conv:
-          await asyncio.sleep(2)
           await netase.edit("`Downloading...Please wait`")
           try:
               msg = await conv.send_message(link)
@@ -732,8 +731,7 @@ async def WooMai(netase):
               await netase.reply("```Please unblock @WooMaiBot and try again```")
               return
           await netase.edit("`Sending Your Music...`")
-          await asyncio.sleep(3)
-          await bot.send_file(netase.chat_id, respond)
+          await bot.send_file(netase.chat_id, respond, caption=respond.text)
     await netase.client.delete_messages(conv.chat_id,
                                        [msg.id, response.id, respond.id])
     await netase.delete()
