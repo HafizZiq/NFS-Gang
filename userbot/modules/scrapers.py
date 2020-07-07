@@ -719,18 +719,11 @@ async def WooMai(netase):
     chat = "@WooMaiBot"
     link = f"/netease {song}"
     await netase.edit("```Getting Your Music```")
-    sed = "未找到结果"
     async with bot.conversation(chat) as conv:
           await netase.edit("`Downloading...Please wait`")
           try:
               msg = await conv.send_message(link)
               response = await conv.get_response()
-              if sed in response:
-                  await netase.edit("`no results found`")
-                  await netase.client.delete_messages(conv.chat_id,
-                                                     [msg.id, response.id])
-                  await netase.delete()
-                  return
               respond = await conv.get_response()
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
@@ -786,19 +779,12 @@ async def SpoMusDown(TifyDown):
     else:
         await TifyDown.edit("```Getting Your Music```")
     chat = "@SpotifyMusicDownloaderBot"
-    sed = "Couldn't find that:("
     async with bot.conversation(chat) as conv:
           await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
           try:
               msg = await conv.send_message(link)
               song = await conv.get_response()
               pubdata = await conv.get_response()
-              if sed in pubdata:
-                  await TifyDown.edit(f"`{sed}`")
-                  await TifyDown.client.delete_messages(conv.chat_id,
-                                                     [msg.id, song.id, pubdata.id])
-                  await TifyDown.delete()
-                  return
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
