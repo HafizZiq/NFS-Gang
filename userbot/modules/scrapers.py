@@ -755,6 +755,7 @@ async def DeezLoader(Deezlod):
               msg = await conv.send_message(d_link)
               details = await conv.get_response()
               song = await conv.get_response()
+              tlink = await conv.get_response()
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
@@ -762,7 +763,7 @@ async def DeezLoader(Deezlod):
               return
           await bot.send_file(Deezlod.chat_id, song, caption=details.text)
           await Deezlod.client.delete_messages(conv.chat_id,
-                                             [msg_start.id, response.id, r.id, msg.id, details.id, song.id])
+                                             [msg_start.id, response.id, r.id, msg.id, details.id, song.id, tlink.id])
           await Deezlod.delete()
 
 
