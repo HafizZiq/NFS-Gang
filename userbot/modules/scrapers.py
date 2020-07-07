@@ -772,8 +772,11 @@ async def SpoMusDown(TifyDown):
     if TifyDown.fwd_from:
         return
     link = TifyDown.pattern_match.group(1)
+    if ".com" in link:
+        await TifyDown.edit("```I need Artist - Song Title, not your shitty link ;_;```")
+    else:
+        await TifyDown.edit("```Getting Your Music```")
     chat = "@SpotifyMusicDownloaderBot"
-    await TifyDown.edit("```Getting Your Music```")
     async with bot.conversation(chat) as conv:
           await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
           try:
