@@ -728,7 +728,7 @@ async def WooMai(netase):
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
-              await netase.reply("```Please unblock @WooMaiBot and try again```")
+              await netase.reply("**Error:** `unblock` @WooMaiBot `and retry!`")
               return
           await netase.edit("`Sending Your Music...`")
           await bot.send_file(netase.chat_id, respond, caption=respond.text)
@@ -750,13 +750,9 @@ async def DeezLoader(Deezlod):
     chat = "@DeezLoadBot"
     async with bot.conversation(chat) as conv:
           try:
-              msg_start = await conv.send_message("/start")
-              response = await conv.get_response()
-              r = await conv.get_response()
               msg = await conv.send_message(d_link)
               details = await conv.get_response()
               song = await conv.get_response()
-              tlink = await conv.get_response()
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
@@ -764,7 +760,7 @@ async def DeezLoader(Deezlod):
               return
           await bot.send_file(Deezlod.chat_id, song, caption=details.text)
           await Deezlod.client.delete_messages(conv.chat_id,
-                                             [msg_start.id, response.id, r.id, msg.id, details.id, song.id, tlink.id])
+                                             [msg.id, details.id, song.id])
           await Deezlod.delete()
 
 
@@ -788,7 +784,7 @@ async def SpoMusDown(TifyDown):
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
-              await TifyDown.reply("```Please unblock @SpotifyMusicDownloaderBot and try again```")
+              await TifyDown.reply("**Error:** `unblock` @SpotifyMusicDownloaderBot `and retry!`")
               return
           await bot.send_file(TifyDown.chat_id, song, caption=song.text)
     await TifyDown.client.delete_messages(conv.chat_id,
