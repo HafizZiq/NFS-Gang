@@ -769,11 +769,14 @@ async def SpoMusDown(TifyDown):
     if TifyDown.fwd_from:
         return
     link = TifyDown.pattern_match.group(1)
-    if ".com" in link:
-        await TifyDown.edit("```I need Artist - Song Title, not your shitty link ;_;```")
+    if "spotify.com" and "deezer.com" in link:
+        pass
+    elif ".com" in link:
+        await TifyDown.edit("```I need Artist - Song Title\nor\nSpotify/Deezer song link.\nNot your shitty link ;_;```")
         return
     else:
-        await TifyDown.edit("```Getting Your Music```")
+        pass
+    await TifyDown.edit("```Getting Your Music```")
     chat = "@SpotifyMusicDownloaderBot"
     async with bot.conversation(chat) as conv:
           await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
@@ -851,6 +854,6 @@ CMD_HELP.update({
     \nUsage: Download music with @WooMaiBot\
     \n\n.sdd <Spotify/Deezer Link>\
     \nUsage: Download music from Spotify or Deezer\
-    \n\n.smd <Artist - Song Title>\
+    \n\n.smd <Artist - Song Title> or <Spotify/Deezer Link>\
     \nUsage: Download music from Spotify"
 })
