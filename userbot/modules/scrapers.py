@@ -789,7 +789,7 @@ async def SpoMusDown(TifyDown):
           except YouBlockedUserError:
               await TifyDown.reply("**Error:** `unblock` @SpotifyMusicDownloaderBot `and retry!`")
               return
-          await bot.send_file(TifyDown.chat_id, song, caption=song.text)
+          await bot.send_file(TifyDown.chat_id, song)
     await TifyDown.client.delete_messages(conv.chat_id,
                                        [msg.id, song.id, pubdata.id])
     await TifyDown.delete()
