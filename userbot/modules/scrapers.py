@@ -769,7 +769,11 @@ async def SpoMusDown(TifyDown):
     if TifyDown.fwd_from:
         return
     link = TifyDown.pattern_match.group(1)
-    if "open.spotify.com" and "deezer.com" and "itunes.apple.com" in link:
+    if "open.spotify.com" in link:
+        pass
+    elif "deezer.com" in link:
+        pass
+    elif "itunes.apple.com" in link:
         pass
     elif ".com" in link:
         await TifyDown.edit("```I need Artist - Song Title\nor\nSpotify/Deezer/Apple Music song link lmao.\nNot your shitty link boi```")
