@@ -36,7 +36,10 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
 from asyncio import sleep
-from userbot import bot, CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY, CHROME_DRIVER, GOOGLE_CHROME_BIN
+from userbot import (bot, CMD_HELP,
+                     BOTLOG, BOTLOG_CHATID,
+                     YOUTUBE_API_KEY, CHROME_DRIVER,
+                     GOOGLE_CHROME_BIN, TEMP_DOWNLOAD_DIRECTORY)
 from userbot.events import register
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio
@@ -53,9 +56,6 @@ except:
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
-TRT_LANG = "en"
-TEMP_DOWNLOAD_DIRECTORY = "/root/NFSGang/.bin"
-
 
 @register(outgoing=True, pattern="^.crblang (.*)")
 async def setlang(prog):
@@ -78,8 +78,8 @@ async def carbon_api(e):
         pcode = str(textx.message)  # Importing message to module
     code = quote_plus(pcode)  # Converting to urlencoded
     await e.edit("`Processing..\n25%`")
-    if os.path.isfile("/root/userbot/.bin/carbon.png"):
-        os.remove("/root/userbot/.bin/carbon.png")
+    if os.path.isfile(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png"):
+        os.remove(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png")
     url = CARBON.format(code=code, lang=CARBONLANG)
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -88,20 +88,19 @@ async def carbon_api(e):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-gpu")
-    prefs = {'download.default_directory': '/root/userbot/.bin'}
+    prefs = {'download.default_directory': TEMP_DOWNLOAD_DIRECTORY}
     chrome_options.add_experimental_option('prefs', prefs)
     driver = webdriver.Chrome(executable_path=CHROME_DRIVER,
                               options=chrome_options)
     driver.get(url)
     await e.edit("`Processing..\n50%`")
-    download_path = '/root/userbot/.bin'
     driver.command_executor._commands["send_command"] = (
         "POST", '/session/$sessionId/chromium/send_command')
     params = {
         'cmd': 'Page.setDownloadBehavior',
         'params': {
             'behavior': 'allow',
-            'downloadPath': download_path
+            'downloadPath': TEMP_DOWNLOAD_DIRECTORY
         }
     }
     command_result = driver.execute("send_command", params)
@@ -110,10 +109,10 @@ async def carbon_api(e):
    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
     await e.edit("`Processing..\n75%`")
     # Waiting for downloading
-    while not os.path.isfile("/root/userbot/.bin/carbon.png"):
+    while not os.path.isfile(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png"):
         await sleep(0.5)
     await e.edit("`Processing..\n100%`")
-    file = '/root/userbot/.bin/carbon.png'
+    file = TEMP_DOWNLOAD_DIRECTORY + "/carbon.png"
     await e.edit("`Uploading..`")
     await e.client.send_file(
         e.chat_id,
@@ -124,7 +123,7 @@ async def carbon_api(e):
         reply_to=e.message.reply_to_msg_id,
     )
 
-    os.remove('/root/userbot/.bin/carbon.png')
+    os.remove(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png")
     driver.quit()
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
