@@ -80,7 +80,6 @@ UB_BLACK_LIST_CHAT = set(int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", ""
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN") or "False")
 
 # Heroku Credentials for updater.
-<<<<<<< HEAD
 HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ") or "False")
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME") or None
 HEROKU_APP_FALLBACK_NAME = os.environ.get("HEROKU_APP_FALLBACK_NAME") or None
