@@ -1,4 +1,4 @@
-FROM zainarbani/dockerub:one4u-alpine
+FROM movecrew/one4ubot:alpine-latest
 
 RUN mkdir /NFSGang && chmod 777 /NFSGang
 ENV PATH="/NFSGang/bin:$PATH"
