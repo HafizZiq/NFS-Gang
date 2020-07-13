@@ -9,7 +9,7 @@ RUN git clone https://github.com/HafizZiq/NFS-Gang -b master /NFSGang
 #
 # Copies session and config(if it exists)
 #
-COPY ./sample_config.env ./userbot.session* ./config.env* /NFSGang/
+COPY ./userbot.session* ./config.env* /NFSGang/
 
 #
 # Finalization
