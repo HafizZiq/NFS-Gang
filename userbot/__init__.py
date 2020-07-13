@@ -68,7 +68,10 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID") or 0)
 
 # Userbot logging feature switch.
 BOTLOG = sb(os.environ.get("BOTLOG") or "False")
-LOGSPAMMER = sb(os.environ.get("LOGSPAMMER") or "False")
+if BOTLOG:
+    LOGSPAMMER = sb(os.environ.get("LOGSPAMMER") or "False")
+else:
+    LOGSPAMMER = False
 
 # set blacklist_chats where you do not want userbot's features
 UB_BLACK_LIST_CHAT = set(int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split())
@@ -219,19 +222,7 @@ if HEROKU_API_KEY_FALLBACK and HEROKU_APP_FALLBACK_NAME:
 #######################################################################
 
 async def check_botlog_chatid():
-    if not BOTLOG_CHATID and LOGSPAMMER:
-        LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the private error log storage to work."
-        )
-        quit(1)
-
-    elif not BOTLOG_CHATID and BOTLOG:
-        LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the userbot logging feature to work."
-        )
-        quit(1)
-
-    elif not BOTLOG or not LOGSPAMMER:
+    if not BOTLOG:
         return
 
     entity = await bot.get_entity(BOTLOG_CHATID)
