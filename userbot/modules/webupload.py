@@ -1,12 +1,8 @@
-from telethon import events
-import subprocess
-import os
-from telethon.errors import MessageEmptyError, MessageTooLongError, MessageNotModifiedError
-import io
 import asyncio
 import time
 from userbot import CMD_HELP
 from userbot.events import register
+
 
 @register(pattern="^.webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|openload|file.io|vshare)")
 async def _(event):
@@ -21,18 +17,26 @@ async def _(event):
     else:
         reply = await event.get_reply_message()
         file_name = await bot.download_media(reply.media, Var.TEMP_DOWNLOAD_DIRECTORY)
-    reply_to_id = event.message.id
-    CMD_WEB = {"anonfiles": "curl -F \"file=@{}\" https://anonfiles.com/api/upload", "transfer": "curl --upload-file \"{}\" https://transfer.sh/{os.path.basename(file_name)}", "anonymousfiles": "curl -F file=\"@{}\" https://api.anonymousfiles.io/", "megaupload": "curl -F file=\"@{}\" https://megaupload.is/api/upload", "bayfiles": "curl -F file=\"@{}\" https://bayfiles.com/api/upload", "openload": "curl -F file=\"@{}\" https://api.openload.cc/upload", "file.io": "curl -F file=\"@{}\" https://file.io" , "vshare": "curl -F file=\"@{}\" https://api.vshare.is/upload"}
+    event.message.id
+    CMD_WEB = {
+        "anonfiles": "curl -F \"file=@{}\" https://anonfiles.com/api/upload",
+        "transfer": "curl --upload-file \"{}\" https://transfer.sh/{os.path.basename(file_name)}",
+        "anonymousfiles": "curl -F file=\"@{}\" https://api.anonymousfiles.io/",
+        "megaupload": "curl -F file=\"@{}\" https://megaupload.is/api/upload",
+        "bayfiles": "curl -F file=\"@{}\" https://bayfiles.com/api/upload",
+        "openload": "curl -F file=\"@{}\" https://api.openload.cc/upload",
+        "file.io": "curl -F file=\"@{}\" https://file.io",
+        "vshare": "curl -F file=\"@{}\" https://api.vshare.is/upload"}
     try:
         selected_one = CMD_WEB[selected_transfer].format(file_name)
     except KeyError:
         await event.edit("Invalid selected Transfer")
     cmd = selected_one
-    start_time = time.time() + PROCESS_RUN_TIME
+    time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
     await event.edit(f"{stdout.decode()}")
-CMD_HELP.update({ "webupload":
-"`.webupload` (filename) `--anonfiles` | `transfer` | `anonymousfiles` | `megaupload` | `bayfiles` | `openload` | `files.io` | `vshare` "})  
+CMD_HELP.update({"webupload":
+                 "`.webupload` (filename) `--anonfiles` | `transfer` | `anonymousfiles` | `megaupload` | `bayfiles` | `openload` | `files.io` | `vshare` "})

@@ -1,6 +1,3 @@
-from telethon import events
-import asyncio
-import json
 import requests
 from urllib.parse import quote
 from userbot import CMD_HELP
@@ -21,8 +18,8 @@ async def _(event):
             queryresult = requests.get(
                 xkcd_search_url,
                 params={
-                    "action":"xkcd",
-                    "query":quote(input_str)
+                    "action": "xkcd",
+                    "query": quote(input_str)
                 }
             ).text
             xkcd_id = queryresult.split(" ")[2].lstrip("\n")
@@ -38,10 +35,10 @@ async def _(event):
         day = data["day"].zfill(2)
         xkcd_link = "https://xkcd.com/{}".format(data.get("num"))
         safe_title = data.get("safe_title")
-        transcript = data.get("transcript")
+        data.get("transcript")
         alt = data.get("alt")
         img = data.get("img")
-        title = data.get("title")
+        data.get("title")
         output_str = """[\u2060]({})**{}**
 [XKCD ]({})
 Title: {}
@@ -53,7 +50,7 @@ Year: {}""".format(img, input_str, xkcd_link, safe_title, alt, day, month, year)
     else:
         await event.edit("xkcd n.{} not found!".format(xkcd_id))
 CMD_HELP.update({
-"xkcd":
-"Finds the Xkcd form of given query.\
+    "xkcd":
+    "Finds the Xkcd form of given query.\
 \nUse:- .xkcd <query>"
 })

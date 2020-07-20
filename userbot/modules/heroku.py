@@ -10,7 +10,6 @@
 """
 
 import heroku3
-import aiohttp
 import os
 import asyncio
 import requests

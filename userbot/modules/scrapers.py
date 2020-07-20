@@ -17,7 +17,6 @@ from re import findall
 from selenium import webdriver
 from urllib.parse import quote_plus
 from urllib.error import HTTPError
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
@@ -41,23 +40,21 @@ from userbot import (bot, CMD_HELP,
                      YOUTUBE_API_KEY, CHROME_DRIVER,
                      GOOGLE_CHROME_BIN)
 from userbot.events import register
-from telethon import events
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.account import UpdateNotifySettingsRequest
-from userbot.utils import progress, humanbytes, time_formatter
+from userbot.utils import progress
 from userbot.utils.google_images_download import googleimagesdownload
-import io
 import glob
 try:
-    import instantmusic , subprocess
-except:
+    pass
+except BaseException:
     os.system("pip install instantmusic")
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
 TEMP_DOWNLOAD_DIRECTORY = "/NFS-Gang/.bin"
+
 
 @register(outgoing=True, pattern="^.crblang (.*)")
 async def setlang(prog):
@@ -105,7 +102,7 @@ async def carbon_api(e):
             'downloadPath': TEMP_DOWNLOAD_DIRECTORY
         }
     }
-    command_result = driver.execute("send_command", params)
+    driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
    # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
@@ -350,7 +347,7 @@ async def imdb(e):
         final_name = '+'.join(remove_space)
         page = get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" + final_name +
                    "&s=all")
-        lnk = str(page.status_code)
+        str(page.status_code)
         soup = BeautifulSoup(page.content, 'lxml')
         odds = soup.findAll("tr", "odd")
         mov_title = odds[0].findNext('td').findNext('td').text
@@ -498,8 +495,9 @@ async def download_song(song):
         return
     cmd = song.pattern_match.group(1)
     reply_to_id = song.message.id
+
     def bruh(name):
-        os.system("instantmusic -q -s "+name)
+        os.system("instantmusic -q -s " + name)
     if song.reply_to_msg_id:
         reply_to_id = song.reply_to_msg_id
     await song.edit("`Ok finding the song...`")
@@ -512,15 +510,16 @@ async def download_song(song):
         return False
     await song.edit("`Sending song...`")
     await song.client.send_file(
-                song.chat_id,
-                loa,
-                force_document=True,
-                allow_cache=False,
-                caption=cmd,
-                reply_to=reply_to_id
-            )
+        song.chat_id,
+        loa,
+        force_document=True,
+        allow_cache=False,
+        caption=cmd,
+        reply_to=reply_to_id
+    )
     await song.edit("`Done`")
     os.remove(loa)
+
 
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
@@ -721,20 +720,20 @@ async def WooMai(netase):
     link = f"/netease {song}"
     await netase.edit("```Getting Your Music```")
     async with bot.conversation(chat) as conv:
-          await netase.edit("`Downloading...Please wait`")
-          try:
-              msg = await conv.send_message(link)
-              response = await conv.get_response()
-              respond = await conv.get_response()
-              """ - don't spam notif - """
-              await bot.send_read_acknowledge(conv.chat_id)
-          except YouBlockedUserError:
-              await netase.reply("**Error:** `unblock` @WooMaiBot `and retry!`")
-              return
-          await netase.edit("`Sending Your Music...`")
-          await bot.send_file(netase.chat_id, respond, caption=respond.text)
+        await netase.edit("`Downloading...Please wait`")
+        try:
+            msg = await conv.send_message(link)
+            response = await conv.get_response()
+            respond = await conv.get_response()
+            """ - don't spam notif - """
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await netase.reply("**Error:** `unblock` @WooMaiBot `and retry!`")
+            return
+        await netase.edit("`Sending Your Music...`")
+        await bot.send_file(netase.chat_id, respond, caption=respond.text)
     await netase.client.delete_messages(conv.chat_id,
-                                       [msg.id, response.id, respond.id])
+                                        [msg.id, response.id, respond.id])
     await netase.delete()
 
 
@@ -750,19 +749,19 @@ async def DeezLoader(Deezlod):
         await Deezlod.edit("**Initiating Download!**")
     chat = "@DeezLoadBot"
     async with bot.conversation(chat) as conv:
-          try:
-              msg = await conv.send_message(d_link)
-              details = await conv.get_response()
-              song = await conv.get_response()
-              """ - don't spam notif - """
-              await bot.send_read_acknowledge(conv.chat_id)
-          except YouBlockedUserError:
-              await Deezlod.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
-              return
-          await bot.send_file(Deezlod.chat_id, song, caption=details.text)
-          await Deezlod.client.delete_messages(conv.chat_id,
+        try:
+            msg = await conv.send_message(d_link)
+            details = await conv.get_response()
+            song = await conv.get_response()
+            """ - don't spam notif - """
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await Deezlod.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
+            return
+        await bot.send_file(Deezlod.chat_id, song, caption=details.text)
+        await Deezlod.client.delete_messages(conv.chat_id,
                                              [msg.id, details.id, song.id])
-          await Deezlod.delete()
+        await Deezlod.delete()
 
 
 @register(outgoing=True, pattern="^.smd(?: |$)(.*)")
@@ -784,19 +783,19 @@ async def SpoMusDown(TifyDown):
     await TifyDown.edit("```Getting Your Music```")
     chat = "@SpotifyMusicDownloaderBot"
     async with bot.conversation(chat) as conv:
-          await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
-          try:
-              msg = await conv.send_message(link)
-              song = await conv.get_response()
-              pubdata = await conv.get_response()
-              """ - don't spam notif - """
-              await bot.send_read_acknowledge(conv.chat_id)
-          except YouBlockedUserError:
-              await TifyDown.reply("**Error:** `unblock` @SpotifyMusicDownloaderBot `and retry!`")
-              return
-          await bot.send_file(TifyDown.chat_id, song)
+        await TifyDown.edit("`Downloading music taking some times,  Stay Tuned.....`")
+        try:
+            msg = await conv.send_message(link)
+            song = await conv.get_response()
+            pubdata = await conv.get_response()
+            """ - don't spam notif - """
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await TifyDown.reply("**Error:** `unblock` @SpotifyMusicDownloaderBot `and retry!`")
+            return
+        await bot.send_file(TifyDown.chat_id, song)
     await TifyDown.client.delete_messages(conv.chat_id,
-                                       [msg.id, song.id, pubdata.id])
+                                          [msg.id, song.id, pubdata.id])
     await TifyDown.delete()
 
 

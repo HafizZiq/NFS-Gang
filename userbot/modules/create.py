@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 #
 
-from telethon.tl import functions, types
+from telethon.tl import functions
 from userbot.events import register
 from userbot import CMD_HELP
 

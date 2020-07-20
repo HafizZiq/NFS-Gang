@@ -95,7 +95,6 @@ async def time_func(tdata):
 
     tnow = dt.now(tz(time_zone)).strftime(t_form)
     dtnow = dt.now(tz(time_zone)).strftime(d_form)
-    
 
     if c_name != COUNTRY:
         await tdata.edit(

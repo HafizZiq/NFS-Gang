@@ -1,9 +1,7 @@
 
-from telethon import events
 import asyncio
 from userbot.events import register
 from userbot import CMD_HELP
-
 
 
 @register(outgoing=True, pattern="^.typ(?: |$)(.*)")
@@ -25,7 +23,7 @@ async def _(event):
         await asyncio.sleep(DELAY_BETWEEN_EDITS)
 
 CMD_HELP.update({
-"typewriter":
-"text writing animation.\
+    "typewriter":
+    "text writing animation.\
 \nUse:- .typ (text)"
 })
