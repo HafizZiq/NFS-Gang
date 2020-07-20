@@ -12,7 +12,7 @@ from shutil import which
 from os import remove
 from telethon import version
 
-from userbot import bot, CMD_HELP, ALIVE_NAME, ALIVE_LOGO, UPSTREAM_REPO_BRANCH
+from userbot import bot, CMD_HELP, ALIVE_NAME, ALIVE_LOGO, UPSTREAM_REPO_BRANCH, USERBOT_VERSION
 from userbot.events import register
 
 # ================= CONSTANT =================
@@ -133,10 +133,11 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     output = ("`My Detail Ubot `\n"
              f"`xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx `\n"
-             f"•  ⚙️ `Telethon    : v{version.__version__} `\n"
+             f"•  ⚙️  `Telethon    : v{version.__version__} `\n"
              f"•  🐍 `Python      : v{python_version()} `\n"
              f"•  👤 `User        :`  {DEFAULTUSER} \n"
              f"•  🐛 `Running on  : {UPSTREAM_REPO_BRANCH} `\n"
+             f"•  🧸 `NFS Gang    : v{USERBOT_VERSION} `\n"
              f"`xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx `\n")
     if ALIVE_LOGO:
         logo = ALIVE_LOGO

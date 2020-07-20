@@ -142,6 +142,9 @@ ALIVE_LOGO = os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/c269a63ed3
 COUNTRY = str(os.environ.get("COUNTRY") or "")
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER") or 1)
 
+# Version of NFS-Gang
+USERBOT_VERSION = os.environ.get("USERBOT_VERSION") or "1.2"
+
 # User Terminal alias
 USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS") or "root@NFS-Gang"
 
