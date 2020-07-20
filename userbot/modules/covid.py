@@ -17,19 +17,19 @@ async def corona(event):
     try:
         country_data = covid.get_status_by_country_name(country)
         output_text = (
-            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n"
-            + f"`🤒Active      : {country_data['active']}`\n"
-            + f"`🤕Critical    : {country_data['critical']}`\n"
-            + f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
-            + f"`😇Recovered   : {country_data['recovered']}`\n"
-            + f"`🧪Total tests : {country_data['total_tests']}`\n"
-            + f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})"
-        )
+            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n" +
+            f"`🤒Active      : {country_data['active']}`\n" +
+            f"`🤕Critical    : {country_data['critical']}`\n" +
+            f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n" +
+            f"`😇Recovered   : {country_data['recovered']}`\n" +
+            f"`🧪Total tests : {country_data['total_tests']}`\n" +
+            f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})")
         await event.edit(f"`Corona Virus Info in {country}:`\n\n{output_text}")
     except ValueError:
         await event.edit(
             f"No information found for: {country}!\nCheck your spelling and try again."
         )
+
 
 @register(outgoing=True, pattern="^.covid$")
 async def corona(event):
@@ -39,19 +39,19 @@ async def corona(event):
     try:
         country_data = covid.get_status_by_country_name(country)
         output_text = (
-            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n"
-            + f"`🤒Active      : {country_data['active']}`\n"
-            + f"`🤕Critical    : {country_data['critical']}`\n"
-            + f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
-            + f"`😇Recovered   : {country_data['recovered']}`\n"
-            + f"`🧪Total tests : N/A`\n"
-            + f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})"
-        )
+            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n" +
+            f"`🤒Active      : {country_data['active']}`\n" +
+            f"`🤕Critical    : {country_data['critical']}`\n" +
+            f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n" +
+            f"`😇Recovered   : {country_data['recovered']}`\n" +
+            f"`🧪Total tests : N/A`\n" +
+            f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})")
         await event.edit(f"`Corona Virus Info in {country}:`\n\n{output_text}")
     except ValueError:
         await event.edit(
             f"No information found for: {country}!\nCheck your spelling and try again."
         )
+
 
 @register(outgoing=True, pattern="^.covidsk$")
 async def corona(event):
@@ -61,14 +61,13 @@ async def corona(event):
     try:
         country_data = covid.get_status_by_country_name(country)
         output_text = (
-            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n"
-            + f"`🤒Active      : {country_data['active']}`\n"
-            + f"`🤕Critical    : {country_data['critical']}`\n"
-            + f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n"
-            + f"`😇Recovered   : {country_data['recovered']}`\n"
-            + f"`🧪Total tests : {country_data['total_tests']}`\n"
-            + f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})"
-        )
+            f"`😷Confirmed   : {country_data['confirmed']} (+{country_data['new_cases']})`\n" +
+            f"`🤒Active      : {country_data['active']}`\n" +
+            f"`🤕Critical    : {country_data['critical']}`\n" +
+            f"`⚰Deaths      : {country_data['deaths']} (+{country_data['new_deaths']})`\n" +
+            f"`😇Recovered   : {country_data['recovered']}`\n" +
+            f"`🧪Total tests : {country_data['total_tests']}`\n" +
+            f"Data provided by [Worldometer](https://www.worldometers.info/coronavirus/country/{country})")
         await event.edit(f"`Corona Virus Info in {country}:`\n\n{output_text}")
     except ValueError:
         await event.edit(
