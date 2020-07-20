@@ -39,7 +39,7 @@ from asyncio import sleep
 from userbot import (bot, CMD_HELP,
                      BOTLOG, BOTLOG_CHATID,
                      YOUTUBE_API_KEY, CHROME_DRIVER,
-                     GOOGLE_CHROME_BIN, TEMP_DOWNLOAD_DIRECTORY)
+                     GOOGLE_CHROME_BIN)
 from userbot.events import register
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio
@@ -56,6 +56,8 @@ except:
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
+TRT_LANG = "en"
+TEMP_DOWNLOAD_DIRECTORY = "/NFS-Gang/.bin"
 
 @register(outgoing=True, pattern="^.crblang (.*)")
 async def setlang(prog):

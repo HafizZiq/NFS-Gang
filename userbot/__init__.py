@@ -179,7 +179,7 @@ G_DRIVE_DATA = os.environ.get("G_DRIVE_DATA") or None
 G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID") or None
 G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET") or None
 G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID") or None
-TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY") or "/NFSGang/.bin"
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY") or "/downloads"
 
 # 2nd Google Drive Module
 GDRIVE_DATA_2 = os.environ.get("GDRIVE_DATA_2") or None
