@@ -34,7 +34,7 @@ async def get_adzan(adzan):
         date = parsed["prayer_times"]["date"]
         imsak = parsed["prayer_times"]["imsak"].upper()
         subuh = parsed["prayer_times"]["subuh"].upper()
-        parsed["prayer_times"]["syuruk"].upper()
+        syuruk = parsed["prayer_times"]["syuruk"].upper()
         zohor = parsed["prayer_times"]["zohor"].upper()
         asar = parsed["prayer_times"]["asar"].upper()
         maghrib = parsed["prayer_times"]["maghrib"].upper()
@@ -44,6 +44,7 @@ async def get_adzan(adzan):
                   f"📍` Location: {city}`\n\n"
                   f"`Imsak   : {imsak}`\n"
                   f"`Subuh   : {subuh}`\n"
+                  f"`Syuruk  : {syuruk}`\n"
                   f"`Zohor   : {zohor}`\n"
                   f"`Asar    : {asar}`\n"
                   f"`Maghrib : {maghrib}`\n"
