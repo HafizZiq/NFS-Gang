@@ -199,7 +199,7 @@
       "required": false
     },
     "ALIVE_LOGO": {
-      "description": "Show Image/Logo in .alive message. Fill value of image your link image, use telegra.ph to get your own image",
+      "description": "Show Image/Logo in .alive message. Fill value of image your link image, use telegra.ph / i.ibb.co to get your own image",
       "required": false
     },
     "G_DRIVE_CLIENT_SECRET": {
