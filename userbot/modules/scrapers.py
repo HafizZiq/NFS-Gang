@@ -38,7 +38,6 @@ from userbot import (bot, CMD_HELP,
                      BOTLOG, BOTLOG_CHATID,
                      CHROME_DRIVER, GOOGLE_CHROME_BIN, WOLFRAM_ID)
 from userbot.events import register
-from telethon import events
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot.utils import progress
@@ -779,6 +778,7 @@ async def SpoMusDown(TifyDown):
 def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
     return get_emoji_regexp().sub(u'', inputString)
+
 
 @register(outgoing=True, pattern=r'^.wolfram (.*)')
 async def wolfram(wvent):
