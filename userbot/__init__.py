@@ -145,7 +145,7 @@ COUNTRY = str(os.environ.get("COUNTRY") or "")
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER") or 1)
 
 # Version of NFS-Gang
-USERBOT_VERSION = os.environ.get("USERBOT_VERSION") or "1.2"
+USERBOT_VERSION = os.environ.get("USERBOT_VERSION") or "1.3"
 
 # User Terminal alias
 USER_TERM_ALIAS = os.environ.get("USER_TERM_ALIAS") or "NFS-Gang"
