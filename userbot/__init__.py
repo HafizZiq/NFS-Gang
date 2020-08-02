@@ -138,8 +138,7 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT") or "False")
 ALIVE_NAME = os.environ.get("ALIVE_NAME") or None
 
 # Default .alive logo
-ALIVE_LOGO = os.environ.get(
-    "ALIVE_LOGO") or "https://telegra.ph/file/c269a63ed3b26f82f4f7b.jpg"
+ALIVE_LOGO = os.environ.get("ALIVE_LOGO") or None
 
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY") or "")
