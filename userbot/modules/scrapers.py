@@ -519,20 +519,44 @@ async def download_song(song):
     os.remove(loa)
 
 
-@register(outgoing=True, pattern="^.yt (.*)")
+@register(outgoing=True, pattern=r"^\.yt (\d*) *(.*)")
 async def yt_search(video_q):
-    """ For .yt command, do a YouTube search from Telegram. """
-    query = video_q.pattern_match.group(1)
+    """For .yt command, do a YouTube search from Telegram."""
+    if video_q.pattern_match.group(1) != "":
+        counter = int(video_q.pattern_match.group(1))
+        if counter > 10:
+            counter = int(10)
+        if counter <= 0:
+            counter = int(1)
+    else:
+        counter = int(5)
+
+    query = video_q.pattern_match.group(2)
     if not query:
         await video_q.edit("`Enter query to search`")
     await video_q.edit("`Processing...`")
+
     try:
-        results = json.loads(YoutubeSearch(query, max_results=7).to_json())
+        results = json.loads(
+            YoutubeSearch(
+                query,
+                max_results=counter).to_json())
     except KeyError:
         return await video_q.edit("`Youtube Search gone retard.\nCan't search this query!`")
+
     output = f"**Search Query:**\n`{query}`\n\n**Results:**\n\n"
+
     for i in results["videos"]:
-        output += (f"● `{i['title']}`\nhttps://www.youtube.com{i['url_suffix']}\n\n")
+        try:
+            title = i["title"]
+            link = "https://youtube.com" + i["url_suffix"]
+            channel = i["channel"]
+            duration = i["duration"]
+            views = i["views"]
+            output += f"[{title}]({link})\nChannel: `{channel}`\nDuration: {duration} | {views}\n\n"
+        except IndexError:
+            break
+
     await video_q.edit(output, link_preview=False)
 
 
@@ -795,8 +819,9 @@ CMD_HELP.update({
     '.song title or .song <yt vid link>\
         \nUsage: Instantly download any songs from YouTube and many other sites.'
 })
-CMD_HELP.update({'yt': '.yt <text>\
-        \nUsage: Does a YouTube search.'})
+CMD_HELP.update({'yt': '.yt <count> <query>'
+                 '\nUsage: Does a YouTube search.'
+                 '\nCan specify the number of results needed (default is 5).'})
 CMD_HELP.update(
     {"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
 CMD_HELP.update({
