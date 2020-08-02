@@ -1,86 +1,85 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.d (the "License"); 
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-""" Userbot module containing various scrapers. """ import os import time import 
-asyncio import shutil import json from bs4 import BeautifulSoup import re from 
-time import sleep from re import findall from selenium import webdriver from 
-urllib.parse import quote_plus from urllib.error import HTTPError from 
-selenium.webdriver.chrome.options import Options from wikipedia import summary 
-from wikipedia.exceptions import DisambiguationError, PageError from urbandict 
-import define from requests import get from search_engine_parser import 
-GoogleSearch from googletrans import LANGUAGES, Translator from gtts import gTTS 
-from gtts.lang import tts_langs from emoji import get_emoji_regexp from 
-youtube_search import YoutubeSearch from youtube_dl import YoutubeDL from 
+""" Userbot module containing various scrapers. """ import os import time import
+asyncio import shutil import json from bs4 import BeautifulSoup import re from
+time import sleep from re import findall from selenium import webdriver from
+urllib.parse import quote_plus from urllib.error import HTTPError from
+selenium.webdriver.chrome.options import Options from wikipedia import summary
+GoogleSearch from googletrans import LANGUAGES, Translator from gtts import gTTS
+youtube_search import YoutubeSearch from youtube_dl import YoutubeDL from
 youtube_dl.utils import (DownloadError, ContentTooShortError,
-                              ExtractorError, GeoRestrictedError, 
-                              MaxDownloadsReached, PostProcessingError, 
+                              ExtractorError, GeoRestrictedError,
+                              MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
-from asyncio import sleep from userbot import (bot, CMD_HELP, BOTLOG, 
-                     BOTLOG_CHATID, CHROME_DRIVER, GOOGLE_CHROME_BIN)
-from userbot.events import register from telethon.tl.types import 
-DocumentAttributeAudio from telethon.errors.rpcerrorlist import 
-YouBlockedUserError from userbot.utils import progress from 
+DocumentAttributeAudio from telethon.errors.rpcerrorlist import
+YouBlockedUserError from userbot.utils import progress from
 userbot.utils.google_images_download import googleimagesdownload import glob try:
-    pass except BaseException: os.system("pip install instantmusic") CARBONLANG = 
-"auto" TTS_LANG = "en" TRT_LANG = "en" TEMP_DOWNLOAD_DIRECTORY = "/NFS-Gang/.bin" 
+    pass except BaseException: os.system("pip install instantmusic") CARBONLANG =
+"auto" TTS_LANG = "en" TRT_LANG = "en" TEMP_DOWNLOAD_DIRECTORY = "/NFS-Gang/.bin"
+
+
 @register(outgoing=True, pattern="^.crblang (.*)") async def setlang(prog):
-    global CARBONLANG CARBONLANG = prog.pattern_match.group(1) await 
+    global CARBONLANG CARBONLANG = prog.pattern_match.group(1) await
     prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
-@register(outgoing=True, pattern="^.carbon") async def carbon_api(e): """ A 
-    Wrapper for carbon.now.sh """ await e.edit("`Processing..`") CARBON = 
-    'https://carbon.now.sh/?l={lang}&code={code}' global CARBONLANG textx = await 
+
+
+@register(outgoing=True, pattern="^.carbon") async def carbon_api(e): """ A
+    Wrapper for carbon.now.sh """ await e.edit("`Processing..`") CARBON =
+    'https://carbon.now.sh/?l={lang}&code={code}' global CARBONLANG textx = await
     e.get_reply_message() pcode = e.text if pcode[8:]:
-        pcode = str(pcode[8:]) elif textx: pcode = str(textx.message) # Importing 
+        # Importing
+        pcode = str(pcode[8:]) elif textx: pcode = str(textx.message)
         message to module
-    code = quote_plus(pcode) # Converting to urlencoded await 
-    e.edit("`Processing..\n25%`") if os.path.isfile(TEMP_DOWNLOAD_DIRECTORY + 
+    code = quote_plus(pcode)  # Converting to urlencoded await
+    e.edit("`Processing..\n25%`") if os.path.isfile(TEMP_DOWNLOAD_DIRECTORY +
     "/carbon.png"):
-        os.remove(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png") url = 
-    CARBON.format(code=code, lang=CARBONLANG) chrome_options = Options() 
-    chrome_options.add_argument("--headless") chrome_options.binary_location = 
-    GOOGLE_CHROME_BIN chrome_options.add_argument("--window-size=1920x1080") 
-    chrome_options.add_argument("--disable-dev-shm-usage") 
-    chrome_options.add_argument("--no-sandbox") 
-    chrome_options.add_argument("--disable-gpu") prefs = 
-    {'download.default_directory': TEMP_DOWNLOAD_DIRECTORY} 
-    chrome_options.add_experimental_option('prefs', prefs) driver = 
+        os.remove(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png") url =
+    CARBON.format(code=code, lang=CARBONLANG) chrome_options = Options()
+    chrome_options.add_argument("--headless") chrome_options.binary_location =
+    GOOGLE_CHROME_BIN chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu") prefs =
+    {'download.default_directory': TEMP_DOWNLOAD_DIRECTORY}
+    chrome_options.add_experimental_option('prefs', prefs) driver =
     webdriver.Chrome(executable_path=CHROME_DRIVER,
-                              options=chrome_options) driver.get(url) await 
-    e.edit("`Processing..\n50%`") 
+                              options=chrome_options) driver.get(url) await
+    e.edit("`Processing..\n50%`")
     driver.command_executor._commands["send_command"] = (
-        "POST", '/session/$sessionId/chromium/send_command') params = { 'cmd': 
+        "POST", '/session/$sessionId/chromium/send_command') params = {'cmd':
         'Page.setDownloadBehavior', 'params': {
             'behavior': 'allow', 'downloadPath': TEMP_DOWNLOAD_DIRECTORY
         }
     }
-    driver.execute("send_command", params) 
+    driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-   # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click() 
+   # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
     await e.edit("`Processing..\n75%`")
     # Waiting for downloading
-    while not os.path.isfile(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png"): await 
+    while not os.path.isfile(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png"): await
         sleep(0.5)
-    await e.edit("`Processing..\n100%`") file = TEMP_DOWNLOAD_DIRECTORY + 
+    await e.edit("`Processing..\n100%`") file = TEMP_DOWNLOAD_DIRECTORY +
     "/carbon.png" await e.edit("`Uploading..`") await e.client.send_file(
-        e.chat_id, file, caption="Made using 
-        [Carbon](https://carbon.now.sh/about/),\ \na project by [Dawn 
-        Labs](https://dawnlabs.io/)", force_document=True, 
+        e.chat_id, file, caption="Made using
+        [Carbon](https: // carbon.now.sh / about /), \ \na project by [Dawn
+        Labs](https: // dawnlabs.io /)", force_document=True,
         reply_to=e.message.reply_to_msg_id,
     ) os.remove(TEMP_DOWNLOAD_DIRECTORY + "/carbon.png") driver.quit()
     # Removing carbon.png after uploading
-    await e.delete() # Deleting msg @register(outgoing=True, pattern="^.img 
+    await e.delete()  # Deleting msg @register(outgoing=True, pattern="^.img
 (.*)") async def img_sampler(event):
-    """ For .img command, search and return images matching the query. """ await 
-    event.edit("`Processing...`") query = event.pattern_match.group(1) lim = 
+    """ For .img command, search and return images matching the query. """ await
+    event.edit("`Processing...`") query=event.pattern_match.group(1) lim=
     findall(r"lim=\d+", query) try:
-        lim = lim[0] lim = lim.replace("lim=", "") query = query.replace("lim=" + 
+        lim=lim[0] lim=lim.replace("lim=", "") query=query.replace("lim=" +
         lim[0], "")
-    except IndexError: lim = 10 response = googleimagesdownload()
+    except IndexError: lim=10 response=googleimagesdownload()
     # creating list of arguments
-    arguments = { "keywords": query, "limit": lim, "format": "jpg", 
+    arguments={"keywords": query, "limit": lim, "format": "jpg",
         "no_directory": "no_directory"
     }
     # passing the arguments to the function
@@ -238,6 +237,12 @@ text_to_speech(query):
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)") async def 
 translateme(trans):
     """ For .trt command, translate the given text using Google Translate. """ 
+from userbot.events import register from telethon.tl.types import
+from asyncio import sleep from userbot import (bot, CMD_HELP, BOTLOG,
+                     BOTLOG_CHATID, CHROME_DRIVER, GOOGLE_CHROME_BIN)
+from gtts.lang import tts_langs from emoji import get_emoji_regexp from
+import define from requests import get from search_engine_parser import
+from wikipedia.exceptions import DisambiguationError, PageError from urbandict
     translator = Translator() textx = await trans.get_reply_message() message = 
     trans.pattern_match.group(1) if message:
         pass elif textx: message = textx.text else: await trans.edit("`Give a 
