@@ -36,8 +36,9 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
 from asyncio import sleep
 from userbot import (bot, CMD_HELP,
                      BOTLOG, BOTLOG_CHATID,
-                     CHROME_DRIVER, GOOGLE_CHROME_BIN)
+                     CHROME_DRIVER, GOOGLE_CHROME_BIN, WOLFRAM_ID)
 from userbot.events import register
+from telethon import events
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot.utils import progress
@@ -779,6 +780,23 @@ def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
     return get_emoji_regexp().sub(u'', inputString)
 
+@register(outgoing=True, pattern=r'^.wolfram (.*)')
+async def wolfram(wvent):
+    """ Wolfram Alpha API """
+    if WOLFRAM_ID is None:
+        await wvent.edit(
+            'Please set your WOLFRAM_ID first !\n'
+            'Get your API KEY from [here](https://'
+            'products.wolframalpha.com/api/)',
+            parse_mode='Markdown')
+        return
+    i = wvent.pattern_match.group(1)
+    appid = WOLFRAM_ID
+    server = f'https://api.wolframalpha.com/v1/spoken?appid={appid}&i={i}'
+    res = get(server)
+    await wvent.edit(f'**{i}**\n\n' + res.text, parse_mode='Markdown')
+    if BOTLOG:
+        await wvent.client.send_message(BOTLOG_CHATID, f'.wolfram {i} was executed successfully')
 
 CMD_HELP.update({
     'img':
@@ -837,4 +855,9 @@ CMD_HELP.update({
     \nUsage: Download music from Spotify or Deezer\
     \n\n.smd <Artist - Song Title> or <Spotify/Deezer/Apple Music Link>\
     \nUsage: Download music from Spotify"
+})
+CMD_HELP.update({
+    'wolfram':
+    '.wolfram <query>\
+        \nUsage: Get answers to questions using WolframAlpha Spoken Results API.'
 })
