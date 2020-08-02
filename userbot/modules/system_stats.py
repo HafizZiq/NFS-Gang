@@ -199,13 +199,13 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     output = ("`Bot services is running...`\n"
               "`⊷⊷⊷⊷⊷⊷⊷⊷⊷⊷⊶⊷⊶⊶⊶⊶⊶⊶⊶⊶⊶⊶`\n"
-              f"•  ⚙️ `Telethon       : v{version.__version__} `\n"
-              f"•  🐍 `Python         : v{python_version()} `\n"
-              f"•  👤 `User           :`  {DEFAULTUSER} \n"
+              f"•  ⚙️ `Telethon       : v{version.__version__}`\n"
+              f"•  🐍 `Python         : v{python_version()}`\n"
+              f"•  👤 `User           : `{DEFAULTUSER} \n"
               "`----------------------------------`\n"
-              f"•  💻 `Running on  : {repo.active_branch.name} `\n"
-              f"•  🗃 `Loaded modules : {len(modules)} `\n"
-              f"•  🧸 NFS Gang     : v{USERBOT_VERSION} `\n"
+              f"•  💻 `Running on     : {repo.active_branch.name}`\n"
+              f"•  🗃 `Loaded modules : {len(modules)}`\n"
+              f"•  🧸 `NFS Gang       : v{USERBOT_VERSION}`\n"
               "`⊷⊷⊷⊷⊷⊷⊷⊷⊷⊷⊶⊷⊶⊶⊶⊶⊶⊶⊶⊶⊶⊶`")
     if ALIVE_LOGO:
         logo = ALIVE_LOGO
