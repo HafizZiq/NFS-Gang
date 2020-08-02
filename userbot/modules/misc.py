@@ -142,6 +142,10 @@ CMD_HELP.update({
 })
 
 CMD_HELP.update({
+})
+
+CMD_HELP.update({
+>>>>>>> cc7d282... treewide: remove some unused things
     "repeat":
     ".repeat <no.> <text>\
 \nUsage: Repeats the text for a number of times. Don't confuse this with spam tho."
