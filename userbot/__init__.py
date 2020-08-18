@@ -7,6 +7,8 @@
 
 import os
 import heroku3
+import re
+import time
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
