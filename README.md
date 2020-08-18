@@ -25,8 +25,6 @@
 Easy way to get STRING_SESSION. 
 
 ### Run on repl.it
-[![Run repl.it](https://img.shields.io/badge/run-string__session.py-blue?style=flat-square&logo=repl.it)](https://userbotsession.moveangel.repl.run)
-
 <a href="https://NFS-Gang.hafizziq.repl.run" target="_blank"><img src="https://img.shields.io/badge/run-string__session.py-blue?style=for-the-badge&logo=repl.it" alt="generate_string" /></a>
 
 ### or Run on your terminal
