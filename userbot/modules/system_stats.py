@@ -15,7 +15,8 @@ from os import remove
 from platform import python_version, uname
 from shutil import which
 
-import shutil, psutil
+import shutil
+import psutil
 from telethon import __version__, version
 from git import Repo
 
