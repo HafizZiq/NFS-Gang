@@ -35,7 +35,7 @@ from asyncio import sleep
 
 from userbot import (bot, CMD_HELP,
                      BOTLOG, BOTLOG_CHATID,
-                     WOLFRAM_ID)
+                     CHROME_DRIVER, GOOGLE_CHROME_BIN, WOLFRAM_ID)
 from userbot.events import register
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.errors.rpcerrorlist import YouBlockedUserError
