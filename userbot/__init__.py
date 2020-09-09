@@ -193,6 +193,10 @@ GDRIVE_CLIENT_ID_2 = os.environ.get("GDRIVE_CLIENT_ID_2") or None
 GDRIVE_CLIENT_SECRET_2 = os.environ.get("GDRIVE_CLIENT_SECRET_2") or None
 GDRIVE_FOLDER_ID_2 = os.environ.get("GDRIVE_FOLDER_ID_2") or None
 
+# Uptobox
+USR_TOKEN = os.environ.get("USR_TOKEN_UPTOBOX", None)
+
+
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
 if not os.path.exists("bin"):
