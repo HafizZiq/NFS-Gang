@@ -7,11 +7,10 @@
 import textwrap
 import asyncio
 from asyncio.exceptions import TimeoutError
-from PIL import Image, ImageEnhance, ImageOps, ImageFont, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from telethon import events
 import os
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import DocumentAttributeFilename
 from userbot import bot, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
