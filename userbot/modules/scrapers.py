@@ -50,7 +50,6 @@ from userbot.utils import googleimagesdownload, progress, chrome
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
-TEMP_DOWNLOAD_DIRECTORY = "/NFS-Gang/.bin"
 
 
 @register(outgoing=True, pattern="^.crblang (.*)")
