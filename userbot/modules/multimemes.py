@@ -14,7 +14,7 @@ from telethon import events, functions, types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import bot, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
-from userbot.utils import progress
+from userbot.utils import progress, check_media
 
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
 
