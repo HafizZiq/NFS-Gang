@@ -5,7 +5,7 @@
 #
 
 import textwrap
-import asyncio
+import time
 from asyncio.exceptions import TimeoutError
 
 from glitch_this import ImageGlitcher
@@ -14,6 +14,7 @@ from telethon import events, functions, types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import bot, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
+from userbot.utils import progress
 
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
 
@@ -84,9 +85,16 @@ async def glitch(event):
         loop=LOOP,
     )
     await event.edit("`Uploading Glitched Media...`")
+    c_time = time.time()
     nosave = await event.client.send_file(
-                 event.chat_id, Glitched, force_document=False, reply_to=event.reply_to_msg_id
-             )
+        event.chat_id,
+        Glitched,
+        force_document=False,
+        reply_to=event.reply_to_msg_id,
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(d, t, event, c_time, "[UPLOAD]")
+        ),
+    )
     await event.delete()
     os.remove(Glitched)
     await bot(
