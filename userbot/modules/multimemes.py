@@ -9,7 +9,7 @@ import time
 from asyncio.exceptions import TimeoutError
 
 from glitch_this import ImageGlitcher
-from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont
 from telethon import events, functions, types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import bot, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
@@ -98,15 +98,15 @@ async def glitch(event):
     await event.delete()
     os.remove(Glitched)
     await bot(
-            functions.messages.SaveGifRequest(
-                id=types.InputDocument(
-                    id=nosave.media.document.id,
-                    access_hash=nosave.media.document.access_hash,
-                    file_reference=nosave.media.document.file_reference,
-                ),
-                unsave=True,
-            )
+        functions.messages.SaveGifRequest(
+            id=types.InputDocument(
+                id=nosave.media.document.id,
+                access_hash=nosave.media.document.access_hash,
+                file_reference=nosave.media.document.file_reference,
+            ),
+            unsave=True,
         )
+    )
     os.remove(glitch_file)
 
 
@@ -466,7 +466,7 @@ CMD_HELP.update(
     {
         "memify": ".mmf texttop ; textbottom\
             \nUsage: Reply a sticker/image/gif and send with cmd."
-})
+    })
 
 CMD_HELP.update({
     "quotly":

@@ -74,6 +74,7 @@ async def corona(event):
             f"No information found for: {country}!\nCheck your spelling and try again."
         )
 
+
 def format_integer(number, thousand_separator="."):
     def reverse(string):
         string = "".join(reversed(string))
@@ -92,6 +93,7 @@ def format_integer(number, thousand_separator="."):
         else:
             result = char + result
     return result
+
 
 CMD_HELP.update({"covid": "`.covid `**<country>**"
                  "\n`Usage: Get an information about covid-19 data in your country.`\n\n"
