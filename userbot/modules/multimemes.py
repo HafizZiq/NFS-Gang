@@ -145,7 +145,8 @@ async def mim(event):
         if event.reply_to_msg_id:
             file_name = "meme.jpg"
             to_download_directory = TEMP_DOWNLOAD_DIRECTORY
-            downloaded_file_name = os.path.join(to_download_directory, file_name)
+            downloaded_file_name = os.path.join(
+                to_download_directory, file_name)
             downloaded_file_name = await bot.download_media(
                 reply_message,
                 downloaded_file_name,
@@ -523,9 +524,7 @@ CMD_HELP.update(
     {
         "hazmat": ".hz or .hz [flip, x2, rotate (degree), background (number), black]"
         "\nUsage: Reply to a image / sticker to suit up!"
-        "\n@hazmat_suit_bot"
-    }
-)
+        "\n@hazmat_suit_bot"})
 
 CMD_HELP.update(
     {
