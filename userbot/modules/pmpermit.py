@@ -371,26 +371,26 @@ async def add_pmsg(cust_msg):
 CMD_HELP.update(
     {
         "pmpermit": "\
-
-.approve
-        \nUsage: Approves the mentioned / replied person to PM.
-        \n\n.disapprove
-        \nUsage: Disapproves the mentioned / replied person to PM.
-        \n\n.block
-        \nUsage: Blocks the person.
-        \n\n.unblock
-        \nUsage: Unblocks the person so they can PM you.
-        \n\n.notifoff
-        \nUsage: Clears / Disables any notifications of unapproved PMs.
-        \n\n.notifon
-        \nUsage: Allows notifications for unapproved PMs.
-        \n\n.set pm_msg < reply to msg > nUsage: Set your own Unapproved message
-        \n\n.get pm_msg
-        \nUsage: Get your current Unapproved message
-        \n\n.reset pm_msg
-        \nUsage: Get your remove your Unapproved message
-        \n\n * Custom unapproved message currently not able to set
-        \nformated text like bold, underline, link, etc.
-        \nMessage will send in monoscape only"
+.approve\
+\nUsage: Approves the mentioned/replied person to PM.\
+\n\n.disapprove\
+\nUsage: Disapproves the mentioned/replied person to PM.\
+\n\n.block\
+\nUsage: Blocks the person.\
+\n\n.unblock\
+\nUsage: Unblocks the person so they can PM you.\
+\n\n.notifoff\
+\nUsage: Clears/Disables any notifications of unapproved PMs.\
+\n\n.notifon\
+\nUsage: Allows notifications for unapproved PMs.\
+\n\n.set pm_msg <reply to msg>\
+\nUsage: Set your own Unapproved message\
+\n\n.get pm_msg\
+\nUsage: Get your current Unapproved message\
+\n\n.reset pm_msg\
+\nUsage: Get your remove your Unapproved message\
+\n\n*Custom unapproved message currently not able to set\
+\nformated text like bold, underline, link, etc.\
+\nMessage will send in monoscape only"
     }
 )
